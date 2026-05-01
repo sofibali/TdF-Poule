@@ -10,3 +10,5 @@ out
 # Auto-generated DB types live at lib/db/types.gen.ts so we can keep the
 # hand-written types in lib/db/types.ts under version control.
 lib/db/types.gen.ts
+#*#
+.#*
