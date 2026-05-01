@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:types": "supabase gen types typescript --local > lib/db/types.ts",
+    "db:types": "supabase gen types typescript --local > lib/db/types.gen.ts",
     "db:migrate": "supabase migration up",
     "import:csv": "tsx scripts/import-historical.ts"
   },
