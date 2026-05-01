@@ -35,7 +35,10 @@ create or replace view public.v_rider_totals as
     select
       pool_id,
       coalesce(rider_id::text, lower(rider_name)) as rider_key,
-      coalesce(rider_id, null) as rider_id,
+      -- Postgres doesn't have max(uuid). Within each group all rider_id values
+      -- are identical (rider_key already discriminates by rider_id when present),
+      -- so casting to text → max → back to uuid is just "pick that one".
+      max(rider_id::text)::uuid as rider_id,
       max(rider_name) as rider_name,
       sum(points) as stage_points
     from public.v_rider_stage_points
@@ -45,7 +48,7 @@ create or replace view public.v_rider_totals as
     select
       fg.pool_id,
       coalesce(fg.rider_id::text, lower(fg.raw_name)) as rider_key,
-      coalesce(fg.rider_id, null) as rider_id,
+      max(fg.rider_id::text)::uuid as rider_id,
       max(fg.raw_name) as rider_name,
       sum(coalesce(gpt.points, 0)) as gc_points
     from public.final_gc fg

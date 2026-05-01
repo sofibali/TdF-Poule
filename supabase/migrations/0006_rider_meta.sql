@@ -1,14 +1,23 @@
 -- ============================================================================
 -- Surface rider meta (pro_team, bib_number, pcs_slug) on the views the UI reads.
--- Re-runnable: uses CREATE OR REPLACE.
+--
+-- We insert new columns in the middle of the SELECT, which CREATE OR REPLACE
+-- VIEW won't allow (it can only append). So drop + recreate. v_perfect_team
+-- depends on v_rider_totals so we drop it first; then recreate both.
+-- Re-runnable: every drop uses IF EXISTS.
 -- ============================================================================
 
-create or replace view public.v_rider_totals as
+drop view if exists public.v_perfect_team;
+drop view if exists public.v_rider_totals;
+
+create view public.v_rider_totals as
   with stage_pts as (
     select
       pool_id,
       coalesce(rider_id::text, lower(rider_name)) as rider_key,
-      coalesce(rider_id, null) as rider_id,
+      -- Postgres doesn't have max(uuid); cast to text → max → back to uuid.
+      -- Within each group all rider_id values are identical anyway.
+      max(rider_id::text)::uuid as rider_id,
       max(rider_name) as rider_name,
       sum(points) as stage_points
     from public.v_rider_stage_points
@@ -18,7 +27,7 @@ create or replace view public.v_rider_totals as
     select
       fg.pool_id,
       coalesce(fg.rider_id::text, lower(fg.raw_name)) as rider_key,
-      coalesce(fg.rider_id, null) as rider_id,
+      max(fg.rider_id::text)::uuid as rider_id,
       max(fg.raw_name) as rider_name,
       sum(coalesce(gpt.points, 0)) as gc_points
     from public.final_gc fg
@@ -64,6 +73,7 @@ create or replace view public.v_rider_totals as
   from agg a
   left join public.riders r on r.id = a.rider_id;
 
--- v_perfect_team rebuild — same change cascades.
-create or replace view public.v_perfect_team as
+-- v_perfect_team rebuild — was dropped at the top of this migration so the
+-- dependency on v_rider_totals could be replaced.
+create view public.v_perfect_team as
   select * from public.v_rider_totals where overall_rank <= 15;

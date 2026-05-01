@@ -32,38 +32,18 @@ git push -u origin main
 ## Step 2 · Create the Supabase project
 
 1. Go to <https://supabase.com> and sign in (GitHub login is fine).
-2. **New project** → name it `tdf-pool`. Pick a region close to you. Save the database password somewhere — you won't need it daily but Supabase shows it once.
+2. **New project** → name it `tdf-pool`. Pick a region close to you. Save the database password somewhere  — you won't need it daily but Supabase shows it once.
 3. Wait ~2 minutes for the project to provision.
-4. Once it's up, go to **Project Settings → API** and copy these four values. **Don't save them as plain text files inside the repo folder** — they'd get pushed to GitHub. Instead, keep them in a password manager (1Password, Apple Passwords, Bitwarden, etc.) until you paste them into Vercel in step 6:
-   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
-   - **anon / public key** → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - **service_role key** (under "Project API keys") → `SUPABASE_SERVICE_ROLE_KEY` ⚠ this bypasses RLS — never commit it
-   - Generate a `CRON_SECRET` while you're at it: run `openssl rand -hex 32` in your terminal and paste the output as another saved value.
-
-   **For local development** (running `npm run dev` on your laptop), put these in a file called `.env.local` at the repo root. That filename is gitignored so it'll never end up on GitHub. Copy `.env.example` and fill in the real values:
-   ```bash
-   cd /Users/sbali/myGit/TdF-Poule
-   cp .env.example .env.local
-   # then edit .env.local with the values you just copied
-   ```
+4. Once it's up, go to **Project Settings → API** and copy:
+   - **Project URL** → save as `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon / public key** → save as `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - **service_role key** (under "Project API keys") → save as `SUPABASE_SERVICE_ROLE_KEY` ⚠ keep this server-side only
 
 ---
 
 ## Step 3 · Apply the schema
 
-There's no "upload .sql file" button in the Supabase SQL Editor — you have to either paste the contents or use the CLI. Three ways to do it:
-
-### Option A · Copy-paste each file (easiest, no install)
-
-In Supabase, go to **SQL Editor** → **New query**. For each file below, copy its entire contents to your clipboard and paste it into the editor, then click **Run**. There are 6 files — you'll do this 6 times. Each run finishes in well under a second.
-
-On a Mac, the fastest way to get a file's contents on your clipboard:
-
-```bash
-cat /Users/sbali/myGit/TdF-Poule/supabase/migrations/0001_init.sql | pbcopy
-```
-
-Then `Cmd+V` into the Supabase SQL Editor. Repeat for each of these in order:
+In Supabase, go to **SQL Editor** → **New query**. Paste each of the migration files in order and click **Run** for each:
 
 1. `supabase/migrations/0001_init.sql`
 2. `supabase/migrations/0002_rls.sql`
@@ -72,27 +52,7 @@ Then `Cmd+V` into the Supabase SQL Editor. Repeat for each of these in order:
 5. `supabase/migrations/0005_history_and_subs.sql`
 6. `supabase/migrations/0006_rider_meta.sql`
 
-### Option B · Drag-and-drop into the SQL Editor
-
-Open the migration file in Finder, drag it into the Supabase SQL Editor's text area — it'll insert the file's contents. Then click **Run**. Same workflow as paste, no terminal needed.
-
-### Option C · Supabase CLI (one command for everything)
-
-The CLI reads everything in `supabase/migrations/` and applies them in order. Install once, use forever:
-
-```bash
-brew install supabase/tap/supabase
-supabase login                  # opens a browser
-cd /Users/sbali/myGit/TdF-Poule
-supabase link --project-ref <your-project-ref>
-supabase db push
-```
-
-(`<your-project-ref>` is the alphanumeric chunk in your Supabase project URL: `https://app.supabase.com/project/<ref>`.)
-
-Whichever path you take, when it's done
-
-— browse **Table Editor** in the sidebar. You should see `pools`, `riders`, `teams`, `team_riders`, `stage_results`, `final_gc`, `rider_dropouts`, `stage_point_table`, `gc_point_table`, `import_log`.
+Each one should finish in well under a second. After they're done, browse **Table Editor** in the sidebar — you should see `pools`, `riders`, `teams`, `team_riders`, `stage_results`, `final_gc`, `rider_dropouts`, `stage_point_table`, `gc_point_table`, `import_log`.
 
 Test by running this in the SQL Editor:
 

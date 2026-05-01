@@ -1,0 +1,86 @@
+# Tour de France Pool — v2
+
+A hosted, multi-user web app for the family TDF pool. Replaces the local React + Python scripts in the parent folder with a Next.js app backed by Supabase (Postgres + Auth + Realtime).
+
+## What's different from v1
+
+| | v1 (parent folder) | v2 (this folder) |
+| - | - | - |
+| Hosting | Run locally with `npm start` | Deployed to Vercel, public URL |
+| Auth | None | Supabase magic-link email login |
+| Data | JSON files in `public/` | Postgres (Supabase) |
+| Updates | You re-run `run_pool.py` after each stage | Vercel Cron auto-fetches daily |
+| Team submission | You parse a CSV they emailed | You drop the in-laws' Word doc into /admin/upload |
+| Family access | Email a screenshot | Public URL — no login, just visit |
+| Live leaderboard | Refresh page | Realtime — updates automatically |
+
+## Stack
+
+- **Next.js 14** (App Router, Server Components, Route Handlers)
+- **Supabase** — Postgres, magic-link auth, Realtime, Row Level Security 
+- **TypeScript**
+- **Tailwind CSS**
+- **cheerio** for parsing ProCyclingStats HTML
+- **Vercel** hosting + Cron Jobs
+
+## Folder layout
+
+```
+tdf-pool-v2/
+├── app/
+│   ├── (auth)/login/         Magic-link login (admin only)
+│   ├── (app)/                PUBLIC pages — no login required
+│   │   ├── leaderboard/      Live standings
+│   │   └── teams/[id]/       One participant's team breakdown
+│   ├── admin/                Authed pages — Sofia only
+│   │   ├── upload/           Drop in-laws' .docx → parse → import
+│   │   ├── refresh/          Force a PCS pull
+│   │   └── results/          Manual stage-result overrides
+│   └── api/
+│       ├── cron/fetch-results/   Daily auto-fetch (Vercel Cron)
+│       └── refresh/              Manual on-demand refresh
+├── lib/
+│   ├── supabase/             Browser + server client factories
+│   ├── scoring/              Port of tdf_engine.py
+│   ├── scraper/              ProCyclingStats fetcher (cheerio)
+│   ├── parsers/              .docx and .csv → ParsedPool
+│   └── db/                   Generated DB types
+├── supabase/migrations/      SQL schema (run via supabase CLI)
+├── components/               Shared React components
+└── scripts/                  One-shot historical importers
+```
+
+## Setup (first time)
+
+See [SETUP.md](./SETUP.md) — step-by-step from `git push` through magic-link login,
+seeding 5 years of historical teams, and configuring the daily cron.
+
+## Running locally
+
+```bash
+npm install
+cp .env.example .env.local   # fill in Supabase keys
+npm run dev
+```
+
+## Access model
+
+- **Family**: just visits the public URL. No accounts, no logins. They see the leaderboard, click into any team, see stage-by-stage points.
+- **Sofia (admin)**: signs in with magic link to upload teams (.docx from the in-laws), trigger result refreshes, or correct scraper misses.
+
+## Status
+
+Build complete — ready to deploy.
+
+1. ✅ Folder skeleton
+2. ✅ Database schema + RLS (public read, admin write)
+3. ✅ Scoring (SQL views + TS substitution simulator)
+4. ✅ ProCyclingStats scraper + cron + manual refresh
+5. ✅ Public leaderboard, all-teams matrix, riders view, team detail, admin upload, login
+6. ✅ Historical years 2020-2025 → seed_history.sql
+7. ✅ [Deployment guide](./SETUP.md)
+8. ✅ Word doc / CSV parser
+
+Run `python3 scripts/build_preview.py` to regenerate `preview.html` (a self-contained
+demo of the UI using your real 2025 team data — useful for showing the family what
+they'll be looking at).
