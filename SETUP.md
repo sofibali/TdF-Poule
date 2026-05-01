@@ -1,0 +1,276 @@
+# Deploying the TDF Pool
+
+Step-by-step guide to take the code in this folder live. End state: a public URL your family can bookmark, with magic-link admin access for you and a daily cron pulling stage results from ProCyclingStats.
+
+Hosting choices used here: **Supabase** (Postgres + auth + realtime, free tier) and **Vercel** (Next.js hosting + cron, free tier). Total cost: $0 for a 16-team family pool.
+
+---
+
+## Step 1 · Commit and push to GitHub
+
+The repo at `/Users/sbali/myGit/TdF-Poule` is already a git repo — just commit the new code on top of it and push:
+
+```bash
+cd /Users/sbali/myGit/TdF-Poule
+git add .
+git commit -m "Rebuild TDF pool on Next.js + Supabase"
+git push origin main
+```
+
+If this repo doesn't have a GitHub remote yet, create one at <https://github.com/new> (private is fine), then:
+
+```bash
+git remote add origin git@github.com:YOURNAME/TdF-Poule.git
+git branch -M main
+git push -u origin main
+```
+
+(Or with `gh` installed: `gh repo create TdF-Poule --private --source=. --push` in one step.)
+
+---
+
+## Step 2 · Create the Supabase project
+
+1. Go to <https://supabase.com> and sign in (GitHub login is fine).
+2. **New project** → name it `tdf-pool`. Pick a region close to you. Save the database password somewhere — you won't need it daily but Supabase shows it once.
+3. Wait ~2 minutes for the project to provision.
+4. Once it's up, go to **Project Settings → API** and copy:
+   - **Project URL** → save as `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon / public key** → save as `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - **service_role key** (under "Project API keys") → save as `SUPABASE_SERVICE_ROLE_KEY` ⚠ keep this server-side only
+
+---
+
+## Step 3 · Apply the schema
+
+In Supabase, go to **SQL Editor** → **New query**. Paste each of the migration files in order and click **Run** for each:
+
+1. `supabase/migrations/0001_init.sql`
+2. `supabase/migrations/0002_rls.sql`
+3. `supabase/migrations/0003_scoring.sql`
+4. `supabase/migrations/0004_rider_views.sql`
+5. `supabase/migrations/0005_history_and_subs.sql`
+6. `supabase/migrations/0006_rider_meta.sql`
+
+Each one should finish in well under a second. After they're done, browse **Table Editor** in the sidebar — you should see `pools`, `riders`, `teams`, `team_riders`, `stage_results`, `final_gc`, `rider_dropouts`, `stage_point_table`, `gc_point_table`, `import_log`.
+
+Test by running this in the SQL Editor:
+
+```sql
+select * from public.stage_point_table order by position;
+```
+
+You should get 10 rows.
+
+---
+
+## Step 4 · Seed historical years (2020-2025)
+
+In **SQL Editor → New query**, paste the entire contents of `supabase/seed_history.sql` and click **Run**. This loads 75 teams across 5 years — should take a few seconds.
+
+Verify:
+
+```sql
+select year, count(*) as teams
+  from public.pools p
+  join public.teams t on t.pool_id = p.id
+ group by year
+ order by year;
+```
+
+You should see something like:
+
+| year | teams |
+| - | - |
+| 2020 | 17 |
+| 2021 | 14 |
+| 2022 | 14 |
+| 2024 | 16 |
+| 2025 | 16 |
+
+The 4 "Unknown_N" teams in 2025 and 3 in 2024 are already loaded — you'll rename them via `/admin/upload` after deploy (see step 9).
+
+---
+
+## Step 5 · Configure auth
+
+Supabase → **Authentication → Providers**.
+
+- Make sure **Email** is enabled (it is by default).
+- Turn **OFF** "Confirm email" — magic links don't need a separate confirm step.
+- Under **URL Configuration** add the production URL once you have it (after step 7). For now you can leave the default localhost.
+
+Then **Authentication → Settings → User signups**: keep "Enable email signup" on. (It's only you signing up; we're using magic links not passwords.)
+
+---
+
+## Step 6 · Deploy to Vercel
+
+1. Go to <https://vercel.com> → **New Project** → import the GitHub repo from step 1.
+2. Vercel auto-detects Next.js. Leave the build settings as-is.
+3. Under **Environment Variables**, add these (paste the values you saved in step 2):
+
+   | Name | Value |
+   | - | - |
+   | `NEXT_PUBLIC_SUPABASE_URL` | from step 2 |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | from step 2 |
+   | `SUPABASE_SERVICE_ROLE_KEY` | from step 2 ⚠ server-side only |
+   | `CRON_SECRET` | generate with `openssl rand -hex 32` |
+   | `TDF_YEAR` | the active year — `2026` once the season starts |
+
+4. Click **Deploy**. ~2 minutes later you'll have a URL like `https://tdf-pool-abc123.vercel.app`.
+
+---
+
+## Step 7 · Tell Supabase about the production URL
+
+Back in Supabase → **Authentication → URL Configuration**:
+
+- **Site URL**: paste your Vercel URL (no trailing slash)
+- **Redirect URLs**: add `https://your-vercel-url.vercel.app/**` (the `**` lets magic-link callbacks land on any page)
+
+Without this, magic-link emails will redirect to localhost and fail.
+
+---
+
+## Step 8 · Verify the cron is configured
+
+Vercel → your project → **Settings → Cron Jobs**. You should see one entry:
+
+```
+/api/cron/fetch-results    0 21 * * *
+```
+
+If the cron isn't there, Vercel may need a redeploy — push an empty commit (`git commit --allow-empty -m "trigger cron"; git push`) and it'll pick up `vercel.json`.
+
+The cron uses the `CRON_SECRET` env var to authenticate. Vercel sends `Authorization: Bearer <CRON_SECRET>` automatically.
+
+---
+
+## Step 9 · First admin login + cleanup unresolved teams
+
+1. Visit `https://your-vercel-url.vercel.app/login`
+2. Enter your email, click **Send magic link**
+3. Open the email, click the link — you should land on `/admin/upload`
+4. Visit `/admin/upload` (or browse to `/admin/results` for stage overrides)
+
+To rename the `Unknown_N` teams from the historical seed, run this in Supabase **SQL Editor**:
+
+```sql
+-- Find the unresolved teams
+select t.id, p.year, t.name, t.player_name
+  from public.teams t
+  join public.pools p on p.id = t.pool_id
+ where t.player_name like 'Unknown_%'
+ order by p.year, t.name;
+```
+
+For each, update with the right player name:
+
+```sql
+update public.teams
+   set name = 'Eelco''s Still Trying',
+       player_name = 'Eelco'
+ where id = 'paste-the-id-here';
+```
+
+(Or build out an `/admin/teams/[id]/edit` page later — for now a few SQL updates is the fastest path.)
+
+---
+
+## Step 10 · Set up the 2026 pool
+
+Once your in-laws send the 2026 Word doc:
+
+1. Visit `/admin/upload`
+2. Drop the `.docx`
+3. Click **Parse** — preview shows the parsed teams
+4. Rename any `Unknown_N` cards to the correct player
+5. Click **Confirm and import**
+
+Then add `pools.start_date` so the cron knows when to start fetching:
+
+```sql
+update public.pools
+   set start_date = '2026-07-04'   -- whatever the actual start date is
+ where year = 2026;
+```
+
+The daily cron at 21:00 UTC will start filling in `stage_results` automatically once stage 1 is on PCS. **On its first run for a year**, it also fetches the start list from PCS and populates the `riders` table — that's what gives every rider name their **pro team affiliation** and a clickable **PCS profile link** in the UI. If you want this to happen earlier (e.g. day-of pool start, before stage 1), just hit `/admin/refresh` once.
+
+---
+
+## Sharing with the family
+
+The public URL needs no further setup — anyone visiting it goes straight to `/matrix` (the all-teams stage view) and can browse the leaderboard, riders, and team detail pages without an account.
+
+Optional: buy a domain (say `tour-pool.com` for ~$10/year), add it in Vercel **Settings → Domains**, point your DNS at Vercel's nameservers. Then your family bookmark is `tour-pool.com` instead of `tdf-pool-abc123.vercel.app`.
+
+---
+
+## Day-to-day operation
+
+| What | How |
+| - | - |
+| Family looks at standings | Just visit the URL |
+| You correct a rider name mismatch | `/admin/results` — pick the stage, fix the typo |
+| Stage didn't auto-fetch | `/admin/refresh` — click the button |
+| Cron failed | Vercel → Logs → look for `/api/cron/fetch-results`. Check `import_log` table in Supabase for details. |
+| New rider name needs an alias | Update `team_riders.match_status` to `'manual'` and set `rider_id` directly in Supabase |
+| Add a new admin | Just have them sign up via `/login`. RLS treats any authenticated user as admin (tighten this in `0002_rls.sql` if needed) |
+
+---
+
+## Troubleshooting
+
+**Magic-link email doesn't arrive**
+- Supabase free tier has email rate limits and uses their default SMTP which can land in spam. Check spam.
+- For more reliability, configure custom SMTP in **Authentication → Email Templates → SMTP Settings** (SendGrid, Resend, etc.).
+
+**`/admin/upload` says "Unauthorized"**
+- Your auth cookie expired. Re-login.
+
+**Leaderboard shows zeros after a stage finished**
+- The cron runs once daily at 21:00 UTC. To see results sooner, hit `/admin/refresh`.
+- Check `import_log` table for any stage_fetch errors:
+  ```sql
+  select * from public.import_log order by created_at desc limit 10;
+  ```
+
+**PCS scraper returns empty results**
+- They might have changed their HTML. The scraper falls back to "first integer cell + first link cell" but if even that fails, you'll see errors in `import_log`.
+- Quick fix: paste results manually into `stage_results` via SQL Editor:
+  ```sql
+  insert into public.stage_results (pool_id, stage, position, raw_name)
+  values
+    ((select id from public.pools where year = 2026), 1, 1, 'Pogacar'),
+    ((select id from public.pools where year = 2026), 1, 2, 'Vingegaard'),
+    ...;
+  ```
+
+**Realtime updates aren't pushing to the family's browsers**
+- Check Supabase → **Database → Replication** — make sure `stage_results`, `final_gc`, and `team_riders` are added to the `supabase_realtime` publication. By default Supabase enables this for new tables, but if not:
+  ```sql
+  alter publication supabase_realtime add table public.stage_results;
+  alter publication supabase_realtime add table public.final_gc;
+  alter publication supabase_realtime add table public.team_riders;
+  ```
+
+---
+
+## What if something breaks during the Tour?
+
+1. The DB is the source of truth. As long as Supabase is up, you can always edit results directly via SQL Editor — the leaderboard view recomputes automatically.
+2. Vercel rollbacks are instant: **Deployments** → click any prior deploy → **Promote to Production**.
+3. If Vercel + Supabase both have an outage at the same time during a stage, that's a bad afternoon — but everyone watching the actual Tour will be too distracted to notice. Recover when they're back up.
+
+---
+
+## Files referenced in this guide
+
+- `supabase/migrations/000{1..5}_*.sql` — schema (run once at setup)
+- `supabase/seed_history.sql` — 5 years of historical teams (regen with `python3 scripts/generate_seed_sql.py`)
+- `vercel.json` — cron schedule
+- `.env.example` — variable names you'll fill in at Vercel
+- `app/api/cron/fetch-results/route.ts` — what the daily cron runs
+- `app/api/refresh/route.ts` — `/admin/refresh` calls this

@@ -1,0 +1,350 @@
+{
+  "source": "Tour.2021.csv",
+  "year": 2021,
+  "team_count": 14,
+  "teams": [
+    {
+      "player": "Coert",
+      "team_name": "Come back team",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Higuita",
+        "Gaudu",
+        "MA Lopez",
+        "Alaphilippe",
+        "Landa",
+        "Colbrelli",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Bennet",
+        "Demare"
+      ],
+      "reserves": [
+        "Keldermans",
+        "Buchman",
+        "Sagan"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Thomas",
+        "Kelderman",
+        "MA Lopez",
+        "Alaphilippe",
+        "Uran",
+        "Colbrelli",
+        "Bol",
+        "Ewan",
+        "Merlier",
+        "Geoghegan",
+        "Demare"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Jelle",
+      "team_name": "tweede Primeurs",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Thomas",
+        "Carapaz",
+        "Kwiatkowski",
+        "Uran",
+        "Kelderman",
+        "Alaphilippe",
+        "Nibali",
+        "Buchman",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Bjerg",
+        "Sagan"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Chavez",
+        "Carapaz",
+        "G Martin",
+        "Gaudu",
+        "MA Lopez",
+        "Alaphilippe",
+        "Powless",
+        "Colbrelli",
+        "Thomas",
+        "Ewan",
+        "Sagan",
+        "Bennett",
+        "Demare"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "Trophee holder",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Thomas",
+        "Uran",
+        "MA Lopez",
+        "Kelderman",
+        "Sagan",
+        "Colbrelli",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Merlier",
+        "Demare"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Wanting that trophy back badly",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Asgreen",
+        "Carapaz",
+        "Turgis",
+        "Gaudu",
+        "MA Lopez",
+        "Alaphilippe",
+        "G Martin",
+        "Merlier",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Sagan",
+        "Demare"
+      ],
+      "reserves": [
+        "Thomas",
+        "Coquard",
+        "O’Connor"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Uran",
+        "Thomas",
+        "MA Lopez",
+        "Alaphilippe",
+        "Kelderman",
+        "Colbrelli",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Sagan",
+        "Demare"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "Dallas boys",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Thomas",
+        "Uran",
+        "MA Lopez",
+        "Alaphilippe",
+        "Mas",
+        "Lutsenko",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Sagan",
+        "Demare"
+      ],
+      "reserves": [
+        "Gaudu",
+        "Buchman",
+        "Kelderman"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "Fifth Try",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Thomas",
+        "Carapaz",
+        "Kelderman",
+        "Van Aert",
+        "Bisegger",
+        "Alaphilippe",
+        "Van der Poel",
+        "Ewan",
+        "Demare",
+        "Colbrelli",
+        "Sagan",
+        "Merlier",
+        "Uran"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "experience",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Mas",
+        "Thomas",
+        "MA Lopez",
+        "Alaphilippe",
+        "Kruiswijk",
+        "Uran",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Sagan",
+        "Demare"
+      ],
+      "reserves": [
+        "Bol",
+        "Kelderman",
+        "Kuss"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "hope for the Kuss",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Kuss",
+        "S Yates",
+        "Lopez",
+        "Thomas",
+        "Uran",
+        "Colbrelli",
+        "Cavendish",
+        "Ewan",
+        "Sagan",
+        "Merlier",
+        "Demare"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Rein",
+      "team_name": "Comeback",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Froome",
+        "G Martin",
+        "Ganna",
+        "Alaphilippe",
+        "Vd Poel",
+        "Cavendish",
+        "Fuglsang",
+        "Meintjes",
+        "Kruiswijk",
+        "Ewan",
+        "Sagan",
+        "Bennett",
+        "van Aert"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "expert view",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Thomas",
+        "Mas",
+        "MA Lopez",
+        "Alaphilippe",
+        "Uran",
+        "Kruiswijk",
+        "Bol",
+        "Ewan",
+        "Van Aert",
+        "Sagan",
+        "Demare"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Sofia",
+      "team_name": "second time",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Porte",
+        "Carapaz",
+        "Thomas",
+        "Mas",
+        "MA Lopez",
+        "Alaphilippe",
+        "Mas",
+        "Quintana",
+        "Van der Poel",
+        "Ewan",
+        "Van Aert",
+        "Sagan",
+        "Demare"
+      ],
+      "reserves": [
+        "Gaudu",
+        "Froome",
+        "Uran"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": []
+}

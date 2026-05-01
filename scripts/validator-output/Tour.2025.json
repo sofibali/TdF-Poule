@@ -1,0 +1,444 @@
+{
+  "source": "Tour.2025.docx",
+  "year": 2025,
+  "team_count": 16,
+  "teams": [
+    {
+      "player": "Quinten",
+      "team_name": "Let’s Win again",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Groenewegen",
+        "Philipsen",
+        "Ganna"
+      ],
+      "reserves": [
+        "Mas",
+        "Onley",
+        "S Yates"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Gerard",
+      "team_name": "Dream Team",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Evenepoel",
+        "Skjelmose",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "Gee"
+      ],
+      "reserves": [
+        "Coquard",
+        "O Connor",
+        "A Yates"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "No Disaster",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Martinez",
+        "Almeida",
+        "Vauquelin",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "De Lie",
+        "Onley"
+      ],
+      "reserves": [
+        "Gall",
+        "Healy",
+        "A Yates"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "Last minute insights",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Skjelmose",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "Nys"
+      ],
+      "reserves": [
+        "Ca Rodrigues",
+        "L Martinez",
+        "Gall"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Due for a Win",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Vauquelin",
+        "Merlier",
+        "Milan",
+        "Jake Stewart",
+        "Philipsen",
+        "Ivan Romeo"
+      ],
+      "reserves": [
+        "Roglic",
+        "Martinez",
+        "Onley"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_6",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Skjelmose",
+        "Almeida",
+        "Lipowitz",
+        "Martinez",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "De Lie",
+        "Philipsen",
+        "Buitrago"
+      ],
+      "reserves": [
+        "A Yates",
+        "Rodriguez"
+      ],
+      "needs_attention": true
+    },
+    {
+      "player": "Eelco",
+      "team_name": "“hopelijk winnende” tour ploeg",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Gall",
+        "Skjelmose",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "TH Johannesen"
+      ],
+      "reserves": [
+        "Martinez",
+        "Mas",
+        "Onley"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_8",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Martinez",
+        "van Aert",
+        "Van der Poel",
+        "Vauquelin",
+        "Merlier",
+        "Milan",
+        "Meeus",
+        "Philipsen"
+      ],
+      "reserves": [
+        "v Eetvelt",
+        "Skjlemose",
+        "Mas"
+      ],
+      "needs_attention": true
+    },
+    {
+      "player": "Kielen",
+      "team_name": "California Cycling",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Mas",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "Onley"
+      ],
+      "reserves": [
+        "A Yates",
+        "Vauquelin",
+        "Gall"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas",
+      "team_name": "Oud Still Fanatic",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Skjelmose",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "Coquard"
+      ],
+      "reserves": [
+        "A Yates",
+        "Buitrago",
+        "Gall"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "Sprinters Atack",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A yates",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "Skjelmose",
+        "Romeo",
+        "Ca Rodriguez"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "Goose getters",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "Gall",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Girmay",
+        "Philipsen",
+        "Mas"
+      ],
+      "reserves": [
+        "Hirschi",
+        "Onley",
+        "Butrigo"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Sofia",
+      "team_name": "Year 6 here we go!",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Rodriguez",
+        "Almeida",
+        "Lipowitz",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Groenewegen",
+        "Philipsen",
+        "Girmay"
+      ],
+      "reserves": [
+        "A Yates",
+        "Gall",
+        "O Connor"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_14",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Almeida",
+        "Vauquelin",
+        "Lipowitz",
+        "Jorgenson",
+        "Van Poppel",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "O Connor",
+        "Philipsen",
+        "Amirail"
+      ],
+      "reserves": [
+        "S Yates",
+        "De Lie",
+        "Martinez"
+      ],
+      "needs_attention": true
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "Winning List!",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Almeida",
+        "S Yates",
+        "Mas",
+        "van Aert",
+        "Van der Poel",
+        "Merlier",
+        "Milan",
+        "Groenewegen",
+        "Philipsen",
+        "Alaphillipe"
+      ],
+      "reserves": [
+        "Thomas",
+        "O Connor",
+        "Martin"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_16",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Ca. Rodriguez",
+        "Hirschi",
+        "Mohoric",
+        "van Aert",
+        "Van der Poel",
+        "Milan",
+        "Merlier",
+        "Girmay",
+        "Groenewegen",
+        "Philipsen",
+        "Alaphillipe"
+      ],
+      "reserves": [
+        "A Yates",
+        "Meeus",
+        "Nys"
+      ],
+      "needs_attention": true
+    }
+  ],
+  "unresolved": [
+    "Unknown_6",
+    "Unknown_8",
+    "Unknown_14",
+    "Unknown_16"
+  ]
+}

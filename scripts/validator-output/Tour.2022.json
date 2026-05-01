@@ -1,0 +1,400 @@
+{
+  "source": "Tour.2022.docx",
+  "year": 2022,
+  "team_count": 14,
+  "teams": [
+    {
+      "player": "Coert",
+      "team_name": "……. team",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Asgreen",
+        "Gaudu",
+        "Martinez",
+        "O Connor",
+        "Ganna",
+        "Sagan",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Vlasov",
+        "Bardet",
+        "Uran"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "...............",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "Martinez",
+        "Haig",
+        "O Connor",
+        "Philipsen",
+        "A Yates",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Ewan",
+        "Bardet",
+        "Gaudu",
+        "Caruso"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Gerard",
+      "team_name": "Alpenkreuzers",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "Martinez",
+        "Pedersen",
+        "O Connor",
+        "Philipsen",
+        "Sagan",
+        "Ganna",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Groenewegen",
+        "Gaudu",
+        "Mohoric",
+        "Mas"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Time for Glory",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Mas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "O Connor",
+        "McNulty",
+        "Bissegger",
+        "Philipsen",
+        "Leknessund",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Sagan",
+        "Bardet",
+        "Storer",
+        "Martinez"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "Sportieve Groet",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "Martinez",
+        "O Connor",
+        "Haig",
+        "Philipsen",
+        "Trentin",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Woods",
+        "Mas",
+        "Gaudu",
+        "Bardet",
+        "A Yates"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "This Time?",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "O Connor",
+        "Pedersen",
+        "Kung",
+        "Philipsen",
+        "Kamna",
+        "Pinot",
+        "Jakobsen",
+        "Storer"
+      ],
+      "reserves": [
+        "Bardet",
+        "Haig",
+        "van Poppel",
+        "Woods"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Hubert",
+      "team_name": "Expert view",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Van Poppel",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "Martinez",
+        "O Connor",
+        "Pedersen",
+        "Philipsen",
+        "Haig",
+        "Asgreen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Gaudu",
+        "Bardet",
+        "Mas",
+        "Mollema"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "VUDU boys",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "Martinez",
+        "O Connor",
+        "Pedersen",
+        "Philipsen",
+        "Sagan",
+        "Caruso",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "A Yates",
+        "Mas",
+        "Lutsenko",
+        "Haig"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "…….",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "O Connor",
+        "Martinez",
+        "Haig",
+        "Majka",
+        "Yates",
+        "Ganna",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "Martin",
+        "Gaudu",
+        "Pinot"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "zou best kunnen",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Martinez",
+        "Coqard",
+        "Pidcock",
+        "Pedersen",
+        "Philipsen",
+        "Majka",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "O Connor",
+        "Vlasov",
+        "Higuita",
+        "Gaudu"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "forgotten Dutch hero’s",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Vlasov",
+        "Martinez",
+        "O Connor",
+        "Van Poppel",
+        "Caruso",
+        "Woods",
+        "Philipsen",
+        "Mas",
+        "Mathews",
+        "Jakobsen",
+        "Mohoric"
+      ],
+      "reserves": [
+        "Haig",
+        "Pinto",
+        "Dianese",
+        "v Aert",
+        "Groenewegen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rein",
+      "team_name": "Comeback 2",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "O Connor",
+        "Bissegger",
+        "Ganna",
+        "Philipsen",
+        "Sagan",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "vd Hoorn",
+        "Yates",
+        "Mas",
+        "Mohoric"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "Sprinters",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Vlasov",
+        "O Connor",
+        "Mas",
+        "Mohoric",
+        "Kristof",
+        "Philipsen",
+        "Sagan",
+        "Groenewegen",
+        "Jakobsen",
+        "Ewan"
+      ],
+      "reserves": [
+        "A Yates",
+        "Lutsenko",
+        "Bardet",
+        "Froome"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Sofia",
+      "team_name": "Who needs Sprinters?",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Vingegaard",
+        "Thomas",
+        "Van Aert",
+        "Van der Poel",
+        "Vlasov",
+        "O Connor",
+        "Martinez",
+        "Uran",
+        "Caruso",
+        "Sagan",
+        "Mas",
+        "G Martin",
+        "A Yates"
+      ],
+      "reserves": [
+        "Quntana",
+        "Haig",
+        "Gaudu",
+        "Pinot"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": []
+}

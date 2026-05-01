@@ -1,0 +1,444 @@
+{
+  "source": "Tour.2024.docx",
+  "year": 2024,
+  "team_count": 16,
+  "teams": [
+    {
+      "player": "Quinten",
+      "team_name": "Let’s Win again",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "Mas",
+        "Carapaz",
+        "Almeida"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Gerard",
+      "team_name": "Every year Early Prep",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "S. Yates",
+        "Carlos Rodriguez",
+        "Skelmose",
+        "Jorgenson",
+        "G.Thomas",
+        "Pidcock",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "van Aert",
+        "Bernal",
+        "Ciccone"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Taking a chance",
+      "riders": [
+        "Pogacar",
+        "Hindley",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Gall",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "Girmay"
+      ],
+      "reserves": [
+        "Kristof",
+        "Mas",
+        "Powless"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "Just Couldn’t Wait",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "Gall",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Mas",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "Coquard"
+      ],
+      "reserves": [
+        "Van den Berg",
+        "Jorgenson",
+        "Carapaz"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Due for a Win",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Gee",
+        "Pidcock",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "S. Bennett",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "A Yates",
+        "S Yates",
+        "Almeida"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Coert",
+      "team_name": "Appenijen killer",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "Bilbao",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Jorgenson",
+        "Almeida",
+        "Jacobsen",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "Van den Berg"
+      ],
+      "reserves": [
+        "Carapaz",
+        "Mohoric",
+        "GallEelco is still trying"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_7",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Buitrago",
+        "Jorgenson",
+        "Almeida",
+        "S. Bennett",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "Bernal",
+        "Lazkano",
+        "Healy"
+      ],
+      "needs_attention": true
+    },
+    {
+      "player": "Unknown_8",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Carapaz",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Mathews",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "Mas",
+        "A Yates",
+        "Almeida"
+      ],
+      "needs_attention": true
+    },
+    {
+      "player": "Kielen",
+      "team_name": "Berkely here I come",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "Almeida",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Jorgenson",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "S Yates",
+        "Vlasov",
+        "Bilbao"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas",
+      "team_name": "Oud Still Fanatic",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Healy",
+        "Evenepoel",
+        "A. Yates",
+        "Gall",
+        "Van Gils",
+        "Bilbao",
+        "Girmay",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "Roglic",
+        "Rodrigues",
+        "Gee"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "Sprinters Atack",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Thomas",
+        "S. Bennett",
+        "Jacoben",
+        "Girmay",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "Coquard"
+      ],
+      "reserves": [
+        "Hindley",
+        "Jorgenson",
+        "Almeida"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "Duck Duck Goose",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "A. Yates",
+        "Vlasov",
+        "Ca. Rodriguez",
+        "Bilbao",
+        "Jorgenson",
+        "Van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "De Lie"
+      ],
+      "reserves": [
+        "Bennett",
+        "Almeida",
+        "Bardet"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "Going for it again",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "S Williams",
+        "A. Yates",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Jakobsen",
+        "Demare",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "S Bennett"
+      ],
+      "reserves": [
+        "Thomas",
+        "Bernal",
+        "Gaudu"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Sofia",
+      "team_name": "San Fran Here I come",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Bilbao",
+        "S. Yates",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Carapaz",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Jakobsen",
+        "Philipsen",
+        "Hindley"
+      ],
+      "reserves": [
+        "Gall",
+        "Gaudu",
+        "Mas"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Sterre",
+      "team_name": "Giving it a Go!",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "Bilbao",
+        "A. Yates",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Bernal",
+        "van Aert",
+        "Van der Poel",
+        "Gall",
+        "Pidcock",
+        "Philipsen",
+        "Hindley"
+      ],
+      "reserves": [
+        "Groenewegen",
+        "Pedersen",
+        "Gaudu"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_16",
+      "team_name": "",
+      "riders": [
+        "Pogacar",
+        "Vingegaard",
+        "Roglic",
+        "Evenepoel",
+        "L matinez",
+        "Vd Broek",
+        "Ca. Rodriguez",
+        "Ayuso",
+        "Pidcock",
+        "van Aert",
+        "Van der Poel",
+        "Pedersen",
+        "Groenewegen",
+        "Philipsen",
+        "Cavendish"
+      ],
+      "reserves": [
+        "S Yates",
+        "Gaudu",
+        "Asgreen"
+      ],
+      "needs_attention": true
+    }
+  ],
+  "unresolved": [
+    "Unknown_7",
+    "Unknown_8",
+    "Unknown_16"
+  ]
+}

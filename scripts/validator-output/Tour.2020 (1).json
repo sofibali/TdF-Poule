@@ -1,0 +1,497 @@
+{
+  "source": "Tour.2020 (1).docx",
+  "year": 2020,
+  "team_count": 17,
+  "teams": [
+    {
+      "player": "Freek",
+      "team_name": "Special names",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Pinot",
+        "MA Lopez",
+        "Higuita",
+        "DF Martinez",
+        "Van Aert",
+        "Ewan",
+        "Bennet",
+        "Nizollo",
+        "Alaphilippe",
+        "Coquard",
+        "Venturini"
+      ],
+      "reserves": [
+        "Pogacar",
+        "Viviani",
+        "Sagan",
+        "Trentin",
+        "Colbrelli"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Coert",
+      "team_name": "Come back team",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Pinot",
+        "Sivakov",
+        "MA Lopez",
+        "Alaphilippe",
+        "D Martinez",
+        "Sagan",
+        "Viviani",
+        "Ewan",
+        "Van Aert",
+        "Buchmann",
+        "Nizzolo"
+      ],
+      "reserves": [
+        "E Mas",
+        "van Avermaet",
+        "Landa",
+        "Coquard"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Pinot",
+        "MA Lopez",
+        "Pogacar",
+        "Quintana",
+        "Buchman",
+        "Landa",
+        "Alaphilippe",
+        "Ewan",
+        "Bennett",
+        "Sagan",
+        "Nizzolo"
+      ],
+      "reserves": [
+        "Bardet",
+        "G Martin",
+        "Uran",
+        "Martinez"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Jelle",
+      "team_name": "Primeurs",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "MA Lopez",
+        "Sagan",
+        "Alaphilippe",
+        "Quintana",
+        "Bardet",
+        "Landa",
+        "De Gendt",
+        "Stuyven",
+        "Viviani",
+        "Ewan",
+        "Bennet"
+      ],
+      "reserves": [
+        "Pinot",
+        "Higuita",
+        "Buchman",
+        "A Yates",
+        "Pogacar"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Buchmann",
+        "Pinot",
+        "Carapaz",
+        "Alaphilippe",
+        "Van Aert",
+        "Quintana",
+        "Pogacar",
+        "Sagan",
+        "Ewan",
+        "Bennett",
+        "Viviani",
+        "Nizzolo"
+      ],
+      "reserves": [
+        "Uran",
+        "Colbrelli",
+        "Lutsenko",
+        "Sivakov",
+        "Poels"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "Trophee holder",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Sivakov",
+        "Pinot",
+        "G Martin",
+        "Buchmann",
+        "Pogacar",
+        "Van Aert",
+        "Sagan",
+        "Stuyven",
+        "Ewan",
+        "Bennet",
+        "Nizzolo",
+        "Alaphilippe"
+      ],
+      "reserves": [
+        "Lopez",
+        "Landa",
+        "Trentin",
+        "D Martinez",
+        "Carapaz"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Wanting that trophee back badly",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Pinot",
+        "Buchmann",
+        "Pogacar",
+        "Alaphilippe",
+        "Van Aert",
+        "Kamna",
+        "Nizzolo",
+        "Sagan",
+        "Bennet",
+        "Coquard",
+        "Ewan"
+      ],
+      "reserves": [
+        "Trentin",
+        "Landa",
+        "Colbrelli",
+        "Hirshi",
+        "Higuita"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Pinot",
+        "Pogacar",
+        "Landa",
+        "Bennett",
+        "Ewan",
+        "Sagan",
+        "Alaphilippe",
+        "Trentin",
+        "Nizzolo",
+        "Van Aert",
+        "Buchmann"
+      ],
+      "reserves": [
+        "Lopez",
+        "Mollema",
+        "B Hagen",
+        "Mas",
+        "Porte"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "Dallas boys",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Buchmann",
+        "Pinot",
+        "Landa",
+        "Quintana",
+        "Pogacar",
+        "Lopez",
+        "Van Aert",
+        "Sagan",
+        "Ewan",
+        "Viviani",
+        "Trentin",
+        "Bennett"
+      ],
+      "reserves": [
+        "Uran",
+        "Alaphilippe",
+        "D Martin",
+        "Bardet",
+        "Avermaet"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "Fourth Try",
+      "riders": [
+        "Roglic",
+        "Pogacar",
+        "Bernal",
+        "Buchman",
+        "Pinot",
+        "Chaves",
+        "yates",
+        "Alaphilippe",
+        "Higuita",
+        "Sagan",
+        "Ewan",
+        "Bennett",
+        "Nizzolo",
+        "Formolo",
+        "Benoot"
+      ],
+      "reserves": [
+        "Carapaz",
+        "Dumoulin",
+        "Lopez",
+        "Quintana",
+        "Uran"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "experience",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Buchmann",
+        "Mas",
+        "Lopez",
+        "Pogacar",
+        "Colbrelli",
+        "D Martin",
+        "Nizzolo",
+        "Cees Bol",
+        "Viviani",
+        "Van Aert",
+        "Ewan"
+      ],
+      "reserves": [
+        "Sagan",
+        "Pinot",
+        "Polanc",
+        "Soler",
+        "Landa"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "hope for the Kuss",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Landa",
+        "Pinot",
+        "Uran",
+        "Kuss",
+        "G Martin",
+        "Pogacar",
+        "Quintana",
+        "Van Aert",
+        "Sagan",
+        "Ewan",
+        "Demare",
+        "Alaphilippe"
+      ],
+      "reserves": [
+        "Nizzolo",
+        "Gaviria",
+        "D Martinez",
+        "Kamna",
+        "Valverde"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Gerard",
+      "team_name": "Tourbuffels",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Pogacar",
+        "Pinot",
+        "Alaphilippe",
+        "MA Lopez",
+        "Quintana",
+        "A Yates",
+        "Van Aert",
+        "Nizzolo",
+        "Bennet",
+        "Sagan",
+        "Ewan",
+        "Viviani"
+      ],
+      "reserves": [
+        "Schachmann",
+        "Porte",
+        "DF Martinez",
+        "Landa",
+        "Sivakov"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Martijn",
+      "team_name": "Northern boys from Greuningen",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Pinot",
+        "Carapaz",
+        "Mas",
+        "Izagirre",
+        "de Gendt",
+        "D Martin",
+        "Quintana",
+        "Kuss",
+        "Sagan",
+        "Ewan",
+        "Valverde",
+        "Alaphilippe"
+      ],
+      "reserves": [
+        "Formolo",
+        "A Yates",
+        "Jungels",
+        "Mollema",
+        "Sivakov"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "expert view",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Carapaz",
+        "Pinot",
+        "Buchman",
+        "Quintana",
+        "Sivakov",
+        "Alaphilippe",
+        "D Martinez",
+        "Sagan",
+        "Nizzolo",
+        "Ewan",
+        "Viviani",
+        "Bennett"
+      ],
+      "reserves": [
+        "Uran",
+        "Bardet",
+        "Landa",
+        "Gaudu",
+        "Carapaz"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Jos",
+      "team_name": "I bike thus I know",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Landa",
+        "Quintana",
+        "Kuss",
+        "Buchmann",
+        "v Aert",
+        "Alaphilippe",
+        "Mollema",
+        "Pogacar",
+        "Porte",
+        "Sagan",
+        "Viviani",
+        "Greipel"
+      ],
+      "reserves": [
+        "Uran",
+        "van Garderen",
+        "de Gendt"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Sofia",
+      "team_name": "first time",
+      "riders": [
+        "Roglic",
+        "Dumoulin",
+        "Bernal",
+        "Landa",
+        "Quintana",
+        "Pinot",
+        "Carapaz",
+        "Pogacar",
+        "Alaphilippe",
+        "D Martinez",
+        "Trentin",
+        "Sagan",
+        "Ewan",
+        "S Bennett",
+        "Nizzolo"
+      ],
+      "reserves": [
+        "Yates",
+        "van Aert",
+        "Viviani",
+        "Bardet",
+        "Uran"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": []
+}

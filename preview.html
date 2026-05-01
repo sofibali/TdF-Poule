@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TDF Pool · preview</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  .tab-active { color: #0f172a; border-color: #0f172a; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { color: #0f172a; }
+  th.sortable .arrow { display: inline-block; width: 0.7em; opacity: 0.35; }
+  th.sortable.sort-asc  .arrow::after { content: "▲"; opacity: 1; }
+  th.sortable.sort-desc .arrow::after { content: "▼"; opacity: 1; }
+  .heat-0 { background: transparent; }
+  .heat-1 { background: rgba(34,197,94,0.08); }
+  .heat-2 { background: rgba(34,197,94,0.18); }
+  .heat-3 { background: rgba(34,197,94,0.32); }
+  .heat-4 { background: rgba(34,197,94,0.50); color: #064e3b; font-weight: 600; }
+  .row-click { cursor: pointer; }
+  .row-click:hover { background: rgba(59,130,246,0.06); }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+<header class="border-b bg-white">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <div class="font-bold tracking-tight">🚴 TDF Pool</div>
+    <div class="text-xs text-slate-400">PREVIEW · synthetic scores from your real 2025 teams</div>
+  </nav>
+</header>
+
+<main class="mx-auto max-w-6xl px-4 py-8">
+  <div class="flex gap-6 border-b border-slate-200 overflow-x-auto">
+    <button data-tab="matrix" class="tab tab-active border-b-2 border-transparent px-1 py-3 text-sm font-semibold whitespace-nowrap">
+      All teams · stages
+    </button>
+    <button data-tab="leaderboard" class="tab border-b-2 border-transparent px-1 py-3 text-sm font-semibold text-slate-400 hover:text-slate-600 whitespace-nowrap">
+      Leaderboard
+    </button>
+    <button data-tab="riders" class="tab border-b-2 border-transparent px-1 py-3 text-sm font-semibold text-slate-400 hover:text-slate-600 whitespace-nowrap">
+      Riders
+    </button>
+    <button data-tab="upload" class="tab border-b-2 border-transparent px-1 py-3 text-sm font-semibold text-slate-400 hover:text-slate-600 whitespace-nowrap">
+      Admin · upload
+    </button>
+  </div>
+
+  <!-- ALL TEAMS · STAGES (default) -->
+  <section id="view-matrix" class="mt-8">
+    <div class="flex items-baseline justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight">All teams · stages</h1>
+        <p class="mt-1 text-sm text-slate-500">
+          Every team's points across every stage of <span id="m-year"></span>.
+          Top scorer per stage shaded green. Click a team for details.
+        </p>
+      </div>
+      <select class="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm">
+        <option>2025</option>
+        <option disabled>2026 (not yet)</option>
+      </select>
+    </div>
+    <div class="mt-6 overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+      <table class="text-sm" id="matrix-table">
+        <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+          <tr id="matrix-head"></tr>
+        </thead>
+        <tbody id="matrix-body" class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LEADERBOARD -->
+  <section id="view-leaderboard" class="mt-8 hidden space-y-12">
+    <div>
+      <div class="flex items-baseline justify-between">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight">Leaderboard</h1>
+          <p id="lb-sub" class="mt-1 text-sm text-slate-500"></p>
+        </div>
+        <select class="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm">
+          <option>2025</option>
+        </select>
+      </div>
+      <div class="mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <table class="w-full text-sm" id="lb-table">
+          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <tr>
+              <th class="sortable px-4 py-3 w-16" data-key="rank">#<span class="arrow"></span></th>
+              <th class="sortable px-4 py-3" data-key="name">Team<span class="arrow"></span></th>
+              <th class="sortable px-4 py-3 hidden sm:table-cell" data-key="player">Player<span class="arrow"></span></th>
+              <th class="sortable px-4 py-3 text-right" data-key="stage_points">Stages<span class="arrow"></span></th>
+              <th class="sortable px-4 py-3 text-right" data-key="gc_points">GC<span class="arrow"></span></th>
+              <th class="sortable px-4 py-3 text-right font-bold" data-key="total">Total<span class="arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="lb-body" class="divide-y divide-slate-100"></tbody>
+        </table>
+        <p class="border-t border-slate-100 px-4 py-2 text-xs text-slate-400">
+          Click a row to open team details · click a column header to sort.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-bold tracking-tight">Historical winners</h2>
+      <p class="mt-1 text-sm text-slate-500">
+        Past pool champions across the family's tradition.
+      </p>
+      <div class="mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <tr>
+              <th class="px-4 py-3 w-20">Year</th>
+              <th class="px-4 py-3">Winning team</th>
+              <th class="px-4 py-3 hidden sm:table-cell">Player</th>
+              <th class="px-4 py-3 text-right">Points</th>
+            </tr>
+          </thead>
+          <tbody id="hw-body" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIDERS -->
+  <section id="view-riders" class="mt-8 hidden">
+    <h1 class="text-3xl font-bold tracking-tight">Riders</h1>
+    <p class="mt-1 text-sm text-slate-500">
+      Every rider that's scored points across the field, with stage-by-stage breakdown.
+      Top <span id="rider-perfect-n" class="font-semibold"></span> rows = the
+      <strong>perfect team you could have picked.</strong>
+    </p>
+    <div class="mt-6 overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+      <table class="text-sm" id="riders-table">
+        <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+          <tr id="riders-head"></tr>
+        </thead>
+        <tbody id="riders-body" class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+    <p class="mt-3 text-xs text-slate-400">Click any column header to sort. Rows in green = perfect team.</p>
+  </section>
+
+  <!-- UPLOAD -->
+  <section id="view-upload" class="mt-8 hidden">
+    <h1 class="text-3xl font-bold tracking-tight">Upload teams</h1>
+    <p class="mt-1 text-sm text-slate-500">
+      What you'll see after dropping the in-laws' Word doc — parsed teams with
+      anything ambiguous flagged for you to fix.
+    </p>
+    <div class="mt-6 flex items-center gap-3 rounded-lg border border-dashed border-slate-300 bg-white p-4">
+      <span class="rounded border border-slate-300 px-3 py-1.5 text-xs text-slate-500">Tour.2025.docx (mocked)</span>
+      <span class="rounded bg-slate-900 px-4 py-2 text-xs font-medium text-white">Parse</span>
+    </div>
+    <div id="upload-summary" class="mt-6"></div>
+    <div id="upload-grid" class="mt-4 grid gap-3 md:grid-cols-2"></div>
+  </section>
+</main>
+
+<!-- TEAM MODAL -->
+<div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+  <div class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white shadow-2xl">
+    <div class="flex items-start justify-between border-b border-slate-200 px-6 py-4">
+      <div>
+        <div id="m-name" class="text-xl font-bold"></div>
+        <div id="m-player" class="text-sm text-slate-500"></div>
+      </div>
+      <button id="m-close" class="text-slate-400 hover:text-slate-700 text-2xl leading-none">×</button>
+    </div>
+    <div id="m-body" class="space-y-6 px-6 py-4"></div>
+  </div>
+</div>
+
+<script>
+const DATA = {"year": 2025, "team_count": 12, "leaderboard": [{"player": "Karin", "name": "Karin's Due for a Win", "stage_points": 455, "gc_points": 364, "total": 819, "rank": 1}, {"player": "Bas Otto", "name": "Bas Otto's Winning List!", "stage_points": 405, "gc_points": 304, "total": 709, "rank": 2}, {"player": "Eelco", "name": "Eelco's “hopelijk winnende” tour ploeg", "stage_points": 339, "gc_points": 369, "total": 708, "rank": 3}, {"player": "Gerard", "name": "Gerard's Dream Team", "stage_points": 346, "gc_points": 269, "total": 615, "rank": 4}, {"player": "Quinten", "name": "Quinten's Let’s Win again", "stage_points": 366, "gc_points": 244, "total": 610, "rank": 5}, {"player": "Chiel", "name": "Chiel's Last minute insights", "stage_points": 313, "gc_points": 293, "total": 606, "rank": 6}, {"player": "Rich", "name": "Rich's Goose getters", "stage_points": 345, "gc_points": 259, "total": 604, "rank": 7}, {"player": "Bas", "name": "Bas's Oud Still Fanatic", "stage_points": 351, "gc_points": 229, "total": 580, "rank": 8}, {"player": "Lori", "name": "Lori's No Disaster", "stage_points": 321, "gc_points": 248, "total": 569, "rank": 9}, {"player": "Han", "name": "Han's Sprinters Atack", "stage_points": 284, "gc_points": 269, "total": 553, "rank": 10}, {"player": "Kielen", "name": "Kielen's California Cycling", "stage_points": 340, "gc_points": 188, "total": 528, "rank": 11}, {"player": "Sofia", "name": "Sofia's Year 6 here we go!", "stage_points": 277, "gc_points": 244, "total": 521, "rank": 12}], "breakdowns": {"Quinten": {"team_name": "Let’s Win again", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Lipowitz", "status": "dropped_out", "dropout_after_stage": 4, "pick_order": 7}, {"name": "Jorgenson", "status": "dropped_out", "dropout_after_stage": 21, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Groenewegen", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Ganna", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Mas", "reserve_order": 1, "status": "used", "joined_at_stage": 5, "replaced_name": "Lipowitz"}, {"name": "Onley", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "S Yates", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 20, "2": 8, "3": 28, "4": 33, "5": 28, "6": 31, "7": 34, "8": 22, "9": 2, "10": 25, "11": 51, "12": 17, "13": 37, "14": 15, "15": 15}, "rider_points": {"Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 46, "Almeida": 124, "Ca. Rodriguez": 148, "Milan": 38, "Ganna": 26, "Mas": 42, "Groenewegen": 29, "Pogacar": 12, "Jorgenson": 11, "van Aert": 2, "Philipsen": 2}, "stage_total": 366, "gc_points": 244, "total": 610}, "Gerard": {"team_name": "Dream Team", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "dropped_out", "dropout_after_stage": 11, "pick_order": 2}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Skjelmose", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "dropped_out", "dropout_after_stage": 13, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Gee", "status": "dropped_out", "dropout_after_stage": 11, "pick_order": 15}], "reserves_status": [{"name": "Coquard", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "O Connor", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "A Yates", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 14, "2": 8, "3": 28, "4": 43, "5": 10, "6": 31, "7": 32, "8": 18, "9": 20, "10": 27, "11": 39, "12": 31, "13": 10, "14": 29, "15": 6}, "rider_points": {"Van der Poel": 24, "Gee": 4, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Almeida": 124, "Skjelmose": 70, "Ca. Rodriguez": 148, "Milan": 38, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2, "Philipsen": 2}, "stage_total": 346, "gc_points": 269, "total": 615}, "Lori": {"team_name": "No Disaster", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Martinez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Vauquelin", "status": "dropped_out", "dropout_after_stage": 5, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "De Lie", "status": "dropped_out", "dropout_after_stage": 6, "pick_order": 14}, {"name": "Onley", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Gall", "reserve_order": 1, "status": "used", "joined_at_stage": 6, "replaced_name": "Vauquelin"}, {"name": "Healy", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "A Yates", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 38, "2": 8, "3": 24, "4": 25, "5": 7, "6": 57, "7": 31, "8": 18, "9": 11, "10": 15, "11": 11, "12": 17, "13": 18, "14": 28, "15": 13}, "rider_points": {"Onley": 23, "Roglic": 10, "Van der Poel": 24, "De Lie": 12, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Martinez": 170, "Almeida": 124, "Milan": 38, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2, "Gall": 3, "Vauquelin": 20}, "stage_total": 321, "gc_points": 248, "total": 569}, "Chiel": {"team_name": "Last minute insights", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Skjelmose", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Nys", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Ca Rodrigues", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "L Martinez", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Gall", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 20, "2": 8, "3": 28, "4": 38, "5": 10, "6": 26, "7": 28, "8": 18, "9": 20, "10": 34, "11": 4, "12": 40, "13": 10, "14": 29, "15": 0}, "rider_points": {"Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Almeida": 124, "Skjelmose": 70, "Milan": 38, "Nys": 33, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2, "Philipsen": 2, "L Martinez": 100}, "stage_total": 313, "gc_points": 293, "total": 606}, "Karin": {"team_name": "Due for a Win", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Vauquelin", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Jake Stewart", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Ivan Romeo", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Roglic", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Martinez", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Onley", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 22, "2": 28, "3": 28, "4": 37, "5": 8, "6": 31, "7": 58, "8": 23, "9": 40, "10": 47, "11": 53, "12": 26, "13": 38, "14": 10, "15": 6}, "rider_points": {"Ivan Romeo": 88, "Van der Poel": 24, "Vingegaard": 22, "Jake Stewart": 62, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Almeida": 124, "Ca. Rodriguez": 148, "Milan": 38, "Pogacar": 12, "Jorgenson": 11, "Vauquelin": 52, "van Aert": 2, "Philipsen": 2, "Martinez": 100}, "stage_total": 455, "gc_points": 364, "total": 819}, "Eelco": {"team_name": "“hopelijk winnende” tour ploeg", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "dropped_out", "dropout_after_stage": 14, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Gall", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "Skjelmose", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "dropped_out", "dropout_after_stage": 7, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "TH Johannesen", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Martinez", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Mas", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Onley", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 20, "2": 8, "3": 28, "4": 43, "5": 10, "6": 25, "7": 27, "8": 12, "9": 18, "10": 15, "11": 39, "12": 31, "13": 10, "14": 29, "15": 24}, "rider_points": {"Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Almeida": 124, "Skjelmose": 70, "Ca. Rodriguez": 148, "Milan": 20, "Pogacar": 12, "Girmay": 24, "Philipsen": 2, "TH Johannesen": 15, "Gall": 3, "Martinez": 100}, "stage_total": 339, "gc_points": 369, "total": 708}, "Kielen": {"team_name": "California Cycling", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Mas", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "dropped_out", "dropout_after_stage": 21, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Onley", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "A Yates", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Vauquelin", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Gall", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 55, "2": 8, "3": 48, "4": 25, "5": 12, "6": 26, "7": 28, "8": 22, "9": 5, "10": 19, "11": 21, "12": 21, "13": 22, "14": 28, "15": 0}, "rider_points": {"Mas": 82, "Onley": 23, "Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Almeida": 124, "Milan": 38, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2, "Philipsen": 2, "Vauquelin": 20}, "stage_total": 340, "gc_points": 188, "total": 528}, "Bas": {"team_name": "Oud Still Fanatic", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Skjelmose", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "dropped_out", "dropout_after_stage": 11, "pick_order": 14}, {"name": "Coquard", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "A Yates", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Buitrago", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Gall", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 20, "2": 11, "3": 22, "4": 43, "5": 25, "6": 31, "7": 32, "8": 21, "9": 20, "10": 23, "11": 39, "12": 19, "13": 10, "14": 29, "15": 6}, "rider_points": {"Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Coquard": 21, "Evenepoel": 44, "Merlier": 30, "Almeida": 124, "Skjelmose": 70, "Ca. Rodriguez": 148, "Milan": 38, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2}, "stage_total": 351, "gc_points": 229, "total": 580}, "Han": {"team_name": "Sprinters Atack", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "A yates", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "De Lie", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Skjelmose", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Romeo", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Ca Rodriguez", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 23, "2": 13, "3": 28, "4": 31, "5": 7, "6": 30, "7": 28, "8": 18, "9": 17, "10": 25, "11": 4, "12": 17, "13": 10, "14": 25, "15": 8}, "rider_points": {"Roglic": 10, "Van der Poel": 24, "De Lie": 12, "Vingegaard": 22, "A yates": 37, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Almeida": 124, "Milan": 38, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2, "Philipsen": 2, "Ca Rodriguez": 76, "Skjelmose": 25}, "stage_total": 284, "gc_points": 269, "total": 553}, "Rich": {"team_name": "Goose getters", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "dropped_out", "dropout_after_stage": 2, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "Gall", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "dropped_out", "dropout_after_stage": 6, "pick_order": 12}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Mas", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Hirschi", "reserve_order": 1, "status": "used", "joined_at_stage": 3, "replaced_name": "Almeida"}, {"name": "Onley", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Butrigo", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 40, "2": 8, "3": 48, "4": 15, "5": 32, "6": 21, "7": 15, "8": 14, "9": 3, "10": 15, "11": 51, "12": 27, "13": 22, "14": 25, "15": 9}, "rider_points": {"Mas": 82, "Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Ca. Rodriguez": 148, "Milan": 5, "Hirschi": 47, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "Philipsen": 2, "Gall": 3, "Almeida": 80}, "stage_total": 345, "gc_points": 259, "total": 604}, "Sofia": {"team_name": "Year 6 here we go!", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "dropped_out", "dropout_after_stage": 20, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Rodriguez", "status": "dropped_out", "dropout_after_stage": 10, "pick_order": 5}, {"name": "Almeida", "status": "dropped_out", "dropout_after_stage": 2, "pick_order": 6}, {"name": "Lipowitz", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Jorgenson", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Groenewegen", "status": "active", "dropout_after_stage": null, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Girmay", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "A Yates", "reserve_order": 1, "status": "used", "joined_at_stage": 3, "replaced_name": "Almeida"}, {"name": "Gall", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "O Connor", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 20, "2": 8, "3": 28, "4": 19, "5": 6, "6": 21, "7": 30, "8": 6, "9": 17, "10": 33, "11": 4, "12": 17, "13": 25, "14": 30, "15": 13}, "rider_points": {"Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Evenepoel": 44, "Merlier": 30, "Lipowitz": 60, "Rodriguez": 101, "A Yates": 32, "Milan": 38, "Groenewegen": 29, "Pogacar": 12, "Jorgenson": 11, "Girmay": 24, "van Aert": 2, "Philipsen": 2, "Almeida": 80}, "stage_total": 277, "gc_points": 244, "total": 521}, "Bas Otto": {"team_name": "Winning List!", "main_status": [{"name": "Pogacar", "status": "active", "dropout_after_stage": null, "pick_order": 1}, {"name": "Vingegaard", "status": "active", "dropout_after_stage": null, "pick_order": 2}, {"name": "Roglic", "status": "active", "dropout_after_stage": null, "pick_order": 3}, {"name": "Evenepoel", "status": "active", "dropout_after_stage": null, "pick_order": 4}, {"name": "Ca. Rodriguez", "status": "active", "dropout_after_stage": null, "pick_order": 5}, {"name": "Almeida", "status": "active", "dropout_after_stage": null, "pick_order": 6}, {"name": "S Yates", "status": "active", "dropout_after_stage": null, "pick_order": 7}, {"name": "Mas", "status": "active", "dropout_after_stage": null, "pick_order": 8}, {"name": "van Aert", "status": "active", "dropout_after_stage": null, "pick_order": 9}, {"name": "Van der Poel", "status": "active", "dropout_after_stage": null, "pick_order": 10}, {"name": "Merlier", "status": "active", "dropout_after_stage": null, "pick_order": 11}, {"name": "Milan", "status": "active", "dropout_after_stage": null, "pick_order": 12}, {"name": "Groenewegen", "status": "dropped_out", "dropout_after_stage": 18, "pick_order": 13}, {"name": "Philipsen", "status": "active", "dropout_after_stage": null, "pick_order": 14}, {"name": "Alaphillipe", "status": "active", "dropout_after_stage": null, "pick_order": 15}], "reserves_status": [{"name": "Thomas", "reserve_order": 1, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "O Connor", "reserve_order": 2, "status": "unused", "joined_at_stage": null, "replaced_name": null}, {"name": "Martin", "reserve_order": 3, "status": "unused", "joined_at_stage": null, "replaced_name": null}], "stage_points": {"1": 40, "2": 12, "3": 42, "4": 45, "5": 16, "6": 25, "7": 31, "8": 22, "9": 6, "10": 23, "11": 51, "12": 17, "13": 37, "14": 15, "15": 23}, "rider_points": {"Mas": 82, "Roglic": 10, "Van der Poel": 24, "Vingegaard": 22, "Alaphillipe": 18, "Evenepoel": 44, "Merlier": 30, "Almeida": 124, "S Yates": 24, "Ca. Rodriguez": 148, "Milan": 38, "Groenewegen": 29, "Pogacar": 12, "van Aert": 2, "Philipsen": 2, "Martin": 100}, "stage_total": 405, "gc_points": 304, "total": 709}}, "all_teams_parsed": [{"player": "Quinten", "team_name": "Let’s Win again", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Groenewegen", "Philipsen", "Ganna"], "reserves": ["Mas", "Onley", "S Yates"], "needs_attention": false}, {"player": "Gerard", "team_name": "Dream Team", "riders": ["Pogacar", "Vingegaard", "Evenepoel", "Skjelmose", "Ca. Rodriguez", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "Gee"], "reserves": ["Coquard", "O Connor", "A Yates"], "needs_attention": false}, {"player": "Lori", "team_name": "No Disaster", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Martinez", "Almeida", "Vauquelin", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Girmay", "De Lie", "Onley"], "reserves": ["Gall", "Healy", "A Yates"], "needs_attention": false}, {"player": "Chiel", "team_name": "Last minute insights", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Skjelmose", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "Nys"], "reserves": ["Ca Rodrigues", "L Martinez", "Gall"], "needs_attention": false}, {"player": "Karin", "team_name": "Due for a Win", "riders": ["Pogacar", "Vingegaard", "Evenepoel", "Ca. Rodriguez", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Vauquelin", "Merlier", "Milan", "Jake Stewart", "Philipsen", "Ivan Romeo"], "reserves": ["Roglic", "Martinez", "Onley"], "needs_attention": false}, {"player": "Unknown_6", "team_name": "", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Skjelmose", "Almeida", "Lipowitz", "Martinez", "van Aert", "Van der Poel", "Merlier", "Milan", "De Lie", "Philipsen", "Buitrago"], "reserves": ["A Yates", "Rodriguez"], "needs_attention": true}, {"player": "Eelco", "team_name": "“hopelijk winnende” tour ploeg", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Almeida", "Lipowitz", "Gall", "Skjelmose", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "TH Johannesen"], "reserves": ["Martinez", "Mas", "Onley"], "needs_attention": false}, {"player": "Unknown_8", "team_name": "", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Almeida", "Lipowitz", "Martinez", "van Aert", "Van der Poel", "Vauquelin", "Merlier", "Milan", "Meeus", "Philipsen"], "reserves": ["v Eetvelt", "Skjlemose", "Mas"], "needs_attention": true}, {"player": "Kielen", "team_name": "California Cycling", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Mas", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "Onley"], "reserves": ["A Yates", "Vauquelin", "Gall"], "needs_attention": false}, {"player": "Bas", "team_name": "Oud Still Fanatic", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Almeida", "Skjelmose", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "Coquard"], "reserves": ["A Yates", "Buitrago", "Gall"], "needs_attention": false}, {"player": "Han", "team_name": "Sprinters Atack", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "A yates", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "De Lie"], "reserves": ["Skjelmose", "Romeo", "Ca Rodriguez"], "needs_attention": false}, {"player": "Rich", "team_name": "Goose getters", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Almeida", "Lipowitz", "Jorgenson", "Gall", "Van der Poel", "Merlier", "Milan", "Girmay", "Philipsen", "Mas"], "reserves": ["Hirschi", "Onley", "Butrigo"], "needs_attention": false}, {"player": "Sofia", "team_name": "Year 6 here we go!", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Rodriguez", "Almeida", "Lipowitz", "Jorgenson", "van Aert", "Van der Poel", "Merlier", "Milan", "Groenewegen", "Philipsen", "Girmay"], "reserves": ["A Yates", "Gall", "O Connor"], "needs_attention": false}, {"player": "Unknown_14", "team_name": "", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Almeida", "Vauquelin", "Lipowitz", "Jorgenson", "Van Poppel", "Van der Poel", "Merlier", "Milan", "O Connor", "Philipsen", "Amirail"], "reserves": ["S Yates", "De Lie", "Martinez"], "needs_attention": true}, {"player": "Bas Otto", "team_name": "Winning List!", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Almeida", "S Yates", "Mas", "van Aert", "Van der Poel", "Merlier", "Milan", "Groenewegen", "Philipsen", "Alaphillipe"], "reserves": ["Thomas", "O Connor", "Martin"], "needs_attention": false}, {"player": "Unknown_16", "team_name": "", "riders": ["Pogacar", "Vingegaard", "Roglic", "Evenepoel", "Ca. Rodriguez", "Hirschi", "Mohoric", "van Aert", "Van der Poel", "Milan", "Merlier", "Girmay", "Groenewegen", "Philipsen", "Alaphillipe"], "reserves": ["A Yates", "Meeus", "Nys"], "needs_attention": true}], "stages_completed": 15, "stage_numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "matrix": [{"player": "Quinten", "name": "Quinten's Let’s Win again", "stages": {"1": 20, "2": 8, "3": 28, "4": 33, "5": 28, "6": 31, "7": 34, "8": 22, "9": 2, "10": 25, "11": 51, "12": 17, "13": 37, "14": 15, "15": 15}, "gc": 244, "total": 610}, {"player": "Gerard", "name": "Gerard's Dream Team", "stages": {"1": 14, "2": 8, "3": 28, "4": 43, "5": 10, "6": 31, "7": 32, "8": 18, "9": 20, "10": 27, "11": 39, "12": 31, "13": 10, "14": 29, "15": 6}, "gc": 269, "total": 615}, {"player": "Lori", "name": "Lori's No Disaster", "stages": {"1": 38, "2": 8, "3": 24, "4": 25, "5": 7, "6": 57, "7": 31, "8": 18, "9": 11, "10": 15, "11": 11, "12": 17, "13": 18, "14": 28, "15": 13}, "gc": 248, "total": 569}, {"player": "Chiel", "name": "Chiel's Last minute insights", "stages": {"1": 20, "2": 8, "3": 28, "4": 38, "5": 10, "6": 26, "7": 28, "8": 18, "9": 20, "10": 34, "11": 4, "12": 40, "13": 10, "14": 29, "15": 0}, "gc": 293, "total": 606}, {"player": "Karin", "name": "Karin's Due for a Win", "stages": {"1": 22, "2": 28, "3": 28, "4": 37, "5": 8, "6": 31, "7": 58, "8": 23, "9": 40, "10": 47, "11": 53, "12": 26, "13": 38, "14": 10, "15": 6}, "gc": 364, "total": 819}, {"player": "Eelco", "name": "Eelco's “hopelijk winnende” tour ploeg", "stages": {"1": 20, "2": 8, "3": 28, "4": 43, "5": 10, "6": 25, "7": 27, "8": 12, "9": 18, "10": 15, "11": 39, "12": 31, "13": 10, "14": 29, "15": 24}, "gc": 369, "total": 708}, {"player": "Kielen", "name": "Kielen's California Cycling", "stages": {"1": 55, "2": 8, "3": 48, "4": 25, "5": 12, "6": 26, "7": 28, "8": 22, "9": 5, "10": 19, "11": 21, "12": 21, "13": 22, "14": 28, "15": 0}, "gc": 188, "total": 528}, {"player": "Bas", "name": "Bas's Oud Still Fanatic", "stages": {"1": 20, "2": 11, "3": 22, "4": 43, "5": 25, "6": 31, "7": 32, "8": 21, "9": 20, "10": 23, "11": 39, "12": 19, "13": 10, "14": 29, "15": 6}, "gc": 229, "total": 580}, {"player": "Han", "name": "Han's Sprinters Atack", "stages": {"1": 23, "2": 13, "3": 28, "4": 31, "5": 7, "6": 30, "7": 28, "8": 18, "9": 17, "10": 25, "11": 4, "12": 17, "13": 10, "14": 25, "15": 8}, "gc": 269, "total": 553}, {"player": "Rich", "name": "Rich's Goose getters", "stages": {"1": 40, "2": 8, "3": 48, "4": 15, "5": 32, "6": 21, "7": 15, "8": 14, "9": 3, "10": 15, "11": 51, "12": 27, "13": 22, "14": 25, "15": 9}, "gc": 259, "total": 604}, {"player": "Sofia", "name": "Sofia's Year 6 here we go!", "stages": {"1": 20, "2": 8, "3": 28, "4": 19, "5": 6, "6": 21, "7": 30, "8": 6, "9": 17, "10": 33, "11": 4, "12": 17, "13": 25, "14": 30, "15": 13}, "gc": 244, "total": 521}, {"player": "Bas Otto", "name": "Bas Otto's Winning List!", "stages": {"1": 40, "2": 12, "3": 42, "4": 45, "5": 16, "6": 25, "7": 31, "8": 22, "9": 6, "10": 23, "11": 51, "12": 17, "13": 37, "14": 15, "15": 23}, "gc": 304, "total": 709}], "riders": [{"rider": "Almeida", "stages": {"4": 20, "6": 10, "7": 2, "8": 12}, "gc": 80, "pro_team": "Movistar Team", "bib_number": 86, "pcs_slug": "joao-almeida", "total": 124}, {"rider": "Martinez", "stages": {"6": 12, "13": 6}, "gc": 100, "pro_team": "Bahrain Victorious", "bib_number": 30, "pcs_slug": "lenny-martinez", "total": 118}, {"rider": "Rodriguez", "stages": {"4": 8, "11": 15, "12": 6}, "gc": 60, "pro_team": "Cofidis", "bib_number": 101, "pcs_slug": "carlos-rodriguez-cano", "total": 89}, {"rider": "Skjelmose", "stages": {"4": 10, "5": 8, "9": 15, "12": 8, "14": 4}, "gc": 25, "pro_team": "Visma–Lease a Bike", "bib_number": 1, "pcs_slug": "mattias-skjelmose", "total": 70}, {"rider": "Hirschi", "stages": {"1": 6, "2": 10, "4": 2, "5": 20, "8": 10}, "gc": 15, "pro_team": "Soudal Quick-Step", "bib_number": 156, "pcs_slug": "marc-hirschi", "total": 63}, {"rider": "Skjlemose", "stages": {"2": 15, "8": 20, "11": 3, "12": 20, "13": 5}, "gc": 0, "pro_team": "EF Education–EasyPost", "bib_number": 11, "pcs_slug": "mattias-skjelmose", "total": 63}, {"rider": "Jake Stewart", "stages": {"2": 20, "7": 20, "9": 8, "11": 6, "13": 8}, "gc": 0, "pro_team": "Jayco AlUla", "bib_number": 124, "pcs_slug": "jake-stewart", "total": 62}, {"rider": "Lipowitz", "stages": {"3": 6, "10": 4, "12": 10}, "gc": 40, "pro_team": "Jayco AlUla", "bib_number": 124, "pcs_slug": "florian-lipowitz", "total": 60}, {"rider": "Vauquelin", "stages": {"7": 12, "13": 20}, "gc": 20, "pro_team": "Visma–Lease a Bike", "bib_number": 161, "pcs_slug": "kevin-vauquelin", "total": 52}, {"rider": "Ivan Romeo", "stages": {"1": 12, "4": 4, "5": 6, "9": 20, "11": 8}, "gc": 0, "pro_team": "Israel–Premier Tech", "bib_number": 179, "pcs_slug": "ivan-romeo", "total": 50}, {"rider": "Amirail", "stages": {"1": 5, "10": 10, "11": 10, "14": 2, "15": 20}, "gc": 0, "pro_team": "Bahrain Victorious", "bib_number": 64, "pcs_slug": "amirail", "total": 47}, {"rider": "Mas", "stages": {"1": 20, "3": 20, "12": 4}, "gc": 0, "pro_team": "Movistar Team", "bib_number": 106, "pcs_slug": "enric-mas", "total": 44}, {"rider": "Evenepoel", "stages": {"3": 12, "5": 2}, "gc": 30, "pro_team": "Visma–Lease a Bike", "bib_number": 84, "pcs_slug": "remco-evenepoel", "total": 44}, {"rider": "Mohoric", "stages": {"3": 4, "4": 15, "6": 20, "10": 5}, "gc": 0, "pro_team": "Bahrain Victorious", "bib_number": 175, "pcs_slug": "mohoric", "total": 44}, {"rider": "Martin", "stages": {"3": 2, "6": 15, "7": 3, "9": 6, "11": 2, "15": 10}, "gc": 0, "pro_team": "Israel–Premier Tech", "bib_number": 39, "pcs_slug": "martin", "total": 38}, {"rider": "Milan", "stages": {"4": 5, "7": 15, "8": 6, "10": 12}, "gc": 0, "pro_team": "Israel–Premier Tech", "bib_number": 91, "pcs_slug": "jonathan-milan", "total": 38}, {"rider": "Thomas", "stages": {"5": 10, "8": 4, "11": 12, "13": 12}, "gc": 0, "pro_team": "Lidl–Trek", "bib_number": 61, "pcs_slug": "geraint-thomas", "total": 38}, {"rider": "Ca Rodriguez", "stages": {"7": 4, "10": 8, "11": 20, "15": 6}, "gc": 0, "pro_team": "Soudal Quick-Step", "bib_number": 164, "pcs_slug": "carlos-rodriguez-cano", "total": 38}, {"rider": "Romeo", "stages": {"8": 5, "9": 10, "10": 20, "12": 3}, "gc": 0, "pro_team": "Cofidis", "bib_number": 35, "pcs_slug": "romeo", "total": 38}, {"rider": "Nys", "stages": {"4": 3, "10": 15, "12": 15}, "gc": 0, "pro_team": "Ineos Grenadiers", "bib_number": 175, "pcs_slug": "thibau-nys", "total": 33}, {"rider": "A Yates", "stages": {"2": 5, "4": 6, "9": 12, "15": 8}, "gc": 0, "pro_team": "Visma–Lease a Bike", "bib_number": 35, "pcs_slug": "adam-yates", "total": 31}, {"rider": "Merlier", "stages": {"3": 10, "13": 10, "14": 10}, "gc": 0, "pro_team": "Visma–Lease a Bike", "bib_number": 172, "pcs_slug": "tim-merlier", "total": 30}, {"rider": "Groenewegen", "stages": {"5": 4, "13": 15, "14": 5, "15": 5}, "gc": 0, "pro_team": "Lidl–Trek", "bib_number": 59, "pcs_slug": "dylan-groenewegen", "total": 29}, {"rider": "Van Poppel", "stages": {"2": 12, "8": 15}, "gc": 0, "pro_team": "Bahrain Victorious", "bib_number": 135, "pcs_slug": "van-poppel", "total": 27}, {"rider": "Healy", "stages": {"2": 6, "14": 20}, "gc": 0, "pro_team": "Lidl–Trek", "bib_number": 108, "pcs_slug": "ben-healy", "total": 26}, {"rider": "O Connor", "stages": {"3": 15, "8": 8, "13": 3}, "gc": 0, "pro_team": "Groupama–FDJ", "bib_number": 109, "pcs_slug": "ben-oconnor", "total": 26}, {"rider": "Ganna", "stages": {"5": 12, "7": 8, "10": 2, "15": 4}, "gc": 0, "pro_team": "Decathlon AG2R", "bib_number": 178, "pcs_slug": "filippo-ganna", "total": 26}, {"rider": "Van der Poel", "stages": {"1": 8, "2": 8, "10": 3, "12": 5}, "gc": 0, "pro_team": "Groupama–FDJ", "bib_number": 132, "pcs_slug": "mathieu-van-der-poel", "total": 24}, {"rider": "S Yates", "stages": {"4": 12, "15": 12}, "gc": 0, "pro_team": "Jayco AlUla", "bib_number": 130, "pcs_slug": "simon-yates", "total": 24}, {"rider": "Girmay", "stages": {"7": 6, "9": 3, "14": 15}, "gc": 0, "pro_team": "Israel–Premier Tech", "bib_number": 116, "pcs_slug": "biniam-girmay", "total": 24}, {"rider": "Onley", "stages": {"1": 15, "11": 5, "14": 3}, "gc": 0, "pro_team": "Alpecin–Deceuninck", "bib_number": 172, "pcs_slug": "oscar-onley", "total": 23}, {"rider": "Vingegaard", "stages": {"1": 2, "6": 2}, "gc": 18, "pro_team": "Visma–Lease a Bike", "bib_number": 146, "pcs_slug": "jonas-vingegaard", "total": 22}, {"rider": "Buitrago", "stages": {"3": 3, "9": 5, "14": 12, "15": 2}, "gc": 0, "pro_team": "Decathlon AG2R", "bib_number": 122, "pcs_slug": "santiago-buitrago", "total": 22}, {"rider": "Coquard", "stages": {"2": 3, "5": 15, "8": 3}, "gc": 0, "pro_team": "Movistar Team", "bib_number": 158, "pcs_slug": "bryan-coquard", "total": 21}, {"rider": "Ca. Rodriguez", "stages": {"6": 5}, "gc": 16, "pro_team": "UAE Team Emirates", "bib_number": 80, "pcs_slug": "carlos-rodriguez-cano", "total": 21}, {"rider": "Alaphillipe", "stages": {"2": 4, "7": 10, "9": 4}, "gc": 0, "pro_team": "Soudal Quick-Step", "bib_number": 150, "pcs_slug": "alaphillipe", "total": 18}, {"rider": "Butrigo", "stages": {"2": 2, "5": 3, "8": 2, "14": 8}, "gc": 0, "pro_team": "Israel–Premier Tech", "bib_number": 104, "pcs_slug": "santiago-buitrago", "total": 15}, {"rider": "TH Johannesen", "stages": {"15": 15}, "gc": 0, "pro_team": "EF Education–EasyPost", "bib_number": 167, "pcs_slug": "th-johannesen", "total": 15}, {"rider": "v Eetvelt", "stages": {"3": 8, "14": 6}, "gc": 0, "pro_team": "Ineos Grenadiers", "bib_number": 167, "pcs_slug": "lennert-van-eetvelt", "total": 14}, {"rider": "L Martinez", "stages": {"12": 12, "13": 2}, "gc": 0, "pro_team": "Israel–Premier Tech", "bib_number": 65, "pcs_slug": "lenny-martinez", "total": 14}, {"rider": "De Lie", "stages": {"1": 3, "5": 5, "6": 4}, "gc": 0, "pro_team": "Decathlon AG2R", "bib_number": 160, "pcs_slug": "arnaud-de-lie", "total": 12}, {"rider": "Pogacar", "stages": {"6": 8, "11": 4}, "gc": 0, "pro_team": "Soudal Quick-Step", "bib_number": 132, "pcs_slug": "tadej-pogacar", "total": 12}, {"rider": "Jorgenson", "stages": {"6": 6, "7": 5}, "gc": 0, "pro_team": "Bahrain Victorious", "bib_number": 25, "pcs_slug": "matteo-jorgenson", "total": 11}, {"rider": "Roglic", "stages": {"1": 10}, "gc": 0, "pro_team": "Jayco AlUla", "bib_number": 65, "pcs_slug": "primoz-roglic", "total": 10}, {"rider": "Gee", "stages": {"1": 4, "13": 4}, "gc": 0, "pro_team": "Soudal Quick-Step", "bib_number": 5, "pcs_slug": "derek-gee", "total": 8}, {"rider": "Meeus", "stages": {"3": 5, "6": 3}, "gc": 0, "pro_team": "EF Education–EasyPost", "bib_number": 113, "pcs_slug": "jordi-meeus", "total": 8}, {"rider": "A yates", "stages": {"10": 6}, "gc": 0, "pro_team": "Lidl–Trek", "bib_number": 84, "pcs_slug": "adam-yates", "total": 6}, {"rider": "Gall", "stages": {"15": 3}, "gc": 0, "pro_team": "Red Bull–BORA–hansgrohe", "bib_number": 45, "pcs_slug": "felix-gall", "total": 3}, {"rider": "van Aert", "stages": {"9": 2}, "gc": 0, "pro_team": "EF Education–EasyPost", "bib_number": 43, "pcs_slug": "wout-van-aert", "total": 2}, {"rider": "Philipsen", "stages": {"12": 2}, "gc": 0, "pro_team": "Visma–Lease a Bike", "bib_number": 75, "pcs_slug": "jasper-philipsen", "total": 2}], "rider_meta": {"Pogacar": {"pro_team": "Soudal Quick-Step", "bib_number": 132, "pcs_slug": "tadej-pogacar"}, "Vingegaard": {"pro_team": "Visma–Lease a Bike", "bib_number": 146, "pcs_slug": "jonas-vingegaard"}, "Roglic": {"pro_team": "Jayco AlUla", "bib_number": 65, "pcs_slug": "primoz-roglic"}, "Evenepoel": {"pro_team": "Visma–Lease a Bike", "bib_number": 84, "pcs_slug": "remco-evenepoel"}, "Ca. Rodriguez": {"pro_team": "UAE Team Emirates", "bib_number": 80, "pcs_slug": "carlos-rodriguez-cano"}, "Almeida": {"pro_team": "Movistar Team", "bib_number": 86, "pcs_slug": "joao-almeida"}, "Lipowitz": {"pro_team": "Jayco AlUla", "bib_number": 124, "pcs_slug": "florian-lipowitz"}, "Jorgenson": {"pro_team": "Bahrain Victorious", "bib_number": 25, "pcs_slug": "matteo-jorgenson"}, "van Aert": {"pro_team": "EF Education–EasyPost", "bib_number": 43, "pcs_slug": "wout-van-aert"}, "Van der Poel": {"pro_team": "Groupama–FDJ", "bib_number": 132, "pcs_slug": "mathieu-van-der-poel"}, "Merlier": {"pro_team": "Visma–Lease a Bike", "bib_number": 172, "pcs_slug": "tim-merlier"}, "Milan": {"pro_team": "Israel–Premier Tech", "bib_number": 91, "pcs_slug": "jonathan-milan"}, "Groenewegen": {"pro_team": "Lidl–Trek", "bib_number": 59, "pcs_slug": "dylan-groenewegen"}, "Philipsen": {"pro_team": "Visma–Lease a Bike", "bib_number": 75, "pcs_slug": "jasper-philipsen"}, "Ganna": {"pro_team": "Decathlon AG2R", "bib_number": 178, "pcs_slug": "filippo-ganna"}, "Mas": {"pro_team": "Movistar Team", "bib_number": 106, "pcs_slug": "enric-mas"}, "Onley": {"pro_team": "Alpecin–Deceuninck", "bib_number": 172, "pcs_slug": "oscar-onley"}, "S Yates": {"pro_team": "Jayco AlUla", "bib_number": 130, "pcs_slug": "simon-yates"}, "Skjelmose": {"pro_team": "Visma–Lease a Bike", "bib_number": 1, "pcs_slug": "mattias-skjelmose"}, "Girmay": {"pro_team": "Israel–Premier Tech", "bib_number": 116, "pcs_slug": "biniam-girmay"}, "Gee": {"pro_team": "Soudal Quick-Step", "bib_number": 5, "pcs_slug": "derek-gee"}, "Coquard": {"pro_team": "Movistar Team", "bib_number": 158, "pcs_slug": "bryan-coquard"}, "O Connor": {"pro_team": "Groupama–FDJ", "bib_number": 109, "pcs_slug": "ben-oconnor"}, "A Yates": {"pro_team": "Visma–Lease a Bike", "bib_number": 35, "pcs_slug": "adam-yates"}, "Martinez": {"pro_team": "Bahrain Victorious", "bib_number": 30, "pcs_slug": "lenny-martinez"}, "Vauquelin": {"pro_team": "Visma–Lease a Bike", "bib_number": 161, "pcs_slug": "kevin-vauquelin"}, "De Lie": {"pro_team": "Decathlon AG2R", "bib_number": 160, "pcs_slug": "arnaud-de-lie"}, "Gall": {"pro_team": "Red Bull–BORA–hansgrohe", "bib_number": 45, "pcs_slug": "felix-gall"}, "Healy": {"pro_team": "Lidl–Trek", "bib_number": 108, "pcs_slug": "ben-healy"}, "Nys": {"pro_team": "Ineos Grenadiers", "bib_number": 175, "pcs_slug": "thibau-nys"}, "Ca Rodrigues": {"pro_team": "Jayco AlUla", "bib_number": 71, "pcs_slug": "carlos-rodriguez-cano"}, "L Martinez": {"pro_team": "Israel–Premier Tech", "bib_number": 65, "pcs_slug": "lenny-martinez"}, "Jake Stewart": {"pro_team": "Jayco AlUla", "bib_number": 124, "pcs_slug": "jake-stewart"}, "Ivan Romeo": {"pro_team": "Israel–Premier Tech", "bib_number": 179, "pcs_slug": "ivan-romeo"}, "Buitrago": {"pro_team": "Decathlon AG2R", "bib_number": 122, "pcs_slug": "santiago-buitrago"}, "Rodriguez": {"pro_team": "Cofidis", "bib_number": 101, "pcs_slug": "carlos-rodriguez-cano"}, "TH Johannesen": {"pro_team": "EF Education–EasyPost", "bib_number": 167, "pcs_slug": "th-johannesen"}, "Meeus": {"pro_team": "EF Education–EasyPost", "bib_number": 113, "pcs_slug": "jordi-meeus"}, "v Eetvelt": {"pro_team": "Ineos Grenadiers", "bib_number": 167, "pcs_slug": "lennert-van-eetvelt"}, "Skjlemose": {"pro_team": "EF Education–EasyPost", "bib_number": 11, "pcs_slug": "mattias-skjelmose"}, "A yates": {"pro_team": "Lidl–Trek", "bib_number": 84, "pcs_slug": "adam-yates"}, "Romeo": {"pro_team": "Cofidis", "bib_number": 35, "pcs_slug": "romeo"}, "Ca Rodriguez": {"pro_team": "Soudal Quick-Step", "bib_number": 164, "pcs_slug": "carlos-rodriguez-cano"}, "Hirschi": {"pro_team": "Soudal Quick-Step", "bib_number": 156, "pcs_slug": "marc-hirschi"}, "Butrigo": {"pro_team": "Israel–Premier Tech", "bib_number": 104, "pcs_slug": "santiago-buitrago"}, "Van Poppel": {"pro_team": "Bahrain Victorious", "bib_number": 135, "pcs_slug": "van-poppel"}, "Amirail": {"pro_team": "Bahrain Victorious", "bib_number": 64, "pcs_slug": "amirail"}, "Alaphillipe": {"pro_team": "Soudal Quick-Step", "bib_number": 150, "pcs_slug": "alaphillipe"}, "Thomas": {"pro_team": "Lidl–Trek", "bib_number": 61, "pcs_slug": "geraint-thomas"}, "Martin": {"pro_team": "Israel–Premier Tech", "bib_number": 39, "pcs_slug": "martin"}, "Mohoric": {"pro_team": "Bahrain Victorious", "bib_number": 175, "pcs_slug": "mohoric"}}, "perfect_team_size": 15, "historical_winners": [{"year": 2024, "team_name": "Sterre's Giving it a Go!", "player_name": "Sterre", "total_points": 982}, {"year": 2022, "team_name": "Han's zou best kunnen", "player_name": "Han", "total_points": 888}, {"year": 2021, "team_name": "Lori's Glory", "player_name": "Lori", "total_points": 1119}, {"year": 2020, "team_name": "Quinten's Snelste Tijden", "player_name": "Quinten", "total_points": 824}]};
+
+document.getElementById("m-year").textContent = DATA.year;
+document.getElementById("rider-perfect-n").textContent = DATA.perfect_team_size;
+
+// ---------- Sortable table helper ----------
+function makeSortable(tableId, headerSelector, getRows, renderRow, defaultKey, defaultDir) {
+  let key = defaultKey;
+  let dir = defaultDir;
+  const table = document.getElementById(tableId);
+  function applySort() {
+    const rows = getRows().slice();
+    rows.sort((a, b) => {
+      const av = a[key], bv = b[key];
+      if (typeof av === "number" && typeof bv === "number") return dir === "asc" ? av - bv : bv - av;
+      const as = String(av ?? "").toLowerCase(), bs = String(bv ?? "").toLowerCase();
+      if (as < bs) return dir === "asc" ? -1 : 1;
+      if (as > bs) return dir === "asc" ?  1 : -1;
+      return 0;
+    });
+    const body = table.querySelector("tbody");
+    body.innerHTML = "";
+    rows.forEach((r, i) => body.appendChild(renderRow(r, i)));
+    table.querySelectorAll(headerSelector).forEach((th) => {
+      th.classList.remove("sort-asc", "sort-desc");
+      if (th.dataset.key === key) th.classList.add(dir === "asc" ? "sort-asc" : "sort-desc");
+    });
+  }
+  table.querySelectorAll(headerSelector).forEach((th) => {
+    th.addEventListener("click", () => {
+      if (th.dataset.key === key) dir = dir === "asc" ? "desc" : "asc";
+      else { key = th.dataset.key; dir = ["rank","name","player","rider"].includes(key) ? "asc" : "desc"; }
+      applySort();
+    });
+  });
+  applySort();
+}
+
+// ---------- Leaderboard ----------
+document.getElementById("lb-sub").textContent =
+  `Tour de France ${DATA.year} · ${DATA.team_count} teams · stage ${DATA.stages_completed} just finished`;
+makeSortable(
+  "lb-table",
+  "th.sortable",
+  () => DATA.leaderboard,
+  (r) => {
+    const tr = document.createElement("tr");
+    tr.className = "row-click " + (
+      r.rank === 1 ? "bg-yellow-50/50" : r.rank <= 3 ? "bg-slate-50/50" : ""
+    );
+    const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
+    tr.innerHTML = `
+      <td class="px-4 py-3 text-slate-500 font-mono">${medal ?? r.rank}</td>
+      <td class="px-4 py-3 font-medium">${r.name}</td>
+      <td class="px-4 py-3 hidden sm:table-cell text-slate-600">${r.player}</td>
+      <td class="px-4 py-3 text-right tabular text-slate-600">${r.stage_points}</td>
+      <td class="px-4 py-3 text-right tabular text-slate-600">${r.gc_points}</td>
+      <td class="px-4 py-3 text-right tabular font-bold">${r.total}</td>`;
+    tr.addEventListener("click", () => openTeam(r.player));
+    return tr;
+  },
+  "rank",
+  "asc"
+);
+
+// ---------- Historical winners ----------
+(function renderHistorical() {
+  const body = document.getElementById("hw-body");
+  body.innerHTML = "";
+  for (const w of DATA.historical_winners) {
+    const tr = document.createElement("tr");
+    tr.className = "hover:bg-slate-50/60";
+    tr.innerHTML = `
+      <td class="px-4 py-3 font-mono text-slate-500">${w.year}</td>
+      <td class="px-4 py-3 font-medium">🏆 ${w.team_name}</td>
+      <td class="px-4 py-3 hidden sm:table-cell text-slate-600">${w.player_name}</td>
+      <td class="px-4 py-3 text-right tabular font-semibold">${w.total_points}</td>`;
+    body.appendChild(tr);
+  }
+})();
+
+// ---------- Stages matrix ----------
+(function renderMatrix() {
+  const head = document.getElementById("matrix-head");
+  const body = document.getElementById("matrix-body");
+  const stageCols = DATA.stage_numbers;
+  const stageMax = {};
+  for (const s of stageCols) {
+    stageMax[s] = 0;
+    for (const t of DATA.matrix) stageMax[s] = Math.max(stageMax[s], t.stages[s] || 0);
+  }
+  function heatClass(pts, max) {
+    if (!pts || max === 0) return "heat-0";
+    const pct = pts / max;
+    if (pct >= 1) return "heat-4";
+    if (pct >= 0.66) return "heat-3";
+    if (pct >= 0.33) return "heat-2";
+    return "heat-1";
+  }
+  head.innerHTML =
+    `<th class="px-4 py-3 sticky left-0 bg-slate-50 text-left">Team</th>` +
+    stageCols.map((s) => `<th class="px-2 py-3 text-center font-mono">${s}</th>`).join("") +
+    `<th class="px-3 py-3 text-right">GC</th><th class="px-3 py-3 text-right font-bold">Total</th>`;
+
+  const rows = DATA.matrix.slice().sort((a, b) => b.total - a.total);
+  body.innerHTML = "";
+  rows.forEach((r) => {
+    const tr = document.createElement("tr");
+    tr.className = "row-click";
+    tr.innerHTML =
+      `<td class="px-4 py-2 sticky left-0 bg-white">
+         <div class="font-medium">${r.name}</div>
+         <div class="text-xs text-slate-400">${r.player}</div>
+       </td>` +
+      stageCols.map((s) => {
+        const v = r.stages[s] || 0;
+        return `<td class="px-2 py-2 text-center tabular ${heatClass(v, stageMax[s])}">${v || ""}</td>`;
+      }).join("") +
+      `<td class="px-3 py-2 text-right tabular text-slate-600">${r.gc || ""}</td>` +
+      `<td class="px-3 py-2 text-right tabular font-bold">${r.total}</td>`;
+    tr.addEventListener("click", () => openTeam(r.player));
+    body.appendChild(tr);
+  });
+})();
+
+// ---------- Riders ----------
+(function renderRiders() {
+  const head = document.getElementById("riders-head");
+  const stageCols = DATA.stage_numbers;
+  head.innerHTML =
+    `<th class="sortable px-4 py-3 sticky left-0 bg-slate-50 text-left" data-key="rider">Rider<span class="arrow"></span></th>` +
+    `<th class="sortable px-3 py-3 text-left" data-key="pro_team">Team<span class="arrow"></span></th>` +
+    stageCols.map((s) => `<th class="px-2 py-3 text-center font-mono">${s}</th>`).join("") +
+    `<th class="sortable px-3 py-3 text-right" data-key="gc">GC<span class="arrow"></span></th>` +
+    `<th class="sortable px-3 py-3 text-right font-bold" data-key="total">Total<span class="arrow"></span></th>`;
+  const flatRows = DATA.riders.map((r, i) => ({
+    rider: r.rider,
+    pcs_slug: r.pcs_slug,
+    pro_team: r.pro_team,
+    bib_number: r.bib_number,
+    stages: r.stages,
+    gc: r.gc,
+    total: r.total,
+    perfect: i < DATA.perfect_team_size,
+    rank: i + 1,
+  }));
+  makeSortable(
+    "riders-table",
+    "th.sortable",
+    () => flatRows,
+    (r) => {
+      const tr = document.createElement("tr");
+      tr.className = r.perfect ? "bg-emerald-50/60" : "";
+      const link = r.pcs_slug
+        ? `<a href="https://www.procyclingstats.com/rider/${r.pcs_slug}" target="_blank" rel="noreferrer noopener" class="font-medium hover:text-blue-600 hover:underline">${r.rider}</a>`
+        : `<span class="font-medium">${r.rider}</span>`;
+      const bib = r.bib_number != null
+        ? `<span class="ml-2 rounded border border-slate-200 px-1.5 py-0.5 text-[10px] tabular text-slate-500">#${r.bib_number}</span>`
+        : "";
+      tr.innerHTML =
+        `<td class="px-4 py-2 sticky left-0 ${r.perfect ? "bg-emerald-50/60" : "bg-white"}">
+           <span class="text-slate-400 mr-2 tabular text-xs">${r.rank}</span>
+           ${link}${bib}
+           ${r.perfect ? '<span class="ml-2 text-xs text-emerald-700">★</span>' : ""}
+         </td>` +
+        `<td class="px-3 py-2 text-slate-600 whitespace-nowrap">${r.pro_team || '<span class="text-slate-300">—</span>'}</td>` +
+        stageCols.map((s) => {
+          const v = r.stages[s] || 0;
+          return `<td class="px-2 py-2 text-center tabular ${v ? "text-slate-800 font-medium" : "text-slate-300"}">${v || "·"}</td>`;
+        }).join("") +
+        `<td class="px-3 py-2 text-right tabular text-slate-600">${r.gc || ""}</td>` +
+        `<td class="px-3 py-2 text-right tabular font-bold">${r.total}</td>`;
+      return tr;
+    },
+    "total",
+    "desc"
+  );
+})();
+
+// ---------- Modal ----------
+function openTeam(player) {
+  const t = DATA.breakdowns[player];
+  if (!t) return;
+  document.getElementById("m-name").textContent = `${player}'s ${t.team_name}`;
+  document.getElementById("m-player").textContent =
+    `${t.total} pts total · ${t.stage_total} stage · ${t.gc_points} GC`;
+  const body = document.getElementById("m-body");
+  body.innerHTML = "";
+
+  // Helper: build a "name + #bib + pro_team" cluster, name linking to PCS.
+  function riderTag(name, includePrefix = "") {
+    const meta = DATA.rider_meta[name] || {};
+    const link = meta.pcs_slug
+      ? `<a href="https://www.procyclingstats.com/rider/${meta.pcs_slug}" target="_blank" rel="noreferrer noopener" class="hover:text-blue-600 hover:underline">${name}</a>`
+      : name;
+    const bib = meta.bib_number != null
+      ? `<span class="ml-2 rounded border border-slate-200 px-1.5 py-0.5 text-[10px] tabular text-slate-500">#${meta.bib_number}</span>`
+      : "";
+    const team = meta.pro_team
+      ? `<div class="text-xs text-slate-400">${meta.pro_team}</div>` : "";
+    return `<div class="font-medium text-slate-800">${includePrefix}${link}${bib}</div>${team}`;
+  }
+
+  // ---- Roster (with status) ----
+  const roster = document.createElement("div");
+  const rosterRows = t.main_status.map((m) => {
+    const pts = t.rider_points[m.name] ?? 0;
+    let badge = "", style = "border-slate-200 bg-white";
+    if (m.status === "active") {
+      badge = `<span class="text-emerald-700">● Active</span>`;
+    } else if (m.status === "dropped_out") {
+      badge = `<span class="text-rose-700">✗ Dropped after stage ${m.dropout_after_stage}</span>`;
+      style = "border-rose-200 bg-rose-50/50";
+    } else {
+      badge = `<span class="text-slate-500">— Didn't start</span>`;
+      style = "border-slate-200 bg-slate-50";
+    }
+    return `<li class="flex items-start justify-between rounded border ${style} px-3 py-2 text-sm">
+      <div>
+        ${riderTag(m.name)}
+        <div class="mt-0.5 text-xs">${badge}</div>
+      </div>
+      <span class="tabular text-slate-500">${pts || "—"}</span>
+    </li>`;
+  }).join("");
+  roster.innerHTML = `
+    <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Roster</h3>
+    <ul class="mt-2 grid gap-2 sm:grid-cols-2">${rosterRows}</ul>`;
+  body.appendChild(roster);
+
+  // ---- Reserves (with substitution info) ----
+  if (t.reserves_status.length > 0) {
+    const reserves = document.createElement("div");
+    const rrows = t.reserves_status.map((r) => {
+      const pts = t.rider_points[r.name] ?? 0;
+      let badge = "", style = "border-slate-200 bg-white";
+      if (r.status === "used") {
+        badge = `<span class="text-blue-700">→ Joined at stage ${r.joined_at_stage} · replacing ${r.replaced_name}</span>`;
+        style = "border-blue-200 bg-blue-50/60";
+      } else {
+        badge = `<span class="text-slate-500">Unused</span>`;
+        style = "border-slate-200 bg-slate-50";
+      }
+      return `<li class="flex items-start justify-between rounded border ${style} px-3 py-2 text-sm">
+        <div>
+          ${riderTag(r.name, '<span class="text-slate-400 mr-1">' + r.reserve_order + '.</span>')}
+          <div class="mt-0.5 text-xs">${badge}</div>
+        </div>
+        <span class="tabular text-slate-500">${pts || ""}</span>
+      </li>`;
+    }).join("");
+    reserves.innerHTML = `
+      <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Reserves</h3>
+      <ul class="mt-2 grid gap-2 sm:grid-cols-2">${rrows}</ul>`;
+    body.appendChild(reserves);
+  }
+
+  // ---- Stage breakdown ----
+  const stageEntries = Object.entries(t.stage_points).sort((a,b) => +a[0]-+b[0]);
+  const stages = document.createElement("div");
+  stages.innerHTML = `
+    <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Points by stage</h3>
+    <div class="mt-2 overflow-x-auto rounded border border-slate-200">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-xs text-slate-500">
+          <tr>${stageEntries.map(([s]) => `<th class="px-2 py-1 font-mono">${s}</th>`).join("")}</tr>
+        </thead>
+        <tbody><tr>
+          ${stageEntries.map(([_,p]) =>
+            `<td class="px-2 py-1 text-center tabular ${p>0?'font-semibold':'text-slate-400'}">${p||"—"}</td>`
+          ).join("")}
+        </tr></tbody>
+      </table>
+    </div>`;
+  body.appendChild(stages);
+
+  document.getElementById("modal").classList.remove("hidden");
+  document.getElementById("modal").classList.add("flex");
+}
+document.getElementById("m-close").addEventListener("click", closeModal);
+document.getElementById("modal").addEventListener("click", (e) => {
+  if (e.target.id === "modal") closeModal();
+});
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
+  document.getElementById("modal").classList.remove("flex");
+}
+
+// ---------- Upload ----------
+(function renderUpload() {
+  const teams = DATA.all_teams_parsed;
+  const unresolvedCount = teams.filter((t) => t.needs_attention).length;
+  document.getElementById("upload-summary").innerHTML = `
+    <div class="flex items-baseline justify-between">
+      <h2 class="text-lg font-semibold">Preview</h2>
+      <div class="text-sm text-slate-500">
+        year=${DATA.year} · ${teams.length} teams
+        ${unresolvedCount > 0 ? `<span class="ml-2 text-amber-600">· ${unresolvedCount} need a name</span>` : ""}
+      </div>
+    </div>`;
+  const grid = document.getElementById("upload-grid");
+  grid.innerHTML = "";
+  for (const t of teams) {
+    const card = document.createElement("article");
+    card.className = "rounded-lg border p-4 " + (
+      t.needs_attention ? "border-amber-300 bg-amber-50" : "border-slate-200 bg-white"
+    );
+    card.innerHTML = `
+      <header class="flex items-baseline justify-between">
+        <div>
+          <div class="font-semibold">
+            ${t.player}
+            ${t.needs_attention ? '<span class="ml-2 text-xs text-amber-700">⚠ rename me</span>' : ""}
+          </div>
+          <div class="text-xs text-slate-500">${t.team_name}</div>
+        </div>
+        <div class="text-xs text-slate-400">${t.riders.length}+${t.reserves.length}</div>
+      </header>
+      <ul class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-sm">
+        ${t.riders.map((r) => `<li class="text-slate-700">${r}</li>`).join("")}
+      </ul>
+      ${t.reserves.length > 0 ? `
+        <div class="mt-3 border-t border-slate-200 pt-3 text-xs text-slate-500">
+          Reserves: ${t.reserves.join(" · ")}
+        </div>` : ""}`;
+    grid.appendChild(card);
+  }
+})();
+
+// ---------- Tabs ----------
+document.querySelectorAll(".tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach((t) => {
+      t.classList.remove("tab-active");
+      t.classList.add("text-slate-400");
+    });
+    tab.classList.add("tab-active");
+    tab.classList.remove("text-slate-400");
+    const which = tab.dataset.tab;
+    ["matrix","leaderboard","riders","upload"].forEach((name) => {
+      document.getElementById(`view-${name}`).classList.toggle("hidden", which !== name);
+    });
+  });
+});
+</script>
+</body>
+</html>
