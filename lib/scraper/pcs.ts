@@ -30,20 +30,23 @@ function parseResultsTable($: cheerio.CheerioAPI): StageResult[] {
   // that's a positive integer as position and the first cell containing a
   // link as the rider name. Skips rows that don't match (DNF, header, etc.).
   const out: StageResult[] = [];
-  const tables = $("table.results");
-  if (tables.length === 0) {
-    // Fallback: any table whose first row contains a "Pos" header.
+
+  // Pick a primary table. Prefer table.results; if PCS changed their markup,
+  // fall back to the first <table> whose first cell looks like a results
+  // header ("Pos" / "Rnk").
+  let primary = $("table.results").first();
+  if (primary.length === 0) {
     $("table").each((_i, table) => {
+      if (primary.length > 0) return;
       const headerText = $(table).find("th, td").first().text().toLowerCase();
       if (headerText.includes("pos") || headerText.includes("rnk")) {
-        tables.push(table);
+        primary = $(table);
       }
     });
   }
-  if (tables.length === 0) return out;
+  if (primary.length === 0) return out;
 
-  tables
-    .first()
+  primary
     .find("tr")
     .each((_i, tr) => {
       const cells = $(tr).find("td").toArray();
