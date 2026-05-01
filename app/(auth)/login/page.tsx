@@ -18,7 +18,11 @@ export default function LoginPage() {
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/admin/upload` },
+      options: {
+        // Magic link redirects to /auth/callback, which exchanges the code
+        // for a session cookie and then forwards to ?next=/admin/upload.
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/admin/upload`,
+      },
     });
     setBusy(false);
     if (error) setErr(error.message);
