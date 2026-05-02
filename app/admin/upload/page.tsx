@@ -1,15 +1,11 @@
 "use client";
 
 // Drop a Word doc (or CSV) of team submissions → server parses it →
-// preview parsed teams → confirm → upserts pools/teams/team_riders.
-//
-// TODO (task #6): wire up the "Confirm import" action that POSTs to
-// /api/admin/import to run the upsert. For now this surfaces the parsed
-// preview so we can eyeball the parser output.
+// preview + edit teams (rename Unknown_N) → confirm → POST to /api/admin/import.
 
 import { useState } from "react";
 
-import type { ParsedPool } from "@/lib/parsers/types";
+import type { ParsedPool, ParsedTeam } from "@/lib/parsers/types";
 
 export default function AdminUploadPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -40,8 +36,8 @@ export default function AdminUploadPage() {
       <div>
         <h1 className="text-2xl font-bold">Upload teams</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Drop the .docx (or .csv) from the in-laws — I&apos;ll parse it,
-          you confirm the teams, and the pool is set up.
+          Drop the .docx (or .csv) from the in-laws — I&apos;ll parse it, you
+          fix any teams flagged with ⚠, and confirm to set up the pool.
         </p>
       </div>
 
@@ -76,22 +72,68 @@ export default function AdminUploadPage() {
 }
 
 function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
+  // Local editable copy of the teams. Edits bubble up via setTeams; the
+  // imported `parsed` object stays unchanged so we can also reset.
+  const [teams, setTeams] = useState<ParsedTeam[]>(parsed.teams);
+  const [importing, setImporting] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+
+  function updateTeam(i: number, patch: Partial<ParsedTeam>) {
+    setTeams((prev) => {
+      const next = [...prev];
+      next[i] = { ...next[i], ...patch };
+      // Auto-clear needs_attention once they've named the team to something
+      // that doesn't start with "Unknown_".
+      if (
+        patch.player !== undefined &&
+        !patch.player.startsWith("Unknown_") &&
+        patch.player.trim().length > 0
+      ) {
+        next[i].needs_attention = false;
+      }
+      return next;
+    });
+  }
+
+  async function confirm() {
+    setImporting(true);
+    setErr(null);
+    setResult(null);
+    const payload = { ...parsed, teams };
+    const res = await fetch("/api/admin/import", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    setImporting(false);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      setErr(body.error ?? `Import failed (${res.status})`);
+      return;
+    }
+    const body = await res.json();
+    setResult(`Imported ${body.teams_imported} teams for ${body.year}.`);
+  }
+
+  const unresolvedCount = teams.filter((t) => t.needs_attention).length;
+
   return (
     <div className="space-y-4">
       <div className="flex items-baseline justify-between">
         <h2 className="text-lg font-semibold">Preview</h2>
         <div className="text-sm text-slate-500">
-          year={parsed.year ?? "?"} · {parsed.team_count} teams
-          {parsed.unresolved.length > 0 && (
+          year={parsed.year ?? "?"} · {teams.length} teams
+          {unresolvedCount > 0 && (
             <span className="ml-2 text-amber-600">
-              · {parsed.unresolved.length} need a name
+              · {unresolvedCount} still need a name
             </span>
           )}
         </div>
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">
-        {parsed.teams.map((t, i) => (
+        {teams.map((t, i) => (
           <article
             key={i}
             className={`rounded-lg border p-4 ${
@@ -100,21 +142,36 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
                 : "border-slate-200 bg-white"
             }`}
           >
-            <header className="flex items-baseline justify-between">
-              <div>
-                <div className="font-semibold">
-                  {t.player}
-                  {t.needs_attention && (
-                    <span className="ml-2 text-xs text-amber-700">
-                      ⚠ rename me
-                    </span>
-                  )}
-                </div>
-                <div className="text-xs text-slate-500">{t.team_name}</div>
+            <header className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <input
+                  type="text"
+                  value={t.player}
+                  onChange={(e) => updateTeam(i, { player: e.target.value })}
+                  placeholder="Player name"
+                  className={`flex-1 rounded border px-2 py-1 text-sm font-semibold focus:outline-none focus:ring-1 ${
+                    t.needs_attention
+                      ? "border-amber-400 bg-white focus:border-amber-500 focus:ring-amber-300"
+                      : "border-transparent bg-transparent hover:border-slate-200 focus:border-slate-400 focus:ring-slate-300 focus:bg-white"
+                  }`}
+                />
+                <span className="text-xs text-slate-400 whitespace-nowrap">
+                  {t.riders.length}+{t.reserves.length}
+                </span>
               </div>
-              <div className="text-xs text-slate-400">
-                {t.riders.length}+{t.reserves.length}
-              </div>
+              <input
+                type="text"
+                value={t.team_name}
+                onChange={(e) => updateTeam(i, { team_name: e.target.value })}
+                placeholder="Team name (optional)"
+                className="w-full rounded border border-transparent bg-transparent px-2 py-0.5 text-xs text-slate-600 hover:border-slate-200 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-300"
+              />
+              {t.needs_attention && (
+                <p className="text-xs text-amber-700">
+                  ⚠ Type the player&apos;s name above. The flag clears once you
+                  rename it.
+                </p>
+              )}
             </header>
             <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-sm">
               {t.riders.map((r, j) => (
@@ -132,13 +189,37 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
         ))}
       </div>
 
-      <div className="flex justify-end gap-2 pt-4">
+      {err && (
+        <div className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+          {err}
+        </div>
+      )}
+      {result && (
+        <div className="rounded border border-green-200 bg-green-50 p-3 text-sm text-green-800">
+          {result}{" "}
+          <a
+            href={`/leaderboard?year=${parsed.year}`}
+            className="font-semibold underline"
+          >
+            View leaderboard →
+          </a>
+        </div>
+      )}
+
+      <div className="flex items-center justify-end gap-3 pt-4">
+        {unresolvedCount > 0 && !result && (
+          <span className="text-xs text-amber-700">
+            You can still import — but unnamed teams will keep the
+            &ldquo;Unknown&rdquo; placeholder until you fix them.
+          </span>
+        )}
         <button
           type="button"
-          className="rounded bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500"
-          onClick={() => alert("TODO: POST to /api/admin/import")}
+          disabled={importing}
+          onClick={confirm}
+          className="rounded bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-50"
         >
-          Confirm and import
+          {importing ? "Importing…" : "Confirm and import"}
         </button>
       </div>
     </div>
