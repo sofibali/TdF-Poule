@@ -1,5 +1,7 @@
 import { type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
+// Use a relative import here — Vercel's Edge Function bundler is stricter
+// about path aliases than the Node.js runtime. Relative path always resolves.
+import { updateSession } from "./lib/supabase/middleware";
 
 // Refreshes the user's auth cookie on every request and gates the (app) routes.
 export async function middleware(request: NextRequest) {
