@@ -125,10 +125,17 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
   // Seed the riders table on first run — gives us pcs_slug + pro_team for the UI.
   summary.riders_seeded = await seedRidersIfEmpty(supabase, pool.id, pool.year);
 
-  const startDate = pool.start_date ? new Date(pool.start_date) : new Date();
+  // Past Tours don't need start_date — detectCurrentStage returns 21 for any
+  // year < this year. For the current year, we need start_date to figure out
+  // what stage we're on; if it's missing we treat the Tour as not-yet-started.
+  const startDate = pool.start_date ? new Date(pool.start_date) : null;
   const currentStage = await detectCurrentStage(pool.year, startDate);
   if (currentStage === 0) {
-    summary.errors.push("Tour hasn't started yet");
+    summary.errors.push(
+      pool.start_date
+        ? "Tour hasn't started yet"
+        : "No start_date set for this pool (current year only — past years auto-fetch)",
+    );
     return summary;
   }
 

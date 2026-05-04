@@ -123,17 +123,31 @@ export async function fetchStartList(year: number): Promise<StartListEntry[]> {
 }
 
 /**
- * "What stage are we on?" Roughly: stage N starts on (start_date + N - 1)
- * with two rest days (typically after stages 9 and 15). For accuracy we
- * fetch the GC page header which shows current stage; falling back to a
- * date-based heuristic.
+ * "What stage are we on?" — figures out how many stages of the given year's
+ * Tour have completed.
+ *
+ *   - Past year      → 21 (the whole Tour is in the books)
+ *   - Future year    → 0  (it hasn't started yet)
+ *   - Current year   → derived from start_date if we have one;
+ *                      else 0 (be conservative — wait until the user sets a date)
+ *
+ * Within the current year, we use the (today − start_date) day delta and
+ * subtract typical rest days (one after stage 9, one after stage 15).
  */
 export async function detectCurrentStage(
   year: number,
-  startDate: Date,
+  startDate: Date | null,
   today: Date = new Date(),
 ): Promise<number> {
-  // Days since the Tour started; clamp to [0, 21] and add typical rest days.
+  const currentYear = today.getUTCFullYear();
+
+  // Past tour: all 21 stages exist regardless of whether start_date was set.
+  if (year < currentYear) return 21;
+  if (year > currentYear) return 0;
+
+  // Same year — need a start_date to compute current stage.
+  if (!startDate) return 0;
+
   const dayMs = 24 * 60 * 60 * 1000;
   const days = Math.floor((today.getTime() - startDate.getTime()) / dayMs);
   if (days < 0) return 0;
