@@ -15,6 +15,9 @@ type RefreshSummary = {
   stages_fetched: number[];
   gc_fetched: boolean;
   riders_seeded: number;
+  picks_resolved: number;
+  picks_ambiguous: number;
+  picks_unmatched: number;
   errors: string[];
 };
 
@@ -86,16 +89,31 @@ export default function AdminRefreshPage() {
                     Tour de France {year}
                   </div>
                   {typeof r === "object" && r !== null && (
-                    <div className="mt-1 text-xs text-slate-500">
-                      {r.stages_fetched.length} stages fetched ·{" "}
-                      {r.gc_fetched ? "GC ✓" : "GC pending"} ·{" "}
-                      {r.riders_seeded > 0
-                        ? `${r.riders_seeded} riders seeded`
-                        : "riders already loaded"}
+                    <div className="mt-1 space-y-0.5 text-xs text-slate-500">
+                      <div>
+                        {r.stages_fetched.length} stages fetched ·{" "}
+                        {r.gc_fetched ? "GC ✓" : "GC pending"} ·{" "}
+                        {r.riders_seeded > 0
+                          ? `${r.riders_seeded} riders seeded`
+                          : "riders already loaded"}
+                      </div>
+                      <div>
+                        Picks resolved: {r.picks_resolved}
+                        {r.picks_ambiguous > 0 && (
+                          <span className="ml-2 text-amber-600">
+                            · {r.picks_ambiguous} ambiguous (need manual fix)
+                          </span>
+                        )}
+                        {r.picks_unmatched > 0 && (
+                          <span className="ml-2 text-rose-600">
+                            · {r.picks_unmatched} unmatched
+                          </span>
+                        )}
+                      </div>
                       {r.errors.length > 0 && (
-                        <span className="ml-2 text-amber-600">
-                          · {r.errors.length} warning(s)
-                        </span>
+                        <div className="text-amber-600">
+                          {r.errors.length} warning(s)
+                        </div>
                       )}
                     </div>
                   )}

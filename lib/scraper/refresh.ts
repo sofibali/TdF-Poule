@@ -16,6 +16,9 @@ export type RefreshSummary = {
   stages_fetched: number[];
   gc_fetched: boolean;
   riders_seeded: number;
+  picks_resolved: number;
+  picks_ambiguous: number;
+  picks_unmatched: number;
   errors: string[];
 };
 
@@ -61,9 +64,67 @@ async function seedRidersIfEmpty(
   }
 }
 
+// Strip diacritics + non-letters and lowercase, so "Pogačar" matches "Pogacar".
+function normalize(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z]/g, "");
+}
+
+type RiderRow = { id: string; full_name: string; last_name: string };
+
 /**
- * Best-effort: link stage_results.rider_id to the canonical riders table,
- * matching by last name. Updates rows whose rider_id is currently null.
+ * Build a last-name → rider_id index. When multiple riders share a last name,
+ * the value becomes null (signaling ambiguity — caller should fall back).
+ */
+function buildLastNameIndex(riders: RiderRow[]): Map<string, string | null> {
+  const idx = new Map<string, string | null>();
+  for (const r of riders) {
+    const k = normalize(r.last_name);
+    idx.set(k, idx.has(k) ? null : r.id);
+  }
+  return idx;
+}
+
+/**
+ * Match a docx-style raw_name (e.g. "Pogacar", "T. Pogacar", "Ca. Rodriguez")
+ * to a canonical rider. Last-name match by default; if ambiguous, narrow by
+ * the first initial when the raw name has one.
+ */
+function matchByLastName(
+  rawName: string,
+  riders: RiderRow[],
+  idx: Map<string, string | null>,
+): { rider_id: string | null; ambiguous: boolean } {
+  const parts = rawName.replace(/[,]/g, " ").split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return { rider_id: null, ambiguous: false };
+  const last = normalize(parts[parts.length - 1]);
+  const initial = parts.length > 1 ? normalize(parts.slice(0, -1).join(" ")) : null;
+
+  const idxHit = idx.get(last);
+  if (idxHit) return { rider_id: idxHit, ambiguous: false };
+  if (idxHit === null && idx.has(last)) {
+    // Ambiguous: try to narrow with first-initial / first-name
+    if (initial) {
+      const candidates = riders.filter((r) => normalize(r.last_name) === last);
+      const narrowed = candidates.filter((r) => {
+        const first = normalize(
+          r.full_name.replace(new RegExp(r.last_name + "$", "i"), ""),
+        );
+        return first === initial || (initial.length === 1 && first.startsWith(initial));
+      });
+      if (narrowed.length === 1) return { rider_id: narrowed[0].id, ambiguous: false };
+    }
+    return { rider_id: null, ambiguous: true };
+  }
+  return { rider_id: null, ambiguous: false };
+}
+
+/**
+ * Best-effort: link stage_results.rider_id to the canonical riders table.
+ * Updates rows whose rider_id is currently null.
  */
 async function resolveStageRiders(
   supabase: ReturnType<typeof createServiceClient>,
@@ -75,12 +136,7 @@ async function resolveStageRiders(
     .eq("pool_id", poolId);
   if (!riders || riders.length === 0) return;
 
-  // Build a last-name index, dropping ambiguous last names.
-  const byLast = new Map<string, string | null>();
-  for (const r of riders) {
-    const k = r.last_name.toLowerCase();
-    byLast.set(k, byLast.has(k) ? null : r.id);
-  }
+  const idx = buildLastNameIndex(riders as RiderRow[]);
 
   const { data: unresolved } = await supabase
     .from("stage_results")
@@ -88,17 +144,80 @@ async function resolveStageRiders(
     .eq("pool_id", poolId)
     .is("rider_id", null);
   for (const row of unresolved ?? []) {
-    const last = row.raw_name.toLowerCase().split(/\s+/).pop() ?? "";
-    const id = byLast.get(last);
-    if (id) {
+    const { rider_id } = matchByLastName(row.raw_name, riders as RiderRow[], idx);
+    if (rider_id) {
       await supabase
         .from("stage_results")
-        .update({ rider_id: id })
+        .update({ rider_id })
         .eq("pool_id", row.pool_id)
         .eq("stage", row.stage)
         .eq("position", row.position);
     }
   }
+}
+
+/**
+ * Resolve team_riders.rider_id by matching raw_name against the canonical
+ * riders table. Without this step, the scoring view never finds matches and
+ * everyone scores zero. Returns counts so the UI can show progress.
+ */
+async function resolveTeamRiders(
+  supabase: ReturnType<typeof createServiceClient>,
+  poolId: string,
+): Promise<{ resolved: number; ambiguous: number; unmatched: number }> {
+  const { data: riders } = await supabase
+    .from("riders")
+    .select("id, full_name, last_name")
+    .eq("pool_id", poolId);
+  if (!riders || riders.length === 0) {
+    return { resolved: 0, ambiguous: 0, unmatched: 0 };
+  }
+
+  const idx = buildLastNameIndex(riders as RiderRow[]);
+
+  // Find every team_riders row in this pool whose rider_id isn't set yet.
+  // We have to join through teams to filter by pool.
+  const { data: picks } = await supabase
+    .from("team_riders")
+    .select("id, raw_name, teams!inner(pool_id)")
+    .eq("teams.pool_id", poolId)
+    .is("rider_id", null);
+
+  let resolved = 0;
+  let ambiguous = 0;
+  let unmatched = 0;
+
+  for (const row of picks ?? []) {
+    const r = row as unknown as { id: string; raw_name: string };
+    const { rider_id, ambiguous: amb } = matchByLastName(
+      r.raw_name,
+      riders as RiderRow[],
+      idx,
+    );
+    if (rider_id) {
+      await supabase
+        .from("team_riders")
+        .update({ rider_id, match_status: "matched" })
+        .eq("id", r.id);
+      resolved++;
+    } else if (amb) {
+      // Build the candidate shortlist so /admin/upload (or a future resolution
+      // page) can let Sofia pick which rider was meant.
+      const last = normalize(r.raw_name.split(/\s+/).pop() ?? "");
+      const candidates = (riders as RiderRow[])
+        .filter((rr) => normalize(rr.last_name) === last)
+        .map((rr) => ({ rider_id: rr.id, full_name: rr.full_name }));
+      await supabase
+        .from("team_riders")
+        .update({ match_status: "ambiguous", match_candidates: candidates })
+        .eq("id", r.id);
+      ambiguous++;
+    } else {
+      unmatched++;
+    }
+  }
+
+  return { resolved, ambiguous, unmatched };
 }
 
 export async function refreshPool(year: number): Promise<RefreshSummary> {
@@ -119,6 +238,9 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     stages_fetched: [],
     gc_fetched: false,
     riders_seeded: 0,
+    picks_resolved: 0,
+    picks_ambiguous: 0,
+    picks_unmatched: 0,
     errors: [],
   };
 
@@ -205,6 +327,19 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
   } catch (e) {
     summary.errors.push(
       `resolve stage riders: ${e instanceof Error ? e.message : String(e)}`,
+    );
+  }
+
+  // Match team_riders.raw_name → riders so the scoring view can join. Without
+  // this step, every pick has rider_id=null and no team scores any points.
+  try {
+    const resolution = await resolveTeamRiders(supabase, pool.id);
+    summary.picks_resolved = resolution.resolved;
+    summary.picks_ambiguous = resolution.ambiguous;
+    summary.picks_unmatched = resolution.unmatched;
+  } catch (e) {
+    summary.errors.push(
+      `resolve team riders: ${e instanceof Error ? e.message : String(e)}`,
     );
   }
 
