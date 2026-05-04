@@ -1,15 +1,139 @@
-// On-demand "fetch latest stage results from PCS" trigger.
-// TODO (task #5): button that POSTs to /api/refresh, shows last-run timestamp.
+"use client";
+
+// Manual on-demand refresh for any year. Lists the years we have pools for
+// and gives each a "Refresh" button that hits /api/refresh and shows the
+// summary. Useful for back-filling historical years (2020-2025) since the
+// daily cron only refreshes the active year (TDF_YEAR env var).
+
+import { useEffect, useState } from "react";
+
+import { createClient } from "@/lib/supabase/client";
+
+type RefreshSummary = {
+  pool_id: string;
+  year: number;
+  stages_fetched: number[];
+  gc_fetched: boolean;
+  riders_seeded: number;
+  errors: string[];
+};
 
 export default function AdminRefreshPage() {
+  const [years, setYears] = useState<number[]>([]);
+  const [busyYear, setBusyYear] = useState<number | null>(null);
+  const [results, setResults] = useState<Record<number, RefreshSummary | string>>({});
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from("pools")
+      .select("year")
+      .order("year", { ascending: false })
+      .then(({ data }) => {
+        setYears((data ?? []).map((p) => p.year as number));
+      });
+  }, []);
+
+  async function refresh(year: number) {
+    setBusyYear(year);
+    setResults((prev) => ({ ...prev, [year]: "Fetching from PCS — this can take ~30s for a full year..." }));
+    try {
+      const res = await fetch("/api/refresh", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ year }),
+      });
+      const body = await res.json();
+      if (!res.ok) {
+        setResults((prev) => ({
+          ...prev,
+          [year]: body.error ?? `Failed (${res.status})`,
+        }));
+      } else {
+        setResults((prev) => ({ ...prev, [year]: body as RefreshSummary }));
+      }
+    } catch (e) {
+      setResults((prev) => ({
+        ...prev,
+        [year]: e instanceof Error ? e.message : String(e),
+      }));
+    }
+    setBusyYear(null);
+  }
+
   return (
-    <section>
-      <h1 className="text-2xl font-bold">Refresh results</h1>
-      <p className="mt-2 text-slate-600">
-        The cron pulls results nightly. Use this to force an immediate fetch.
-      </p>
-      <p className="mt-8 text-xs text-slate-400">
-        TODO: refresh button + last-run status.
+    <section className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold">Refresh results</h1>
+        <p className="mt-2 text-sm text-slate-600">
+          Pull stage results + final GC from ProCyclingStats. The daily cron
+          handles the active year automatically; use this to back-fill
+          previous years or force a fresh pull mid-stage.
+        </p>
+      </div>
+
+      <ul className="space-y-3">
+        {years.map((year) => {
+          const r = results[year];
+          return (
+            <li
+              key={year}
+              className="rounded-lg border border-slate-200 bg-white p-4"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-lg font-semibold">
+                    Tour de France {year}
+                  </div>
+                  {typeof r === "object" && r !== null && (
+                    <div className="mt-1 text-xs text-slate-500">
+                      {r.stages_fetched.length} stages fetched ·{" "}
+                      {r.gc_fetched ? "GC ✓" : "GC pending"} ·{" "}
+                      {r.riders_seeded > 0
+                        ? `${r.riders_seeded} riders seeded`
+                        : "riders already loaded"}
+                      {r.errors.length > 0 && (
+                        <span className="ml-2 text-amber-600">
+                          · {r.errors.length} warning(s)
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {typeof r === "string" && (
+                    <div className="mt-1 text-xs text-slate-500">{r}</div>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => refresh(year)}
+                  disabled={busyYear !== null}
+                  className="rounded bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+                >
+                  {busyYear === year ? "Fetching…" : "Refresh"}
+                </button>
+              </div>
+
+              {typeof r === "object" && r !== null && r.errors.length > 0 && (
+                <details className="mt-3 text-xs">
+                  <summary className="cursor-pointer text-amber-700">
+                    Show {r.errors.length} warning(s)
+                  </summary>
+                  <ul className="mt-2 list-disc pl-5 space-y-0.5 text-slate-600">
+                    {r.errors.map((e, i) => (
+                      <li key={i}>{e}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <p className="text-xs text-slate-400">
+        A full year fetch hits PCS 21 times (one per stage) plus the start
+        list and final GC, with small delays between requests. Expect ~30
+        seconds total per year.
       </p>
     </section>
   );

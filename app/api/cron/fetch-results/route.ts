@@ -5,6 +5,9 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { refreshPool } from "@/lib/scraper/refresh";
 
+// Full-year backfills take ~30s; bump from the 10s default to 60s.
+export const maxDuration = 60;
+
 export async function GET(request: NextRequest) {
   // Vercel Cron sends `Authorization: Bearer <CRON_SECRET>` when configured.
   const auth = request.headers.get("authorization");

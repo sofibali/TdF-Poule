@@ -6,6 +6,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { refreshPool } from "@/lib/scraper/refresh";
 
+// A full 21-stage backfill can take ~30s with the polite 750ms jitter
+// between PCS requests. Vercel's default is 10s; bump to 60 (the Hobby tier
+// max) so back-fills don't get killed mid-fetch.
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   const supabase = createClient();
   const {
