@@ -23,9 +23,16 @@ export type RefreshSummary = {
 };
 
 /**
- * Populate the canonical riders table for a pool, if it's empty.
- * Pulls the start list from PCS and inserts one row per rider with
- * pcs_slug + pro_team. bib_number isn't on the start list page yet.
+ * Populate the canonical riders table for a pool.
+ *
+ * Tries two sources:
+ *   1) PCS start list page (gives us pcs_slug + pro_team — the real meta)
+ *   2) If that fails, fall back to the unique rider names already in
+ *      stage_results / final_gc — at least we get name + last_name so
+ *      matching works, even if pcs_slug + pro_team stay null.
+ *
+ * Returns the number of rows inserted/upserted (0 if the table was already
+ * populated and we didn't add anything new).
  */
 async function seedRidersIfEmpty(
   supabase: ReturnType<typeof createServiceClient>,
@@ -38,30 +45,68 @@ async function seedRidersIfEmpty(
     .eq("pool_id", poolId);
   if ((count ?? 0) > 0) return 0;
 
+  let inserted = 0;
+
+  // --- Path 1: PCS start list (rich data) ---
   try {
     const startList = await fetchStartList(year);
-    if (startList.length === 0) return 0;
-    const rows = startList.map((s) => {
-      const parts = s.rider.trim().split(/\s+/);
-      const last_name = parts.length > 1 ? parts.slice(-1)[0] : s.rider;
-      return {
-        pool_id: poolId,
-        full_name: s.rider,
-        last_name,
-        pcs_slug: s.pcs_slug,
-        pro_team: s.pro_team,
-        bib_number: null,
-      };
-    });
-    const { error } = await supabase
-      .from("riders")
-      .upsert(rows, { onConflict: "pool_id,full_name" });
-    if (error) throw error;
-    return rows.length;
+    if (startList.length > 0) {
+      const rows = startList.map((s) => {
+        const parts = s.rider.trim().split(/\s+/);
+        const last_name = parts.length > 1 ? parts.slice(-1)[0] : s.rider;
+        return {
+          pool_id: poolId,
+          full_name: s.rider,
+          last_name,
+          pcs_slug: s.pcs_slug,
+          pro_team: s.pro_team,
+          bib_number: null,
+        };
+      });
+      const { error } = await supabase
+        .from("riders")
+        .upsert(rows, { onConflict: "pool_id,full_name" });
+      if (!error) inserted = rows.length;
+    }
   } catch {
-    // Silently skip — rider names just won't have meta until we populate.
-    return 0;
+    /* fall through to path 2 */
   }
+
+  if (inserted > 0) return inserted;
+
+  // --- Path 2: derive from stage_results + final_gc raw names ---
+  // No pcs_slug or pro_team this way, but we still get full_name + last_name
+  // so the matcher can wire team_riders → riders.
+  const [{ data: stageNames }, { data: gcNames }] = await Promise.all([
+    supabase
+      .from("stage_results")
+      .select("raw_name")
+      .eq("pool_id", poolId),
+    supabase.from("final_gc").select("raw_name").eq("pool_id", poolId),
+  ]);
+  const names = new Set<string>();
+  for (const r of stageNames ?? []) names.add((r.raw_name ?? "").trim());
+  for (const r of gcNames ?? []) names.add((r.raw_name ?? "").trim());
+  names.delete("");
+  if (names.size === 0) return 0;
+
+  const fallbackRows = Array.from(names).map((full_name) => {
+    const parts = full_name.split(/\s+/);
+    const last_name = parts.length > 1 ? parts[parts.length - 1] : full_name;
+    return {
+      pool_id: poolId,
+      full_name,
+      last_name,
+      pcs_slug: null,
+      pro_team: null,
+      bib_number: null,
+    };
+  });
+  const { error } = await supabase
+    .from("riders")
+    .upsert(fallbackRows, { onConflict: "pool_id,full_name" });
+  if (error) return 0;
+  return fallbackRows.length;
 }
 
 // Strip diacritics + non-letters and lowercase, so "Pogačar" matches "Pogacar".
@@ -176,19 +221,27 @@ async function resolveTeamRiders(
   const idx = buildLastNameIndex(riders as RiderRow[]);
 
   // Find every team_riders row in this pool whose rider_id isn't set yet.
-  // We have to join through teams to filter by pool.
+  // Two-step query: first get all team_ids in this pool, then filter picks.
+  const { data: teams } = await supabase
+    .from("teams")
+    .select("id")
+    .eq("pool_id", poolId);
+  const teamIds = (teams ?? []).map((t) => t.id);
+  if (teamIds.length === 0) {
+    return { resolved: 0, ambiguous: 0, unmatched: 0 };
+  }
+
   const { data: picks } = await supabase
     .from("team_riders")
-    .select("id, raw_name, teams!inner(pool_id)")
-    .eq("teams.pool_id", poolId)
+    .select("id, raw_name")
+    .in("team_id", teamIds)
     .is("rider_id", null);
 
   let resolved = 0;
   let ambiguous = 0;
   let unmatched = 0;
 
-  for (const row of picks ?? []) {
-    const r = row as unknown as { id: string; raw_name: string };
+  for (const r of picks ?? []) {
     const { rider_id, ambiguous: amb } = matchByLastName(
       r.raw_name,
       riders as RiderRow[],
@@ -244,7 +297,9 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     errors: [],
   };
 
-  // Seed the riders table on first run — gives us pcs_slug + pro_team for the UI.
+  // We try to seed riders TWICE: once before stages (so the rich PCS startlist
+  // path can populate first) and once after stages (so the fallback can derive
+  // riders from the just-fetched stage_results if PCS startlist failed).
   summary.riders_seeded = await seedRidersIfEmpty(supabase, pool.id, pool.year);
 
   // Past Tours don't need start_date — detectCurrentStage returns 21 for any
@@ -316,6 +371,23 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     } catch (e) {
       summary.errors.push(
         `gc: ${e instanceof Error ? e.message : String(e)}`,
+      );
+    }
+  }
+
+  // Second seed attempt: if the first one came up empty (PCS startlist scrape
+  // failed), the fallback can now derive riders from the stage_results we
+  // just wrote.
+  if (summary.riders_seeded === 0) {
+    try {
+      summary.riders_seeded = await seedRidersIfEmpty(
+        supabase,
+        pool.id,
+        pool.year,
+      );
+    } catch (e) {
+      summary.errors.push(
+        `seed riders fallback: ${e instanceof Error ? e.message : String(e)}`,
       );
     }
   }
