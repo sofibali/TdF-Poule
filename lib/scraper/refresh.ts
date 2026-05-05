@@ -119,17 +119,49 @@ async function seedRiders(
   poolId: string,
   year: number,
 ): Promise<number> {
-  const seen = new Map<
-    string,
-    {
-      pool_id: string;
-      full_name: string;
-      last_name: string;
-      pcs_slug: string | null;
-      pro_team: string | null;
-      bib_number: number | null;
+  type RiderSeed = {
+    pool_id: string;
+    full_name: string;
+    last_name: string;
+    pcs_slug: string | null;
+    pro_team: string | null;
+    bib_number: number | null;
+  };
+
+  // Dedup by a normalized key (no case, no diacritics, no punctuation) so
+  // "Tadej Pogačar", "tadej pogacar", and "POGAČAR Tadej" all collapse to
+  // a single rider regardless of how PCS rendered the name on different
+  // pages. The stored full_name uses the richest source available.
+  const seen = new Map<string, RiderSeed>();
+
+  function ingest(seed: RiderSeed) {
+    const key = normalize(seed.full_name);
+    if (!key) return;
+    const existing = seen.get(key);
+    if (!existing) {
+      seen.set(key, seed);
+      return;
     }
-  >();
+    // Keep the richer entry — prefer one with pcs_slug + pro_team set,
+    // and prefer a properly-cased "First Last" form over all-caps variants.
+    const existingScore =
+      (existing.pcs_slug ? 2 : 0) +
+      (existing.pro_team ? 1 : 0) +
+      (existing.full_name === existing.full_name.toUpperCase() ? -1 : 0);
+    const newScore =
+      (seed.pcs_slug ? 2 : 0) +
+      (seed.pro_team ? 1 : 0) +
+      (seed.full_name === seed.full_name.toUpperCase() ? -1 : 0);
+    if (newScore > existingScore) {
+      seen.set(key, seed);
+    } else {
+      // Take fields from the new one if the existing has them missing.
+      if (!existing.pcs_slug && seed.pcs_slug) existing.pcs_slug = seed.pcs_slug;
+      if (!existing.pro_team && seed.pro_team) existing.pro_team = seed.pro_team;
+      if (existing.bib_number == null && seed.bib_number != null)
+        existing.bib_number = seed.bib_number;
+    }
+  }
 
   // --- Source 1: PCS start list ---
   try {
@@ -137,7 +169,7 @@ async function seedRiders(
     for (const entry of startList) {
       const full = entry.rider.trim();
       if (!full) continue;
-      seen.set(full.toLowerCase(), {
+      ingest({
         pool_id: poolId,
         full_name: full,
         last_name: lastNameOf(full),
@@ -151,17 +183,13 @@ async function seedRiders(
   }
 
   // --- Source 2: stage_results + final_gc rows we've already saved ---
-  // Each row may carry pcs_slug + pro_team from the stage scraper.
   const [{ data: stageRows }, { data: gcRows }] = await Promise.all([
     supabase
       .from("stage_results")
-      .select("raw_name, rider_id, pool_id")
+      .select("raw_name")
       .eq("pool_id", poolId),
-    supabase.from("final_gc").select("raw_name, rider_id").eq("pool_id", poolId),
+    supabase.from("final_gc").select("raw_name").eq("pool_id", poolId),
   ]);
-  // The Supabase rows don't include pcs_slug/pro_team because we didn't save
-  // them yet. Re-derive from raw_name only — pcs_slug stays null on this path
-  // unless source 1 already covered it.
   const candidateNames = new Set<string>();
   for (const r of stageRows ?? []) {
     if (r.raw_name) candidateNames.add(r.raw_name.trim());
@@ -171,9 +199,7 @@ async function seedRiders(
   }
   for (const full of candidateNames) {
     if (!full) continue;
-    const key = full.toLowerCase();
-    if (seen.has(key)) continue; // source 1 already had it (richer)
-    seen.set(key, {
+    ingest({
       pool_id: poolId,
       full_name: full,
       last_name: lastNameOf(full),
@@ -184,6 +210,10 @@ async function seedRiders(
   }
 
   if (seen.size === 0) return 0;
+
+  // Wipe the existing riders for this pool before re-inserting. This avoids
+  // leftover duplicates from earlier (buggy) runs polluting future matches.
+  await supabase.from("riders").delete().eq("pool_id", poolId);
 
   const { error } = await supabase
     .from("riders")

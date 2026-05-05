@@ -12,7 +12,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
           <div className="flex gap-4 text-sm">
             <Link href="/admin/upload" className="hover:underline">Upload teams</Link>
-            <Link href="/admin/results" className="hover:underline">Results</Link>
+            <Link href="/admin/results" className="hover:underline">Resolve picks</Link>
             <Link href="/admin/refresh" className="hover:underline">Refresh</Link>
             <Link href="/leaderboard" className="text-slate-500 hover:underline">Exit</Link>
           </div>
