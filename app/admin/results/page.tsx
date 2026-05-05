@@ -254,6 +254,11 @@ function PickRow({
   onResolve: (riderId: string | null) => void;
 }) {
   const [search, setSearch] = useState("");
+  const isUnresolved =
+    pick.match_status === "ambiguous" || pick.match_status === "unmatched";
+  // For unresolved picks the editor is open by default; for already-resolved
+  // picks we keep it collapsed behind an "Edit" toggle so the page stays tidy.
+  const [editing, setEditing] = useState(isUnresolved);
 
   const candidateIds = new Set(
     (pick.match_candidates ?? []).map((c) => c.rider_id),
@@ -284,8 +289,13 @@ function PickRow({
     );
 
   const currentRider = riders.find((r) => r.id === pick.rider_id);
-  const isUnresolved =
-    pick.match_status === "ambiguous" || pick.match_status === "unmatched";
+
+  function pick_(riderId: string | null) {
+    onResolve(riderId);
+    // Collapse the editor for resolved picks once the change is saved.
+    setEditing(false);
+    setSearch("");
+  }
 
   return (
     <li className="rounded border border-slate-200 p-3">
@@ -304,11 +314,25 @@ function PickRow({
                 {currentRider.pro_team ? ` · ${currentRider.pro_team}` : ""}
               </span>
             )}
+            {!currentRider && pick.match_status === "manual" && (
+              <span className="ml-2 text-xs text-slate-500">
+                → marked &ldquo;didn&apos;t start&rdquo;
+              </span>
+            )}
           </div>
         </div>
+        {/* Always-available edit affordance — the resolution UI is open by
+            default for unresolved picks, and toggleable for resolved ones. */}
+        <button
+          type="button"
+          onClick={() => setEditing((v) => !v)}
+          className="text-xs text-slate-500 hover:text-blue-600 hover:underline shrink-0"
+        >
+          {editing ? "Cancel" : "Edit"}
+        </button>
       </div>
 
-      {isUnresolved && (
+      {editing && (
         <div className="mt-3 space-y-2">
           {candidates.length > 0 && (
             <div>
@@ -319,14 +343,21 @@ function PickRow({
                 {candidates.map((c) => (
                   <button
                     key={c.id}
-                    onClick={() => onResolve(c.id)}
-                    className="rounded border border-slate-300 bg-slate-50 px-2 py-1 text-xs hover:bg-blue-50 hover:border-blue-300"
+                    onClick={() => pick_(c.id)}
+                    className={`rounded border px-2 py-1 text-xs hover:bg-blue-50 hover:border-blue-300 ${
+                      pick.rider_id === c.id
+                        ? "border-blue-400 bg-blue-50 font-semibold"
+                        : "border-slate-300 bg-slate-50"
+                    }`}
                   >
                     {c.full_name}
                     {c.pro_team && (
                       <span className="ml-1 text-slate-500">
                         · {c.pro_team}
                       </span>
+                    )}
+                    {pick.rider_id === c.id && (
+                      <span className="ml-1 text-blue-700">(current)</span>
                     )}
                   </button>
                 ))}
@@ -339,19 +370,21 @@ function PickRow({
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search any rider…"
+              placeholder="Search any rider by name or team…"
               className="w-full rounded border border-slate-300 px-2 py-1 text-sm"
+              autoFocus={isUnresolved}
             />
             {searchResults.length > 0 && (
               <div className="mt-1 flex flex-wrap gap-1">
                 {searchResults.map((r) => (
                   <button
                     key={r.id}
-                    onClick={() => {
-                      onResolve(r.id);
-                      setSearch("");
-                    }}
-                    className="rounded border border-slate-200 bg-white px-2 py-1 text-xs hover:bg-blue-50 hover:border-blue-300"
+                    onClick={() => pick_(r.id)}
+                    className={`rounded border px-2 py-1 text-xs hover:bg-blue-50 hover:border-blue-300 ${
+                      pick.rider_id === r.id
+                        ? "border-blue-400 bg-blue-50 font-semibold"
+                        : "border-slate-200 bg-white"
+                    }`}
                   >
                     {r.full_name}
                     {r.pro_team && (
@@ -363,13 +396,18 @@ function PickRow({
             )}
           </div>
 
-          <div className="text-right">
+          <div className="flex items-center justify-between text-xs">
             <button
-              onClick={() => onResolve(null)}
-              className="text-xs text-slate-500 hover:text-rose-600 hover:underline"
+              onClick={() => pick_(null)}
+              className="text-slate-500 hover:text-rose-600 hover:underline"
             >
-              Mark as &ldquo;rider didn&apos;t start&rdquo; (no match)
+              Mark as &ldquo;didn&apos;t start&rdquo;
             </button>
+            {currentRider && (
+              <span className="text-slate-400">
+                Currently linked to <strong>{currentRider.full_name}</strong>
+              </span>
+            )}
           </div>
         </div>
       )}
