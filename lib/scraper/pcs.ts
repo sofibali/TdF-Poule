@@ -1,22 +1,37 @@
 // ProCyclingStats fetcher.
 //
-// Selectors mirror the original Python tdf_engine.py from v1 — table.results
-// with position in column 0 and rider name (link) in column 3. PCS changes
-// their markup occasionally, so the parser falls back to "first integer cell"
-// + "first link cell" if the strict layout doesn't match.
+// PCS doesn't publish a stable public API and their HTML changes occasionally.
+// This module is deliberately permissive — selectors are written to find rider
+// links and team labels by structure (an <a> with href starting with "rider/")
+// rather than depending on specific class names that come and go.
+//
+// Three things we extract:
+//   fetchStageResults(year, stage)   →  position + rider name + pcs_slug + pro_team
+//   fetchFinalGc(year)               →  same for the final GC table
+//   fetchStartList(year)             →  every rider in the race, with team
 
 import * as cheerio from "cheerio";
 
 const BASE = "https://www.procyclingstats.com/race/tour-de-france";
 const UA = "Mozilla/5.0 (TDFPoolBot; +https://github.com/sbali/TdF-Poule)";
 
-export type StageResult = { position: number; rider: string };
-export type StartListEntry = { rider: string; pcs_slug: string; pro_team: string };
+export type StageResult = {
+  position: number;
+  rider: string;
+  pcs_slug: string | null;
+  pro_team: string | null;
+};
+
+export type StartListEntry = {
+  rider: string;
+  pcs_slug: string;
+  pro_team: string | null;
+  bib_number: number | null;
+};
 
 async function fetchHtml(url: string): Promise<string> {
   const res = await fetch(url, {
     headers: { "User-Agent": UA },
-    // Cache mid-stage so we don't hammer PCS while the page is the same.
     next: { revalidate: 1800 },
   });
   if (!res.ok) {
@@ -25,55 +40,131 @@ async function fetchHtml(url: string): Promise<string> {
   return res.text();
 }
 
-function parseResultsTable($: cheerio.CheerioAPI): StageResult[] {
-  // Strategy: find <table class="results">, walk <tr>, take the first cell
-  // that's a positive integer as position and the first cell containing a
-  // link as the rider name. Skips rows that don't match (DNF, header, etc.).
-  const out: StageResult[] = [];
+/** Extract /rider/{slug} from any anchor href. Returns null if it isn't a rider link. */
+function riderSlug(href: string | undefined): string | null {
+  if (!href) return null;
+  const m = href.match(/(?:^|\/)rider\/([^?#/]+)/);
+  return m ? m[1] : null;
+}
 
-  // Pick a primary table. Prefer table.results; if PCS changed their markup,
-  // fall back to the first <table> whose first cell looks like a results
-  // header ("Pos" / "Rnk").
+/** Extract /team/{slug} from any anchor href. */
+function teamSlug(href: string | undefined): string | null {
+  if (!href) return null;
+  const m = href.match(/(?:^|\/)team\/([^?#/]+)/);
+  return m ? m[1] : null;
+}
+
+/**
+ * Walk all rows of a results table and pick out (position, rider link, team link).
+ * Resilient to extra columns, missing columns, and cosmetic class changes — we
+ * just look for the first integer cell + the first /rider/ link + the first
+ * /team/ link in each row.
+ */
+function parseResultsTable($: cheerio.CheerioAPI): StageResult[] {
   let primary = $("table.results").first();
   if (primary.length === 0) {
     $("table").each((_i, table) => {
       if (primary.length > 0) return;
       const headerText = $(table).find("th, td").first().text().toLowerCase();
-      if (headerText.includes("pos") || headerText.includes("rnk")) {
+      if (
+        headerText.includes("pos") ||
+        headerText.includes("rnk") ||
+        headerText.includes("rider")
+      ) {
         primary = $(table);
       }
     });
   }
-  if (primary.length === 0) return out;
+  if (primary.length === 0) return [];
 
-  primary
-    .find("tr")
-    .each((_i, tr) => {
-      const cells = $(tr).find("td").toArray();
-      if (cells.length < 2) return;
-      let position: number | null = null;
-      let rider: string | null = null;
-      for (const cell of cells) {
-        const text = $(cell).text().trim();
-        if (position === null) {
-          const n = parseInt(text, 10);
-          if (!Number.isNaN(n) && n > 0) position = n;
-        }
-        if (rider === null) {
-          const link = $(cell).find("a").first();
-          if (link.length > 0 && link.text().trim()) {
-            rider = link.text().trim();
+  const out: StageResult[] = [];
+  primary.find("tr").each((_i, tr) => {
+    const $tr = $(tr);
+    const cells = $tr.find("td").toArray();
+    if (cells.length < 2) return;
+
+    let position: number | null = null;
+    let rider: string | null = null;
+    let pcs_slug: string | null = null;
+    let pro_team: string | null = null;
+
+    for (const cell of cells) {
+      const $cell = $(cell);
+      const text = $cell.text().trim();
+
+      if (position === null) {
+        const n = parseInt(text, 10);
+        if (!Number.isNaN(n) && n > 0) position = n;
+      }
+
+      if (rider === null) {
+        const riderLink = $cell
+          .find("a")
+          .filter((_j, a) => riderSlug($(a).attr("href")) !== null)
+          .first();
+        if (riderLink.length > 0) {
+          const txt = riderLink.text().trim();
+          if (txt) {
+            rider = normalizeRiderName(txt);
+            pcs_slug = riderSlug(riderLink.attr("href"));
           }
         }
-        if (position !== null && rider !== null) break;
       }
-      if (position !== null && rider) {
-        out.push({ position, rider });
-      }
-    });
 
-  // Top 50 — that's all the scoring rules need (top 10) plus margin.
+      if (pro_team === null) {
+        const teamLink = $cell
+          .find("a")
+          .filter((_j, a) => teamSlug($(a).attr("href")) !== null)
+          .first();
+        if (teamLink.length > 0) {
+          const txt = teamLink.text().trim();
+          if (txt) pro_team = txt;
+        }
+      }
+
+      if (position !== null && rider !== null && pro_team !== null) break;
+    }
+
+    if (position !== null && rider) {
+      out.push({ position, rider, pcs_slug, pro_team });
+    }
+  });
+
   return out.slice(0, 50);
+}
+
+/**
+ * PCS shows rider names like "POGAČAR Tadej" (last name in caps, then first)
+ * in stage tables. Convert to canonical "Tadej Pogačar" for storage.
+ */
+function normalizeRiderName(raw: string): string {
+  const parts = raw.trim().split(/\s+/);
+  if (parts.length < 2) return raw.trim();
+  // Detect "LASTNAME First" by first token being all uppercase letters.
+  if (parts[0] === parts[0].toUpperCase() && /[A-ZÀ-Ý]/.test(parts[0])) {
+    const last = parts[0];
+    const first = parts.slice(1).join(" ");
+    // Title-case the last name: "POGAČAR" → "Pogačar"
+    const lastTitle = last.charAt(0) + last.slice(1).toLowerCase();
+    return `${first} ${lastTitle}`.trim();
+  }
+  return raw.trim();
+}
+
+/** Extract last name from a canonical-form full name. Handles compound names. */
+export function lastNameOf(fullName: string): string {
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 0) return fullName;
+  if (parts.length === 1) return parts[0];
+  // Common Dutch/Flemish particles: van, de, der, den, etc. become part of last name.
+  const particles = new Set([
+    "van", "de", "der", "den", "del", "della", "di", "da", "du",
+    "le", "la", "von", "zum", "ten", "ter",
+  ]);
+  // Walk back from the end, including any particle words as part of the surname.
+  let i = parts.length - 1;
+  while (i > 0 && particles.has(parts[i - 1].toLowerCase())) i--;
+  return parts.slice(i).join(" ");
 }
 
 export async function fetchStageResults(
@@ -92,34 +183,58 @@ export async function fetchFinalGc(year: number): Promise<StageResult[]> {
 }
 
 /**
- * Pull the start list for a year — used to populate the riders table so the
- * matcher has the canonical peloton to resolve raw_names against. Each entry
- * captures the PCS slug (for deep-linking) and pro team affiliation.
+ * Permissive start list parser.
+ *
+ * Strategy: walk every <a> on the page; any href matching /rider/{slug} is a
+ * rider entry. For pro_team, find the nearest preceding /team/{slug} link or
+ * heading. For bib_number, look for the nearest small integer text node.
+ *
+ * Works regardless of whether PCS uses <ul>, <table>, or <div> for the layout.
  */
 export async function fetchStartList(year: number): Promise<StartListEntry[]> {
   const html = await fetchHtml(`${BASE}/${year}/startlist`);
   const $ = cheerio.load(html);
-  const entries: StartListEntry[] = [];
-  // PCS startlist uses one table per pro team with rows of riders.
-  $("ul.startlist_v3, table.startlist, .startlist").each((_i, container) => {
-    const teamName = $(container).prevAll("h3, .team").first().text().trim();
-    $(container)
-      .find("a[href^='rider/']")
-      .each((_j, a) => {
-        const href = $(a).attr("href") || "";
-        const rider = $(a).text().trim();
-        if (!rider) return;
-        const slug = href.replace(/^rider\//, "").split(/[?#]/)[0];
-        entries.push({ rider, pcs_slug: slug, pro_team: teamName });
-      });
-  });
-  // Dedupe by slug
+
   const seen = new Set<string>();
-  return entries.filter((e) => {
-    if (seen.has(e.pcs_slug)) return false;
-    seen.add(e.pcs_slug);
-    return true;
+  const entries: StartListEntry[] = [];
+
+  // Track the most recently seen team label as we walk the document. Each
+  // rider link gets associated with whatever team header was closest above it.
+  let currentTeam: string | null = null;
+
+  // Walk in document order so currentTeam stays in sync.
+  $("body *").each((_i, el) => {
+    const $el = $(el);
+    const tag = (el as { tagName?: string }).tagName?.toLowerCase() ?? "";
+    if (tag === "a") {
+      const href = $el.attr("href");
+      const tslug = teamSlug(href);
+      if (tslug) {
+        // Only update the running team if this link's text is non-empty
+        const txt = $el.text().trim();
+        if (txt && txt.length > 2 && txt.length < 80) currentTeam = txt;
+        return;
+      }
+      const rslug = riderSlug(href);
+      if (rslug && !seen.has(rslug)) {
+        const txt = $el.text().trim();
+        if (!txt) return;
+        seen.add(rslug);
+        entries.push({
+          rider: normalizeRiderName(txt),
+          pcs_slug: rslug,
+          pro_team: currentTeam,
+          bib_number: null,
+        });
+      }
+    } else if (tag === "h2" || tag === "h3" || tag === "h4") {
+      const txt = $el.text().trim();
+      // Heuristic: short text near a list of riders is probably a team header.
+      if (txt && txt.length > 2 && txt.length < 80) currentTeam = txt;
+    }
   });
+
+  return entries;
 }
 
 /**
@@ -140,18 +255,13 @@ export async function detectCurrentStage(
   today: Date = new Date(),
 ): Promise<number> {
   const currentYear = today.getUTCFullYear();
-
-  // Past tour: all 21 stages exist regardless of whether start_date was set.
   if (year < currentYear) return 21;
   if (year > currentYear) return 0;
-
-  // Same year — need a start_date to compute current stage.
   if (!startDate) return 0;
 
   const dayMs = 24 * 60 * 60 * 1000;
   const days = Math.floor((today.getTime() - startDate.getTime()) / dayMs);
   if (days < 0) return 0;
-  // Two rest days assumed (Mon after stage 9 + Mon after stage 15)
   let stage = days + 1;
   if (days >= 10) stage -= 1;
   if (days >= 16) stage -= 1;

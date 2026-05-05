@@ -8,6 +8,8 @@ import {
   fetchFinalGc,
   fetchStageResults,
   fetchStartList,
+  lastNameOf,
+  type StageResult,
 } from "@/lib/scraper/pcs";
 
 export type RefreshSummary = {
@@ -22,155 +24,178 @@ export type RefreshSummary = {
   errors: string[];
 };
 
-/**
- * Populate the canonical riders table for a pool.
- *
- * Tries two sources:
- *   1) PCS start list page (gives us pcs_slug + pro_team — the real meta)
- *   2) If that fails, fall back to the unique rider names already in
- *      stage_results / final_gc — at least we get name + last_name so
- *      matching works, even if pcs_slug + pro_team stay null.
- *
- * Returns the number of rows inserted/upserted (0 if the table was already
- * populated and we didn't add anything new).
- */
-async function seedRidersIfEmpty(
-  supabase: ReturnType<typeof createServiceClient>,
-  poolId: string,
-  year: number,
-): Promise<number> {
-  const { count } = await supabase
-    .from("riders")
-    .select("*", { count: "exact", head: true })
-    .eq("pool_id", poolId);
-  if ((count ?? 0) > 0) return 0;
+// ---------------------------------------------------------------------------
+// Name matching helpers
+// ---------------------------------------------------------------------------
 
-  let inserted = 0;
-
-  // --- Path 1: PCS start list (rich data) ---
-  try {
-    const startList = await fetchStartList(year);
-    if (startList.length > 0) {
-      const rows = startList.map((s) => {
-        const parts = s.rider.trim().split(/\s+/);
-        const last_name = parts.length > 1 ? parts.slice(-1)[0] : s.rider;
-        return {
-          pool_id: poolId,
-          full_name: s.rider,
-          last_name,
-          pcs_slug: s.pcs_slug,
-          pro_team: s.pro_team,
-          bib_number: null,
-        };
-      });
-      const { error } = await supabase
-        .from("riders")
-        .upsert(rows, { onConflict: "pool_id,full_name" });
-      if (!error) inserted = rows.length;
-    }
-  } catch {
-    /* fall through to path 2 */
-  }
-
-  if (inserted > 0) return inserted;
-
-  // --- Path 2: derive from stage_results + final_gc raw names ---
-  // No pcs_slug or pro_team this way, but we still get full_name + last_name
-  // so the matcher can wire team_riders → riders.
-  const [{ data: stageNames }, { data: gcNames }] = await Promise.all([
-    supabase
-      .from("stage_results")
-      .select("raw_name")
-      .eq("pool_id", poolId),
-    supabase.from("final_gc").select("raw_name").eq("pool_id", poolId),
-  ]);
-  const names = new Set<string>();
-  for (const r of stageNames ?? []) names.add((r.raw_name ?? "").trim());
-  for (const r of gcNames ?? []) names.add((r.raw_name ?? "").trim());
-  names.delete("");
-  if (names.size === 0) return 0;
-
-  const fallbackRows = Array.from(names).map((full_name) => {
-    const parts = full_name.split(/\s+/);
-    const last_name = parts.length > 1 ? parts[parts.length - 1] : full_name;
-    return {
-      pool_id: poolId,
-      full_name,
-      last_name,
-      pcs_slug: null,
-      pro_team: null,
-      bib_number: null,
-    };
-  });
-  const { error } = await supabase
-    .from("riders")
-    .upsert(fallbackRows, { onConflict: "pool_id,full_name" });
-  if (error) return 0;
-  return fallbackRows.length;
-}
-
-// Strip diacritics + non-letters and lowercase, so "Pogačar" matches "Pogacar".
 function normalize(s: string): string {
   return s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[̀-ͯ]/g, "") // strip combining diacritics
     .replace(/[^a-z]/g, "");
 }
 
-type RiderRow = { id: string; full_name: string; last_name: string };
+type RiderRow = {
+  id: string;
+  full_name: string;
+  last_name: string;
+};
 
 /**
- * Build a last-name → rider_id index. When multiple riders share a last name,
- * the value becomes null (signaling ambiguity — caller should fall back).
+ * Token-based matcher. For a docx pick like "Pogacar" or "T. Pogacar" or
+ * "Ca. Rodriguez", finds the matching rider in the canonical list by checking
+ * if the pick's last name appears as a normalized token of the rider's full
+ * name. Disambiguates by first initial when multiple riders share a last name.
  */
-function buildLastNameIndex(riders: RiderRow[]): Map<string, string | null> {
-  const idx = new Map<string, string | null>();
-  for (const r of riders) {
-    const k = normalize(r.last_name);
-    idx.set(k, idx.has(k) ? null : r.id);
-  }
-  return idx;
-}
-
-/**
- * Match a docx-style raw_name (e.g. "Pogacar", "T. Pogacar", "Ca. Rodriguez")
- * to a canonical rider. Last-name match by default; if ambiguous, narrow by
- * the first initial when the raw name has one.
- */
-function matchByLastName(
+function matchRider(
   rawName: string,
   riders: RiderRow[],
-  idx: Map<string, string | null>,
-): { rider_id: string | null; ambiguous: boolean } {
-  const parts = rawName.replace(/[,]/g, " ").split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return { rider_id: null, ambiguous: false };
-  const last = normalize(parts[parts.length - 1]);
-  const initial = parts.length > 1 ? normalize(parts.slice(0, -1).join(" ")) : null;
+):
+  | { kind: "matched"; rider: RiderRow }
+  | { kind: "ambiguous"; candidates: RiderRow[] }
+  | { kind: "unmatched" } {
+  const tokens = rawName
+    .replace(/[,]/g, " ")
+    .split(/\s+/)
+    .map((t) => t.trim())
+    .filter(Boolean);
+  if (tokens.length === 0) return { kind: "unmatched" };
 
-  const idxHit = idx.get(last);
-  if (idxHit) return { rider_id: idxHit, ambiguous: false };
-  if (idxHit === null && idx.has(last)) {
-    // Ambiguous: try to narrow with first-initial / first-name
-    if (initial) {
-      const candidates = riders.filter((r) => normalize(r.last_name) === last);
-      const narrowed = candidates.filter((r) => {
-        const first = normalize(
-          r.full_name.replace(new RegExp(r.last_name + "$", "i"), ""),
-        );
-        return first === initial || (initial.length === 1 && first.startsWith(initial));
-      });
-      if (narrowed.length === 1) return { rider_id: narrowed[0].id, ambiguous: false };
-    }
-    return { rider_id: null, ambiguous: true };
+  const pickedLast = normalize(tokens[tokens.length - 1]);
+  const pickedInitial =
+    tokens.length > 1 ? normalize(tokens.slice(0, -1).join(" ")) : null;
+
+  // Build candidate set: any rider whose normalized full_name contains the
+  // picked last name as a complete token, OR whose stored last_name normalizes
+  // to the picked last name.
+  const candidates = riders.filter((r) => {
+    const lastNorm = normalize(r.last_name);
+    if (lastNorm === pickedLast) return true;
+    // Token match within full_name
+    const fullTokens = r.full_name.split(/\s+/).map(normalize);
+    return fullTokens.some((t) => t === pickedLast);
+  });
+
+  if (candidates.length === 0) return { kind: "unmatched" };
+  if (candidates.length === 1) return { kind: "matched", rider: candidates[0] };
+
+  // Multiple candidates — try first-initial / first-name narrowing.
+  if (pickedInitial) {
+    const narrowed = candidates.filter((r) => {
+      const tokens = r.full_name.split(/\s+/).map(normalize);
+      // Drop the last-name match from the tokens to avoid self-match.
+      const others = tokens.filter((t) => t !== pickedLast);
+      return others.some((t) =>
+        pickedInitial.length === 1
+          ? t.startsWith(pickedInitial)
+          : t === pickedInitial || t.startsWith(pickedInitial),
+      );
+    });
+    if (narrowed.length === 1) return { kind: "matched", rider: narrowed[0] };
+    if (narrowed.length > 0) return { kind: "ambiguous", candidates: narrowed };
   }
-  return { rider_id: null, ambiguous: false };
+
+  return { kind: "ambiguous", candidates };
 }
 
+// ---------------------------------------------------------------------------
+// Riders table seeding
+// ---------------------------------------------------------------------------
+
 /**
- * Best-effort: link stage_results.rider_id to the canonical riders table.
- * Updates rows whose rider_id is currently null.
+ * Populate or top-up the canonical riders table for a pool. Tries two sources
+ * in order:
+ *
+ *   1) PCS start list page (rich — gives us pcs_slug + pro_team for everyone)
+ *   2) Whatever we already have in stage_results / final_gc (each row carries
+ *      pcs_slug + pro_team if the stage scraper found them)
+ *
+ * Always upserts with ON CONFLICT (pool_id, full_name) so re-runs are idempotent.
+ * Returns the number of inserted/updated rider rows.
  */
+async function seedRiders(
+  supabase: ReturnType<typeof createServiceClient>,
+  poolId: string,
+  year: number,
+): Promise<number> {
+  const seen = new Map<
+    string,
+    {
+      pool_id: string;
+      full_name: string;
+      last_name: string;
+      pcs_slug: string | null;
+      pro_team: string | null;
+      bib_number: number | null;
+    }
+  >();
+
+  // --- Source 1: PCS start list ---
+  try {
+    const startList = await fetchStartList(year);
+    for (const entry of startList) {
+      const full = entry.rider.trim();
+      if (!full) continue;
+      seen.set(full.toLowerCase(), {
+        pool_id: poolId,
+        full_name: full,
+        last_name: lastNameOf(full),
+        pcs_slug: entry.pcs_slug,
+        pro_team: entry.pro_team,
+        bib_number: entry.bib_number,
+      });
+    }
+  } catch {
+    /* fall through */
+  }
+
+  // --- Source 2: stage_results + final_gc rows we've already saved ---
+  // Each row may carry pcs_slug + pro_team from the stage scraper.
+  const [{ data: stageRows }, { data: gcRows }] = await Promise.all([
+    supabase
+      .from("stage_results")
+      .select("raw_name, rider_id, pool_id")
+      .eq("pool_id", poolId),
+    supabase.from("final_gc").select("raw_name, rider_id").eq("pool_id", poolId),
+  ]);
+  // The Supabase rows don't include pcs_slug/pro_team because we didn't save
+  // them yet. Re-derive from raw_name only — pcs_slug stays null on this path
+  // unless source 1 already covered it.
+  const candidateNames = new Set<string>();
+  for (const r of stageRows ?? []) {
+    if (r.raw_name) candidateNames.add(r.raw_name.trim());
+  }
+  for (const r of gcRows ?? []) {
+    if (r.raw_name) candidateNames.add(r.raw_name.trim());
+  }
+  for (const full of candidateNames) {
+    if (!full) continue;
+    const key = full.toLowerCase();
+    if (seen.has(key)) continue; // source 1 already had it (richer)
+    seen.set(key, {
+      pool_id: poolId,
+      full_name: full,
+      last_name: lastNameOf(full),
+      pcs_slug: null,
+      pro_team: null,
+      bib_number: null,
+    });
+  }
+
+  if (seen.size === 0) return 0;
+
+  const { error } = await supabase
+    .from("riders")
+    .upsert(Array.from(seen.values()), { onConflict: "pool_id,full_name" });
+  if (error) return 0;
+  return seen.size;
+}
+
+// ---------------------------------------------------------------------------
+// Stage results: backfill rider_id from raw_name
+// ---------------------------------------------------------------------------
+
 async function resolveStageRiders(
   supabase: ReturnType<typeof createServiceClient>,
   poolId: string,
@@ -181,31 +206,46 @@ async function resolveStageRiders(
     .eq("pool_id", poolId);
   if (!riders || riders.length === 0) return;
 
-  const idx = buildLastNameIndex(riders as RiderRow[]);
-
   const { data: unresolved } = await supabase
     .from("stage_results")
     .select("pool_id, stage, position, raw_name")
     .eq("pool_id", poolId)
     .is("rider_id", null);
+
   for (const row of unresolved ?? []) {
-    const { rider_id } = matchByLastName(row.raw_name, riders as RiderRow[], idx);
-    if (rider_id) {
+    const result = matchRider(row.raw_name, riders as RiderRow[]);
+    if (result.kind === "matched") {
       await supabase
         .from("stage_results")
-        .update({ rider_id })
+        .update({ rider_id: result.rider.id })
         .eq("pool_id", row.pool_id)
         .eq("stage", row.stage)
         .eq("position", row.position);
     }
   }
+
+  // Same treatment for final_gc.
+  const { data: gcUnresolved } = await supabase
+    .from("final_gc")
+    .select("pool_id, position, raw_name")
+    .eq("pool_id", poolId)
+    .is("rider_id", null);
+  for (const row of gcUnresolved ?? []) {
+    const result = matchRider(row.raw_name, riders as RiderRow[]);
+    if (result.kind === "matched") {
+      await supabase
+        .from("final_gc")
+        .update({ rider_id: result.rider.id })
+        .eq("pool_id", row.pool_id)
+        .eq("position", row.position);
+    }
+  }
 }
 
-/**
- * Resolve team_riders.rider_id by matching raw_name against the canonical
- * riders table. Without this step, the scoring view never finds matches and
- * everyone scores zero. Returns counts so the UI can show progress.
- */
+// ---------------------------------------------------------------------------
+// Team picks: backfill rider_id from raw_name
+// ---------------------------------------------------------------------------
+
 async function resolveTeamRiders(
   supabase: ReturnType<typeof createServiceClient>,
   poolId: string,
@@ -218,10 +258,6 @@ async function resolveTeamRiders(
     return { resolved: 0, ambiguous: 0, unmatched: 0 };
   }
 
-  const idx = buildLastNameIndex(riders as RiderRow[]);
-
-  // Find every team_riders row in this pool whose rider_id isn't set yet.
-  // Two-step query: first get all team_ids in this pool, then filter picks.
   const { data: teams } = await supabase
     .from("teams")
     .select("id")
@@ -231,47 +267,62 @@ async function resolveTeamRiders(
     return { resolved: 0, ambiguous: 0, unmatched: 0 };
   }
 
+  // Re-resolve EVERY pick — including ones we previously marked unmatched, so
+  // earlier failures get retried with the now-richer riders table.
   const { data: picks } = await supabase
     .from("team_riders")
     .select("id, raw_name")
-    .in("team_id", teamIds)
-    .is("rider_id", null);
+    .in("team_id", teamIds);
 
   let resolved = 0;
   let ambiguous = 0;
   let unmatched = 0;
 
   for (const r of picks ?? []) {
-    const { rider_id, ambiguous: amb } = matchByLastName(
-      r.raw_name,
-      riders as RiderRow[],
-      idx,
-    );
-    if (rider_id) {
+    const result = matchRider(r.raw_name, riders as RiderRow[]);
+    if (result.kind === "matched") {
       await supabase
         .from("team_riders")
-        .update({ rider_id, match_status: "matched" })
+        .update({
+          rider_id: result.rider.id,
+          match_status: "matched",
+          match_candidates: null,
+        })
         .eq("id", r.id);
       resolved++;
-    } else if (amb) {
-      // Build the candidate shortlist so /admin/upload (or a future resolution
-      // page) can let Sofia pick which rider was meant.
-      const last = normalize(r.raw_name.split(/\s+/).pop() ?? "");
-      const candidates = (riders as RiderRow[])
-        .filter((rr) => normalize(rr.last_name) === last)
-        .map((rr) => ({ rider_id: rr.id, full_name: rr.full_name }));
+    } else if (result.kind === "ambiguous") {
+      const candidates = result.candidates.map((c) => ({
+        rider_id: c.id,
+        full_name: c.full_name,
+      }));
       await supabase
         .from("team_riders")
-        .update({ match_status: "ambiguous", match_candidates: candidates })
+        .update({
+          rider_id: null,
+          match_status: "ambiguous",
+          match_candidates: candidates,
+        })
         .eq("id", r.id);
       ambiguous++;
     } else {
+      await supabase
+        .from("team_riders")
+        .update({
+          rider_id: null,
+          match_status: "unmatched",
+          match_candidates: null,
+        })
+        .eq("id", r.id);
       unmatched++;
     }
   }
 
   return { resolved, ambiguous, unmatched };
 }
+
+// ---------------------------------------------------------------------------
+// Main entry point
+// ---------------------------------------------------------------------------
 
 export async function refreshPool(year: number): Promise<RefreshSummary> {
   const supabase = createServiceClient();
@@ -282,7 +333,9 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     .eq("year", year)
     .single();
   if (error || !pool) {
-    throw new Error(`No pool for year ${year}: ${error?.message ?? "not found"}`);
+    throw new Error(
+      `No pool for year ${year}: ${error?.message ?? "not found"}`,
+    );
   }
 
   const summary: RefreshSummary = {
@@ -297,14 +350,6 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     errors: [],
   };
 
-  // We try to seed riders TWICE: once before stages (so the rich PCS startlist
-  // path can populate first) and once after stages (so the fallback can derive
-  // riders from the just-fetched stage_results if PCS startlist failed).
-  summary.riders_seeded = await seedRidersIfEmpty(supabase, pool.id, pool.year);
-
-  // Past Tours don't need start_date — detectCurrentStage returns 21 for any
-  // year < this year. For the current year, we need start_date to figure out
-  // what stage we're on; if it's missing we treat the Tour as not-yet-started.
   const startDate = pool.start_date ? new Date(pool.start_date) : null;
   const currentStage = await detectCurrentStage(pool.year, startDate);
   if (currentStage === 0) {
@@ -316,6 +361,7 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     return summary;
   }
 
+  // Fetch any stages we don't have yet.
   const { data: existing } = await supabase
     .from("stage_results")
     .select("stage")
@@ -330,7 +376,7 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
         summary.errors.push(`stage ${stage}: empty result set`);
         continue;
       }
-      const upserts = rows.map((r) => ({
+      const upserts = rows.map((r: StageResult) => ({
         pool_id: pool.id,
         stage,
         position: r.position,
@@ -353,11 +399,12 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     await new Promise((r) => setTimeout(r, 750));
   }
 
+  // Final GC
   if (currentStage >= (pool.num_stages ?? 21)) {
     try {
       const gc = await fetchFinalGc(pool.year);
       if (gc.length > 0) {
-        const upserts = gc.map((r) => ({
+        const upserts = gc.map((r: StageResult) => ({
           pool_id: pool.id,
           position: r.position,
           rider_id: null,
@@ -375,25 +422,17 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     }
   }
 
-  // Second seed attempt: if the first one came up empty (PCS startlist scrape
-  // failed), the fallback can now derive riders from the stage_results we
-  // just wrote.
-  if (summary.riders_seeded === 0) {
-    try {
-      summary.riders_seeded = await seedRidersIfEmpty(
-        supabase,
-        pool.id,
-        pool.year,
-      );
-    } catch (e) {
-      summary.errors.push(
-        `seed riders fallback: ${e instanceof Error ? e.message : String(e)}`,
-      );
-    }
+  // Seed/refresh the canonical riders table. Runs AFTER stage fetching so the
+  // fallback path can pull from the rows we just wrote if PCS startlist fails.
+  try {
+    summary.riders_seeded = await seedRiders(supabase, pool.id, pool.year);
+  } catch (e) {
+    summary.errors.push(
+      `seed riders: ${e instanceof Error ? e.message : String(e)}`,
+    );
   }
 
-  // Link stage_results.rider_id to canonical riders so v_rider_totals can
-  // join through to pcs_slug/pro_team/bib_number for the UI.
+  // Now wire rider_id columns on stage_results, final_gc, and team_riders.
   try {
     await resolveStageRiders(supabase, pool.id);
   } catch (e) {
@@ -402,8 +441,6 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     );
   }
 
-  // Match team_riders.raw_name → riders so the scoring view can join. Without
-  // this step, every pick has rider_id=null and no team scores any points.
   try {
     const resolution = await resolveTeamRiders(supabase, pool.id);
     summary.picks_resolved = resolution.resolved;
@@ -418,7 +455,7 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
   await supabase.from("import_log").insert({
     pool_id: pool.id,
     kind: "stage_fetch",
-    message: `Refreshed: stages=${summary.stages_fetched.join(",") || "none"}, gc=${summary.gc_fetched}, riders_seeded=${summary.riders_seeded}`,
+    message: `Refreshed: stages=${summary.stages_fetched.join(",") || "none"}, gc=${summary.gc_fetched}, riders=${summary.riders_seeded}, picks=${summary.picks_resolved}/${summary.picks_ambiguous}/${summary.picks_unmatched}`,
     details: summary,
   });
 
