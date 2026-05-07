@@ -180,18 +180,25 @@ async function seedRiders(
 
   if (candidates.length === 0) return 0;
 
-  // Call upsert_rider for each candidate. The SQL function dedups by sorted-
-  // token key inside Postgres, so re-runs are idempotent and PCS's name-order
+  // Single bulk RPC instead of one call per rider — 1 round trip instead of
+  // 200+. The SQL function dedups by sorted-token key, so PCS's name-order
   // variations all collapse to a single rider row.
-  for (const c of candidates) {
-    await supabase.rpc("upsert_rider", {
-      p_pool_id: poolId,
-      p_full_name: c.full_name,
-      p_last_name: c.last_name,
-      p_pcs_slug: c.pcs_slug,
-      p_pro_team: c.pro_team,
-      p_bib_number: c.bib_number,
-    });
+  const { error: rpcErr } = await supabase.rpc("upsert_riders_bulk", {
+    p_pool_id: poolId,
+    p_riders: candidates,
+  });
+  if (rpcErr) {
+    // Fall back to per-rider calls if the bulk RPC isn't deployed yet.
+    for (const c of candidates) {
+      await supabase.rpc("upsert_rider", {
+        p_pool_id: poolId,
+        p_full_name: c.full_name,
+        p_last_name: c.last_name,
+        p_pcs_slug: c.pcs_slug,
+        p_pro_team: c.pro_team,
+        p_bib_number: c.bib_number,
+      });
+    }
   }
 
   // Return the actual count after upserts so the UI shows the deduped total.

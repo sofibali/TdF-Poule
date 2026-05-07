@@ -148,3 +148,33 @@ grant execute on function public.upsert_rider(uuid, text, text, text, text, int)
   to authenticated;
 grant execute on function public.upsert_rider(uuid, text, text, text, text, int)
   to service_role;
+
+-- Bulk variant: takes a JSON array of rider seeds and upserts them all in
+-- one round-trip. Avoids N×latency overhead when seeding 200-300 riders.
+create or replace function public.upsert_riders_bulk(
+  p_pool_id uuid,
+  p_riders  jsonb
+) returns int
+language plpgsql
+as $$
+declare
+  rider jsonb;
+  cnt   int := 0;
+begin
+  for rider in select value from jsonb_array_elements(p_riders) loop
+    perform public.upsert_rider(
+      p_pool_id,
+      rider->>'full_name',
+      rider->>'last_name',
+      rider->>'pcs_slug',
+      rider->>'pro_team',
+      nullif(rider->>'bib_number', '')::int
+    );
+    cnt := cnt + 1;
+  end loop;
+  return cnt;
+end;
+$$;
+
+grant execute on function public.upsert_riders_bulk(uuid, jsonb) to authenticated;
+grant execute on function public.upsert_riders_bulk(uuid, jsonb) to service_role;

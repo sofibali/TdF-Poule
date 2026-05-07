@@ -12,3 +12,5 @@ out
 lib/db/types.gen.ts
 #*#
 .#*
+*.local~
+*~
