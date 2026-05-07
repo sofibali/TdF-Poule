@@ -36,6 +36,8 @@ function normalize(s: string): string {
     .replace(/[^a-z]/g, "");
 }
 
+// nameKey moved to Postgres as public.rider_match_key — see migration 0008.
+
 type RiderRow = {
   id: string;
   full_name: string;
@@ -120,7 +122,6 @@ async function seedRiders(
   year: number,
 ): Promise<number> {
   type RiderSeed = {
-    pool_id: string;
     full_name: string;
     last_name: string;
     pcs_slug: string | null;
@@ -128,40 +129,10 @@ async function seedRiders(
     bib_number: number | null;
   };
 
-  // Dedup by a normalized key (no case, no diacritics, no punctuation) so
-  // "Tadej Pogačar", "tadej pogacar", and "POGAČAR Tadej" all collapse to
-  // a single rider regardless of how PCS rendered the name on different
-  // pages. The stored full_name uses the richest source available.
-  const seen = new Map<string, RiderSeed>();
-
-  function ingest(seed: RiderSeed) {
-    const key = normalize(seed.full_name);
-    if (!key) return;
-    const existing = seen.get(key);
-    if (!existing) {
-      seen.set(key, seed);
-      return;
-    }
-    // Keep the richer entry — prefer one with pcs_slug + pro_team set,
-    // and prefer a properly-cased "First Last" form over all-caps variants.
-    const existingScore =
-      (existing.pcs_slug ? 2 : 0) +
-      (existing.pro_team ? 1 : 0) +
-      (existing.full_name === existing.full_name.toUpperCase() ? -1 : 0);
-    const newScore =
-      (seed.pcs_slug ? 2 : 0) +
-      (seed.pro_team ? 1 : 0) +
-      (seed.full_name === seed.full_name.toUpperCase() ? -1 : 0);
-    if (newScore > existingScore) {
-      seen.set(key, seed);
-    } else {
-      // Take fields from the new one if the existing has them missing.
-      if (!existing.pcs_slug && seed.pcs_slug) existing.pcs_slug = seed.pcs_slug;
-      if (!existing.pro_team && seed.pro_team) existing.pro_team = seed.pro_team;
-      if (existing.bib_number == null && seed.bib_number != null)
-        existing.bib_number = seed.bib_number;
-    }
-  }
+  // Collect all candidates without dedup — the upsert_rider RPC handles dedup
+  // atomically in SQL using a sorted-token match key, which is robust to PCS's
+  // per-page name reordering ("Tadej Pogačar" vs "Pogačar Tadej").
+  const candidates: RiderSeed[] = [];
 
   // --- Source 1: PCS start list ---
   try {
@@ -169,8 +140,7 @@ async function seedRiders(
     for (const entry of startList) {
       const full = entry.rider.trim();
       if (!full) continue;
-      ingest({
-        pool_id: poolId,
+      candidates.push({
         full_name: full,
         last_name: lastNameOf(full),
         pcs_slug: entry.pcs_slug,
@@ -179,7 +149,7 @@ async function seedRiders(
       });
     }
   } catch {
-    /* fall through */
+    /* fall through to source 2 */
   }
 
   // --- Source 2: stage_results + final_gc rows we've already saved ---
@@ -199,8 +169,7 @@ async function seedRiders(
   }
   for (const full of candidateNames) {
     if (!full) continue;
-    ingest({
-      pool_id: poolId,
+    candidates.push({
       full_name: full,
       last_name: lastNameOf(full),
       pcs_slug: null,
@@ -209,17 +178,28 @@ async function seedRiders(
     });
   }
 
-  if (seen.size === 0) return 0;
+  if (candidates.length === 0) return 0;
 
-  // Wipe the existing riders for this pool before re-inserting. This avoids
-  // leftover duplicates from earlier (buggy) runs polluting future matches.
-  await supabase.from("riders").delete().eq("pool_id", poolId);
+  // Call upsert_rider for each candidate. The SQL function dedups by sorted-
+  // token key inside Postgres, so re-runs are idempotent and PCS's name-order
+  // variations all collapse to a single rider row.
+  for (const c of candidates) {
+    await supabase.rpc("upsert_rider", {
+      p_pool_id: poolId,
+      p_full_name: c.full_name,
+      p_last_name: c.last_name,
+      p_pcs_slug: c.pcs_slug,
+      p_pro_team: c.pro_team,
+      p_bib_number: c.bib_number,
+    });
+  }
 
-  const { error } = await supabase
+  // Return the actual count after upserts so the UI shows the deduped total.
+  const { count } = await supabase
     .from("riders")
-    .upsert(Array.from(seen.values()), { onConflict: "pool_id,full_name" });
-  if (error) return 0;
-  return seen.size;
+    .select("*", { count: "exact", head: true })
+    .eq("pool_id", poolId);
+  return count ?? 0;
 }
 
 // ---------------------------------------------------------------------------
