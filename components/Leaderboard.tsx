@@ -24,16 +24,26 @@ export default function Leaderboard({ initial, year }: Props) {
     const supabase = createClient();
 
     async function refresh() {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("v_leaderboard")
         .select("*")
         .eq("year", year)
         .order("rank", { ascending: true });
+      if (error) {
+        // Don't blow away whatever we have if the refresh fails.
+        // eslint-disable-next-line no-console
+        console.error("Leaderboard refresh failed:", error);
+        return;
+      }
       if (data) setRows(data as LeaderboardRow[]);
     }
 
+    // Run once on mount — covers the case where the server-rendered `initial`
+    // data is stale (e.g. an /admin/refresh just happened in another tab).
+    refresh();
+
     const channel = supabase
-      .channel("leaderboard")
+      .channel(`leaderboard-${year}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "stage_results" }, refresh)
       .on("postgres_changes", { event: "*", schema: "public", table: "final_gc" }, refresh)
       .on("postgres_changes", { event: "*", schema: "public", table: "team_riders" }, refresh)

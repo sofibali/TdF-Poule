@@ -56,6 +56,12 @@ export async function POST(request: NextRequest) {
   }
 
   // 2) Teams + team_riders
+  // Track every team_id we touched in this import, so we can delete leftovers
+  // afterward. This handles the rename case: if a team was previously called
+  // "Unknown_6" and the admin renamed it to "Eelco" in the upload preview,
+  // upsert(on_conflict=name) creates a NEW team rather than updating — we
+  // need to clean up the orphan or it lingers on the leaderboard.
+  const importedTeamIds: string[] = [];
   let imported = 0;
   for (const team of parsed.teams) {
     const teamLabel =
@@ -74,6 +80,8 @@ export async function POST(request: NextRequest) {
       .select()
       .single();
     if (te || !tr) continue;
+
+    importedTeamIds.push(tr.id);
 
     await svc.from("team_riders").delete().eq("team_id", tr.id);
 
@@ -99,19 +107,46 @@ export async function POST(request: NextRequest) {
     imported++;
   }
 
+  // 2b) Delete any teams in this pool that this upload didn't touch — those
+  // are orphans (e.g. an old "Unknown_6" left over after we renamed it to
+  // "Eelco"). team_riders cascade-delete with the parent row.
+  let orphansRemoved = 0;
+  if (importedTeamIds.length > 0) {
+    const { data: orphans } = await svc
+      .from("teams")
+      .select("id, name")
+      .eq("pool_id", pool.id)
+      .not("id", "in", `(${importedTeamIds.map((id) => `"${id}"`).join(",")})`);
+    if (orphans && orphans.length > 0) {
+      const { error: delErr } = await svc
+        .from("teams")
+        .delete()
+        .in(
+          "id",
+          orphans.map((o) => o.id as string),
+        );
+      if (!delErr) orphansRemoved = orphans.length;
+    }
+  }
+
   // 3) Audit row
   await svc.from("import_log").insert({
     pool_id: pool.id,
     kind: parsed.source.toLowerCase().endsWith(".docx")
       ? "teams_docx"
       : "teams_csv",
-    message: `Imported ${imported} teams (${parsed.unresolved.length} unresolved at parse time).`,
-    details: { unresolved: parsed.unresolved, imported_by: user.email ?? user.id },
+    message: `Imported ${imported} teams (${parsed.unresolved.length} unresolved at parse time, ${orphansRemoved} orphans removed).`,
+    details: {
+      unresolved: parsed.unresolved,
+      orphans_removed: orphansRemoved,
+      imported_by: user.email ?? user.id,
+    },
   });
 
   return NextResponse.json({
     pool_id: pool.id,
     year: parsed.year,
     teams_imported: imported,
+    orphans_removed: orphansRemoved,
   });
 }

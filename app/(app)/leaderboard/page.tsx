@@ -41,7 +41,8 @@ export default async function LeaderboardPage({
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Leaderboard</h1>
             <p className="mt-1 text-sm text-slate-500">
-              Tour de France {year} · updates live after each stage
+              Tour de France {year} · {rows.length} team{rows.length === 1 ? "" : "s"}
+              {" · "}updates live after each stage
             </p>
           </div>
           {years.length > 0 && <YearSelect years={years} current={year} />}
