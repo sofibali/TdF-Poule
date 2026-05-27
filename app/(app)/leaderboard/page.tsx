@@ -14,10 +14,22 @@ export default async function LeaderboardPage({
   searchParams: { year?: string };
 }) {
   const supabase = createClient();
-  const year =
-    parseInt(searchParams.year ?? process.env.TDF_YEAR ?? "2026", 10);
 
-  const [{ data: lb }, { data: hist }, { data: pools }] = await Promise.all([
+  // Resolve which year to show. Priority:
+  //   1. ?year=NNNN explicitly in URL
+  //   2. Most recent year that actually has a pool
+  //   3. TDF_YEAR env var (or 2026 as last resort)
+  const { data: pools } = await supabase
+    .from("pools")
+    .select("year")
+    .order("year", { ascending: false });
+  const years = (pools ?? []).map((p) => p.year as number);
+
+  const year = searchParams.year
+    ? parseInt(searchParams.year, 10)
+    : years[0] ?? parseInt(process.env.TDF_YEAR ?? "2026", 10);
+
+  const [{ data: lb }, { data: hist }] = await Promise.all([
     supabase
       .from("v_leaderboard")
       .select("*")
@@ -27,12 +39,10 @@ export default async function LeaderboardPage({
       .from("v_historical_winners")
       .select("*")
       .order("year", { ascending: false }),
-    supabase.from("pools").select("year").order("year", { ascending: false }),
   ]);
 
   const rows = (lb as LeaderboardRow[]) ?? [];
   const winners = (hist as HistoricalWinner[]) ?? [];
-  const years = (pools ?? []).map((p) => p.year as number);
 
   return (
     <section className="space-y-12">

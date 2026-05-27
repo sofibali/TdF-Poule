@@ -17,8 +17,17 @@ export default async function RidersPage({
   searchParams: { year?: string };
 }) {
   const supabase = createClient();
-  const year =
-    parseInt(searchParams.year ?? process.env.TDF_YEAR ?? "2026", 10);
+
+  // Default to most recent year with a pool.
+  const { data: pools } = await supabase
+    .from("pools")
+    .select("year")
+    .order("year", { ascending: false });
+  const years = (pools ?? []).map((p) => p.year as number);
+
+  const year = searchParams.year
+    ? parseInt(searchParams.year, 10)
+    : years[0] ?? parseInt(process.env.TDF_YEAR ?? "2026", 10);
 
   // Fetch the pool ID for filtering — the views filter by pool_id.
   const { data: pool } = await supabase
@@ -45,12 +54,6 @@ export default async function RidersPage({
     if (t) totals.push(...(t as RiderTotalsRow[]));
     if (s) perStage.push(...(s as RiderStagePointsRow[]));
   }
-
-  const { data: pools } = await supabase
-    .from("pools")
-    .select("year")
-    .order("year", { ascending: false });
-  const years = (pools ?? []).map((p) => p.year as number);
 
   return (
     <section>

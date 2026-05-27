@@ -14,8 +14,18 @@ export default async function MatrixPage({
   searchParams: { year?: string };
 }) {
   const supabase = createClient();
-  const year =
-    parseInt(searchParams.year ?? process.env.TDF_YEAR ?? "2026", 10);
+
+  // Default to most recent year with a pool (not TDF_YEAR which might be
+  // a future year with no data yet).
+  const { data: pools } = await supabase
+    .from("pools")
+    .select("year")
+    .order("year", { ascending: false });
+  const years = (pools ?? []).map((p) => p.year as number);
+
+  const year = searchParams.year
+    ? parseInt(searchParams.year, 10)
+    : years[0] ?? parseInt(process.env.TDF_YEAR ?? "2026", 10);
 
   const { data: matrixRows } = await supabase
     .from("v_team_stage_matrix")
@@ -28,12 +38,6 @@ export default async function MatrixPage({
     .select("team_id, points");
   const gcByTeam: Record<string, number> = {};
   for (const r of gcRows ?? []) gcByTeam[r.team_id] = r.points;
-
-  const { data: pools } = await supabase
-    .from("pools")
-    .select("year")
-    .order("year", { ascending: false });
-  const years = (pools ?? []).map((p) => p.year as number);
 
   return (
     <section>
