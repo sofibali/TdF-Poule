@@ -96,6 +96,71 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
     });
   }
 
+  function updateRider(teamIdx: number, riderIdx: number, value: string) {
+    setTeams((prev) => {
+      const next = [...prev];
+      const riders = [...next[teamIdx].riders];
+      riders[riderIdx] = value;
+      next[teamIdx] = { ...next[teamIdx], riders };
+      return next;
+    });
+  }
+
+  function removeRider(teamIdx: number, riderIdx: number) {
+    setTeams((prev) => {
+      const next = [...prev];
+      const riders = next[teamIdx].riders.filter((_, j) => j !== riderIdx);
+      next[teamIdx] = { ...next[teamIdx], riders };
+      return next;
+    });
+  }
+
+  function addRider(teamIdx: number) {
+    setTeams((prev) => {
+      const next = [...prev];
+      next[teamIdx] = {
+        ...next[teamIdx],
+        riders: [...next[teamIdx].riders, ""],
+      };
+      return next;
+    });
+  }
+
+  function updateReserve(teamIdx: number, resIdx: number, value: string) {
+    setTeams((prev) => {
+      const next = [...prev];
+      const reserves = [...next[teamIdx].reserves];
+      reserves[resIdx] = value;
+      next[teamIdx] = { ...next[teamIdx], reserves };
+      return next;
+    });
+  }
+
+  function removeReserve(teamIdx: number, resIdx: number) {
+    setTeams((prev) => {
+      const next = [...prev];
+      const reserves = next[teamIdx].reserves.filter((_, j) => j !== resIdx);
+      next[teamIdx] = { ...next[teamIdx], reserves };
+      return next;
+    });
+  }
+
+  function addReserve(teamIdx: number) {
+    setTeams((prev) => {
+      const next = [...prev];
+      next[teamIdx] = {
+        ...next[teamIdx],
+        reserves: [...next[teamIdx].reserves, ""],
+      };
+      return next;
+    });
+  }
+
+  function removeTeam(teamIdx: number) {
+    if (!confirm(`Remove ${teams[teamIdx].player}'s team from the import?`)) return;
+    setTeams((prev) => prev.filter((_, i) => i !== teamIdx));
+  }
+
   async function confirm() {
     setImporting(true);
     setErr(null);
@@ -158,6 +223,14 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
                 <span className="text-xs text-slate-400 whitespace-nowrap">
                   {t.riders.length}+{t.reserves.length}
                 </span>
+                <button
+                  type="button"
+                  onClick={() => removeTeam(i)}
+                  className="text-slate-300 hover:text-rose-600 text-base leading-none px-1"
+                  title="Remove this team from the import"
+                >
+                  ×
+                </button>
               </div>
               <input
                 type="text"
@@ -173,18 +246,74 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
                 </p>
               )}
             </header>
-            <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-sm">
-              {t.riders.map((r, j) => (
-                <li key={j} className="text-slate-700">
-                  {r}
-                </li>
-              ))}
-            </ul>
-            {t.reserves.length > 0 && (
-              <div className="mt-3 border-t border-slate-200 pt-3 text-xs text-slate-500">
-                Reserves: {t.reserves.join(" · ")}
+
+            <div className="mt-3 space-y-1">
+              <div className="text-xs uppercase tracking-wide text-slate-400">
+                Main picks
               </div>
-            )}
+              {t.riders.map((r, j) => (
+                <div key={j} className="flex items-center gap-1">
+                  <span className="text-xs text-slate-400 w-5 text-right">
+                    {j + 1}.
+                  </span>
+                  <input
+                    type="text"
+                    value={r}
+                    onChange={(e) => updateRider(i, j, e.target.value)}
+                    className="flex-1 rounded border border-transparent bg-transparent px-2 py-0.5 text-sm hover:border-slate-200 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-300"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeRider(i, j)}
+                    className="text-slate-300 hover:text-rose-600 text-base leading-none px-1"
+                    title="Remove this rider"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addRider(i)}
+                className="text-xs text-slate-500 hover:text-blue-600 hover:underline"
+              >
+                + Add rider
+              </button>
+            </div>
+
+            <div className="mt-3 border-t border-slate-200 pt-3 space-y-1">
+              <div className="text-xs uppercase tracking-wide text-slate-400">
+                Reserves
+              </div>
+              {t.reserves.map((r, j) => (
+                <div key={j} className="flex items-center gap-1">
+                  <span className="text-xs text-slate-400 w-5 text-right">
+                    {j + 1}.
+                  </span>
+                  <input
+                    type="text"
+                    value={r}
+                    onChange={(e) => updateReserve(i, j, e.target.value)}
+                    className="flex-1 rounded border border-transparent bg-transparent px-2 py-0.5 text-sm hover:border-slate-200 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-300"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeReserve(i, j)}
+                    className="text-slate-300 hover:text-rose-600 text-base leading-none px-1"
+                    title="Remove this reserve"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addReserve(i)}
+                className="text-xs text-slate-500 hover:text-blue-600 hover:underline"
+              >
+                + Add reserve
+              </button>
+            </div>
           </article>
         ))}
       </div>

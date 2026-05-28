@@ -5,6 +5,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import type { ParsedPool } from "@/lib/parsers/types";
+import { resolveTeamPicks } from "@/lib/scoring/resolve-picks";
 
 export async function POST(request: NextRequest) {
   // Auth check (separate from service-role client used to write).
@@ -129,16 +130,37 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // 3) Audit row
+  // 3) Auto-resolve picks against the existing riders table (if any).
+  // This way the leaderboard scores immediately after import — no need
+  // for the admin to click Refresh just to re-match names.
+  let resolved = 0;
+  let ambiguous = 0;
+  let unmatched = 0;
+  try {
+    const r = await resolveTeamPicks(svc, pool.id);
+    resolved = r.resolved;
+    ambiguous = r.ambiguous;
+    unmatched = r.unmatched;
+  } catch (e) {
+    // Don't fail the whole import if matching has issues — the picks are
+    // still in the DB with match_status='unmatched' and admin can fix on
+    // /admin/results.
+    console.error("resolveTeamPicks failed:", e);
+  }
+
+  // 4) Audit row
   await svc.from("import_log").insert({
     pool_id: pool.id,
     kind: parsed.source.toLowerCase().endsWith(".docx")
       ? "teams_docx"
       : "teams_csv",
-    message: `Imported ${imported} teams (${parsed.unresolved.length} unresolved at parse time, ${orphansRemoved} orphans removed).`,
+    message: `Imported ${imported} teams (${parsed.unresolved.length} unresolved at parse, ${orphansRemoved} orphans removed, ${resolved}/${ambiguous}/${unmatched} picks).`,
     details: {
       unresolved: parsed.unresolved,
       orphans_removed: orphansRemoved,
+      picks_resolved: resolved,
+      picks_ambiguous: ambiguous,
+      picks_unmatched: unmatched,
       imported_by: user.email ?? user.id,
     },
   });
@@ -148,5 +170,8 @@ export async function POST(request: NextRequest) {
     year: parsed.year,
     teams_imported: imported,
     orphans_removed: orphansRemoved,
+    picks_resolved: resolved,
+    picks_ambiguous: ambiguous,
+    picks_unmatched: unmatched,
   });
 }

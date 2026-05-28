@@ -453,7 +453,9 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
         `stage ${stage}: ${e instanceof Error ? e.message : String(e)}`,
       );
     }
-    await new Promise((r) => setTimeout(r, 750));
+    // Polite throttle — but tight enough that a 21-stage backfill finishes
+    // well within Vercel's 60s function limit.
+    await new Promise((r) => setTimeout(r, 200));
   }
 
   // Final GC — also harvest rider meta from here.
