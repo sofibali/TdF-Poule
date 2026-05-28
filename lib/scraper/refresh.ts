@@ -495,7 +495,25 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
       p_riders: richSeeds,
     });
     if (rpcErr) {
-      summary.errors.push(`harvest upsert: ${rpcErr.message}`);
+      // The most common cause is PostgREST's schema cache lagging behind
+      // a recently-added function. Silently fall back to per-rider calls
+      // (still correct, just slower) — don't surface a scary warning.
+      const isSchemaCacheMiss = /schema cache|Could not find the function/i.test(
+        rpcErr.message,
+      );
+      if (!isSchemaCacheMiss) {
+        summary.errors.push(`harvest upsert: ${rpcErr.message}`);
+      }
+      for (const c of richSeeds) {
+        await supabase.rpc("upsert_rider", {
+          p_pool_id: pool.id,
+          p_full_name: c.full_name,
+          p_last_name: c.last_name,
+          p_pcs_slug: c.pcs_slug,
+          p_pro_team: c.pro_team,
+          p_bib_number: c.bib_number,
+        });
+      }
     }
   }
 
