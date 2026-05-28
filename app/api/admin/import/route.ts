@@ -84,7 +84,40 @@ export async function POST(request: NextRequest) {
 
     importedTeamIds.push(tr.id);
 
+    // Preserve any existing manual resolutions: fetch current picks, then
+    // when re-inserting use the OLD rider_id + match_status if the raw_name
+    // hasn't changed. This means the admin doesn't lose their click-by-click
+    // fixes if they re-upload the same team after refining a few names.
+    const { data: existingPicks } = await svc
+      .from("team_riders")
+      .select("raw_name, rider_id, match_status, match_candidates")
+      .eq("team_id", tr.id);
+    const existingByName = new Map<
+      string,
+      {
+        rider_id: string | null;
+        match_status: "matched" | "ambiguous" | "unmatched" | "manual";
+        match_candidates: unknown;
+      }
+    >();
+    for (const p of existingPicks ?? []) {
+      existingByName.set(p.raw_name.trim().toLowerCase(), {
+        rider_id: p.rider_id,
+        match_status: p.match_status,
+        match_candidates: p.match_candidates,
+      });
+    }
+
     await svc.from("team_riders").delete().eq("team_id", tr.id);
+
+    function carryForward(raw: string) {
+      const prev = existingByName.get(raw.trim().toLowerCase());
+      return {
+        rider_id: prev?.rider_id ?? null,
+        match_status: prev?.match_status ?? ("unmatched" as const),
+        match_candidates: prev?.match_candidates ?? null,
+      };
+    }
 
     const picks = [
       ...team.riders.map((raw, idx) => ({
@@ -92,14 +125,14 @@ export async function POST(request: NextRequest) {
         raw_name: raw,
         is_reserve: false,
         pick_order: idx + 1,
-        match_status: "unmatched" as const,
+        ...carryForward(raw),
       })),
       ...team.reserves.map((raw, idx) => ({
         team_id: tr.id,
         raw_name: raw,
         is_reserve: true,
         reserve_order: idx + 1,
-        match_status: "unmatched" as const,
+        ...carryForward(raw),
       })),
     ];
     if (picks.length > 0) {

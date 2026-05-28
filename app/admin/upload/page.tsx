@@ -76,7 +76,14 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
   // imported `parsed` object stays unchanged so we can also reset.
   const [teams, setTeams] = useState<ParsedTeam[]>(parsed.teams);
   const [importing, setImporting] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<{
+    year: number;
+    teams_imported: number;
+    picks_resolved: number;
+    picks_ambiguous: number;
+    picks_unmatched: number;
+    orphans_removed: number;
+  } | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   function updateTeam(i: number, patch: Partial<ParsedTeam>) {
@@ -178,7 +185,14 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
       return;
     }
     const body = await res.json();
-    setResult(`Imported ${body.teams_imported} teams for ${body.year}.`);
+    setResult({
+      year: body.year,
+      teams_imported: body.teams_imported,
+      picks_resolved: body.picks_resolved ?? 0,
+      picks_ambiguous: body.picks_ambiguous ?? 0,
+      picks_unmatched: body.picks_unmatched ?? 0,
+      orphans_removed: body.orphans_removed ?? 0,
+    });
   }
 
   const unresolvedCount = teams.filter((t) => t.needs_attention).length;
@@ -324,14 +338,60 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
         </div>
       )}
       {result && (
-        <div className="rounded border border-green-200 bg-green-50 p-3 text-sm text-green-800">
-          {result}{" "}
-          <a
-            href={`/leaderboard?year=${parsed.year}`}
-            className="font-semibold underline"
-          >
-            View leaderboard →
-          </a>
+        <div className="rounded-lg border border-green-200 bg-green-50 p-4 space-y-3">
+          <div className="text-sm font-semibold text-green-900">
+            ✓ Imported {result.teams_imported} teams for {result.year}.
+          </div>
+          <div className="text-xs text-slate-700 space-y-0.5">
+            <div>
+              <strong>{result.picks_resolved}</strong> picks auto-matched to
+              riders.
+              {result.picks_ambiguous > 0 && (
+                <span className="ml-1 text-amber-700">
+                  {result.picks_ambiguous} ambiguous (need your input).
+                </span>
+              )}
+              {result.picks_unmatched > 0 && (
+                <span className="ml-1 text-rose-700">
+                  {result.picks_unmatched} unmatched.
+                </span>
+              )}
+            </div>
+            {result.orphans_removed > 0 && (
+              <div className="text-slate-500">
+                Cleaned up {result.orphans_removed} orphan team
+                {result.orphans_removed === 1 ? "" : "s"} from a previous
+                upload.
+              </div>
+            )}
+          </div>
+
+          <div className="text-xs text-slate-600 pt-2 border-t border-green-200">
+            <strong>Next step{result.picks_ambiguous + result.picks_unmatched > 0 ? "s" : ""}:</strong>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {result.picks_ambiguous + result.picks_unmatched > 0 && (
+              <a
+                href={`/admin/results?year=${result.year}`}
+                className="rounded bg-amber-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-amber-500"
+              >
+                1. Resolve {result.picks_ambiguous + result.picks_unmatched} picks
+              </a>
+            )}
+            <a
+              href="/admin/refresh"
+              className="rounded bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800"
+            >
+              {result.picks_ambiguous + result.picks_unmatched > 0 ? "2. " : ""}
+              Refresh stage results
+            </a>
+            <a
+              href={`/leaderboard?year=${result.year}`}
+              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+            >
+              View leaderboard
+            </a>
+          </div>
         </div>
       )}
 

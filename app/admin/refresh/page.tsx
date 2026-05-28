@@ -94,6 +94,82 @@ export default function AdminRefreshPage() {
         </button>
       </div>
 
+      <details className="rounded border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
+        <summary className="cursor-pointer font-medium text-slate-700">
+          What do the result terms mean?
+        </summary>
+        <dl className="mt-2 space-y-2">
+          <div>
+            <dt className="font-semibold text-slate-800">Stages fetched</dt>
+            <dd>
+              Number of new stage result pages pulled from PCS this run. 0
+              means everything was already cached.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-slate-800">GC ✓ / pending</dt>
+            <dd>
+              Whether the final General Classification (overall standings)
+              has been fetched. Only fires after stage 21 finishes.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-slate-800">Riders seeded</dt>
+            <dd>
+              Canonical rider rows in the database for that year. The 184-ish
+              starters in the Tour become one row each.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-emerald-700">
+              Picks resolved (matched)
+            </dt>
+            <dd>
+              Team picks the auto-matcher confidently linked to a canonical
+              rider. These score points immediately.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-amber-700">Ambiguous</dt>
+            <dd>
+              Multiple riders share that last name (e.g.
+              <em> &ldquo;Yates&rdquo;</em> could be Adam or Simon). You pick
+              which one on{" "}
+              <a className="underline" href="/admin/results">
+                Resolve picks
+              </a>
+              .
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-rose-700">Unmatched</dt>
+            <dd>
+              No rider on the start list matches the typed name. Usually a
+              typo in the docx (e.g. <em>&ldquo;Skjlemose&rdquo;</em> instead
+              of <em>Skjelmose</em>) or a rider who didn&apos;t race. Fix on{" "}
+              <a className="underline" href="/admin/results">
+                Resolve picks
+              </a>{" "}
+              or mark &ldquo;didn&apos;t start&rdquo; — a reserve fills in
+              automatically for stages 1–6.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-slate-800">
+              &ldquo;Could not find function in the schema cache&rdquo; warning
+            </dt>
+            <dd>
+              PostgREST hasn&apos;t picked up a recently-added SQL function
+              yet. Usually clears itself within a minute; otherwise paste{" "}
+              <code className="bg-slate-200 px-1 rounded">
+                notify pgrst, &apos;reload schema&apos;;
+              </code>{" "}
+              in Supabase SQL Editor.
+            </dd>
+          </div>
+        </dl>
+      </details>
+
       <ul className="space-y-3">
         {years.map((year) => {
           const r = results[year];
