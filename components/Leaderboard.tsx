@@ -79,20 +79,36 @@ export default function Leaderboard({ initial, year }: Props) {
           {sort.rows.map((row) => {
             const medal =
               row.rank === 1 ? "🥇" : row.rank === 2 ? "🥈" : row.rank === 3 ? "🥉" : null;
+            // Distinct gold / silver / bronze treatment for the podium —
+            // left-border accent + soft background so the rows stand out.
+            const podium =
+              row.rank === 1
+                ? "bg-gradient-to-r from-amber-100/80 to-amber-50/40 border-l-4 border-amber-400"
+                : row.rank === 2
+                  ? "bg-gradient-to-r from-slate-200/70 to-slate-50/30 border-l-4 border-slate-400"
+                  : row.rank === 3
+                    ? "bg-gradient-to-r from-orange-100/70 to-orange-50/30 border-l-4 border-orange-400"
+                    : "";
+            const totalColor =
+              row.rank === 1
+                ? "text-amber-900"
+                : row.rank === 2
+                  ? "text-slate-700"
+                  : row.rank === 3
+                    ? "text-orange-900"
+                    : "text-slate-900";
             return (
               <tr
                 key={row.team_id}
                 onClick={() => router.push(`/teams/${row.team_id}`)}
-                className={`cursor-pointer hover:bg-blue-50/40 ${
-                  row.rank === 1
-                    ? "bg-yellow-50/50"
-                    : row.rank <= 3
-                      ? "bg-slate-50/50"
-                      : ""
-                }`}
+                className={`cursor-pointer hover:bg-blue-50/50 transition-colors ${podium}`}
               >
                 <td className="px-4 py-3 text-slate-500 font-mono">
-                  {medal || row.rank}
+                  {medal ? (
+                    <span className="text-lg">{medal}</span>
+                  ) : (
+                    row.rank
+                  )}
                 </td>
                 <td className="px-4 py-3 font-medium">{row.name}</td>
                 <td className="px-4 py-3 text-slate-600 hidden sm:table-cell">
@@ -104,7 +120,9 @@ export default function Leaderboard({ initial, year }: Props) {
                 <td className="px-4 py-3 text-right tabular-nums text-slate-600">
                   {row.gc_points}
                 </td>
-                <td className="px-4 py-3 text-right tabular-nums font-bold">
+                <td
+                  className={`px-4 py-3 text-right tabular-nums font-bold ${totalColor}`}
+                >
                   {row.total_points}
                 </td>
               </tr>

@@ -84,15 +84,14 @@ export async function POST(request: NextRequest) {
 
     importedTeamIds.push(tr.id);
 
-    // Preserve any existing manual resolutions: fetch current picks, then
-    // when re-inserting use the OLD rider_id + match_status if the raw_name
-    // hasn't changed. This means the admin doesn't lose their click-by-click
-    // fixes if they re-upload the same team after refining a few names.
+    // Preserve any existing resolutions when raw_name + is_reserve match.
+    // Key includes is_reserve so a main pick "Yates" and a reserve "Yates"
+    // don't share state (they can correctly be different riders).
     const { data: existingPicks } = await svc
       .from("team_riders")
-      .select("raw_name, rider_id, match_status, match_candidates")
+      .select("raw_name, is_reserve, rider_id, match_status, match_candidates")
       .eq("team_id", tr.id);
-    const existingByName = new Map<
+    const existingByKey = new Map<
       string,
       {
         rider_id: string | null;
@@ -100,8 +99,11 @@ export async function POST(request: NextRequest) {
         match_candidates: unknown;
       }
     >();
+    function pickKey(raw: string, isReserve: boolean) {
+      return `${isReserve ? "r" : "m"}|${raw.trim().toLowerCase()}`;
+    }
     for (const p of existingPicks ?? []) {
-      existingByName.set(p.raw_name.trim().toLowerCase(), {
+      existingByKey.set(pickKey(p.raw_name, p.is_reserve), {
         rider_id: p.rider_id,
         match_status: p.match_status,
         match_candidates: p.match_candidates,
@@ -110,8 +112,8 @@ export async function POST(request: NextRequest) {
 
     await svc.from("team_riders").delete().eq("team_id", tr.id);
 
-    function carryForward(raw: string) {
-      const prev = existingByName.get(raw.trim().toLowerCase());
+    function carryForward(raw: string, isReserve: boolean) {
+      const prev = existingByKey.get(pickKey(raw, isReserve));
       return {
         rider_id: prev?.rider_id ?? null,
         match_status: prev?.match_status ?? ("unmatched" as const),
@@ -125,14 +127,14 @@ export async function POST(request: NextRequest) {
         raw_name: raw,
         is_reserve: false,
         pick_order: idx + 1,
-        ...carryForward(raw),
+        ...carryForward(raw, false),
       })),
       ...team.reserves.map((raw, idx) => ({
         team_id: tr.id,
         raw_name: raw,
         is_reserve: true,
         reserve_order: idx + 1,
-        ...carryForward(raw),
+        ...carryForward(raw, true),
       })),
     ];
     if (picks.length > 0) {

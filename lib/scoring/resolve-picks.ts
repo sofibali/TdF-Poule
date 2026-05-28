@@ -86,10 +86,13 @@ export async function resolveTeamPicks(
     return { resolved: 0, ambiguous: 0, unmatched: 0 };
   }
 
+  // Don't touch picks that an admin has explicitly resolved (match_status =
+  // 'manual'). Auto-matching can re-run safely on everything else.
   const { data: picks } = await supabase
     .from("team_riders")
-    .select("id, raw_name")
-    .in("team_id", teamIds);
+    .select("id, raw_name, match_status")
+    .in("team_id", teamIds)
+    .neq("match_status", "manual");
 
   let resolved = 0;
   let ambiguous = 0;
