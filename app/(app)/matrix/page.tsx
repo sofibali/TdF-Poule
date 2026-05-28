@@ -15,17 +15,21 @@ export default async function MatrixPage({
 }) {
   const supabase = createClient();
 
-  // Default to most recent year with a pool (not TDF_YEAR which might be
-  // a future year with no data yet).
+  // Default to most recent year with TEAMS (skip empty historical pools).
   const { data: pools } = await supabase
     .from("pools")
     .select("year")
     .order("year", { ascending: false });
   const years = (pools ?? []).map((p) => p.year as number);
 
+  const { data: defaultYearRpc } = await supabase.rpc(
+    "most_recent_year_with_teams",
+  );
   const year = searchParams.year
     ? parseInt(searchParams.year, 10)
-    : years[0] ?? parseInt(process.env.TDF_YEAR ?? "2026", 10);
+    : (defaultYearRpc as number | null) ??
+      years[0] ??
+      parseInt(process.env.TDF_YEAR ?? "2026", 10);
 
   const { data: matrixRows } = await supabase
     .from("v_team_stage_matrix")

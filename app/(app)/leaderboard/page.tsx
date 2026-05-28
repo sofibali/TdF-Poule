@@ -17,17 +17,24 @@ export default async function LeaderboardPage({
 
   // Resolve which year to show. Priority:
   //   1. ?year=NNNN explicitly in URL
-  //   2. Most recent year that actually has a pool
-  //   3. TDF_YEAR env var (or 2026 as last resort)
+  //   2. Most recent year that actually has TEAMS (via RPC) — skips empty
+  //      historical pools auto-created by 0011
+  //   3. Most recent year with any pool at all
+  //   4. TDF_YEAR env var (or 2026 as last resort)
   const { data: pools } = await supabase
     .from("pools")
     .select("year")
     .order("year", { ascending: false });
   const years = (pools ?? []).map((p) => p.year as number);
 
+  const { data: defaultYearRpc } = await supabase.rpc(
+    "most_recent_year_with_teams",
+  );
   const year = searchParams.year
     ? parseInt(searchParams.year, 10)
-    : years[0] ?? parseInt(process.env.TDF_YEAR ?? "2026", 10);
+    : (defaultYearRpc as number | null) ??
+      years[0] ??
+      parseInt(process.env.TDF_YEAR ?? "2026", 10);
 
   const [{ data: lb }, { data: hist }] = await Promise.all([
     supabase

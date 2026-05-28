@@ -2,7 +2,9 @@
 // riders table. Shared by /api/admin/import (auto-match after upload) and
 // the refresh pipeline (re-match after stage backfill).
 
-import type { SupabaseClient } from "@supabase/supabase-js";
+import { createServiceClient } from "@/lib/supabase/server";
+
+type SvcClient = ReturnType<typeof createServiceClient>;
 
 function normalize(s: string): string {
   return s
@@ -64,8 +66,7 @@ function matchRider(
 }
 
 export async function resolveTeamPicks(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", any>,
+  supabase: SvcClient,
   poolId: string,
 ): Promise<{ resolved: number; ambiguous: number; unmatched: number }> {
   const { data: riders } = await supabase
