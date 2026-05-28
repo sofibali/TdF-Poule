@@ -378,21 +378,61 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     return summary;
   }
 
-  // Fetch any stages we don't have yet.
+  // Fetch any stages we don't have yet AND collect rich rider metadata
+  // (pcs_slug, pro_team) from each row — way more reliable than the
+  // separate /startlist page scrape.
   const { data: existing } = await supabase
     .from("stage_results")
     .select("stage")
     .eq("pool_id", pool.id);
   const haveStages = new Set((existing ?? []).map((r) => r.stage));
 
+  type RiderHarvest = {
+    full_name: string;
+    last_name: string;
+    pcs_slug: string | null;
+    pro_team: string | null;
+    bib_number: number | null;
+  };
+  const harvestedRiders = new Map<string, RiderHarvest>();
+  function harvest(r: StageResult) {
+    const full = r.rider.trim();
+    if (!full) return;
+    // Dedup in-memory by lower-case full_name; the SQL RPC will do the
+    // proper sorted-token dedup on the server side too.
+    const key = full.toLowerCase();
+    const existing = harvestedRiders.get(key);
+    const seed: RiderHarvest = {
+      full_name: full,
+      last_name: lastNameOf(full),
+      pcs_slug: r.pcs_slug,
+      pro_team: r.pro_team,
+      bib_number: null,
+    };
+    if (!existing) {
+      harvestedRiders.set(key, seed);
+      return;
+    }
+    // Merge — keep whichever has more info.
+    if (!existing.pcs_slug && seed.pcs_slug) existing.pcs_slug = seed.pcs_slug;
+    if (!existing.pro_team && seed.pro_team) existing.pro_team = seed.pro_team;
+  }
+
   for (let stage = 1; stage <= currentStage; stage++) {
-    if (haveStages.has(stage)) continue;
+    if (haveStages.has(stage)) {
+      // Even for stages already in our DB, we may not have rich rider data
+      // for them yet — but skip the network fetch to save time.
+      continue;
+    }
     try {
       const rows = await fetchStageResults(pool.year, stage);
       if (rows.length === 0) {
         summary.errors.push(`stage ${stage}: empty result set`);
         continue;
       }
+      // Harvest rider meta from each row while we're here.
+      for (const r of rows) harvest(r);
+
       const upserts = rows.map((r: StageResult) => ({
         pool_id: pool.id,
         stage,
@@ -416,11 +456,12 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     await new Promise((r) => setTimeout(r, 750));
   }
 
-  // Final GC
+  // Final GC — also harvest rider meta from here.
   if (currentStage >= (pool.num_stages ?? 21)) {
     try {
       const gc = await fetchFinalGc(pool.year);
       if (gc.length > 0) {
+        for (const r of gc) harvest(r);
         const upserts = gc.map((r: StageResult) => ({
           pool_id: pool.id,
           position: r.position,
@@ -439,8 +480,23 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     }
   }
 
-  // Seed/refresh the canonical riders table. Runs AFTER stage fetching so the
-  // fallback path can pull from the rows we just wrote if PCS startlist fails.
+  // Seed the canonical riders table.
+  //
+  // First, upsert all the riders we just harvested from stage/GC pages — this
+  // path carries pcs_slug + pro_team, which we won't get from the fallback
+  // sources. Then seedRiders fills in any remaining riders (e.g. ones that
+  // appear only in older stage_results we already had cached).
+  if (harvestedRiders.size > 0) {
+    const richSeeds = Array.from(harvestedRiders.values());
+    const { error: rpcErr } = await supabase.rpc("upsert_riders_bulk", {
+      p_pool_id: pool.id,
+      p_riders: richSeeds,
+    });
+    if (rpcErr) {
+      summary.errors.push(`harvest upsert: ${rpcErr.message}`);
+    }
+  }
+
   try {
     summary.riders_seeded = await seedRiders(supabase, pool.id, pool.year);
   } catch (e) {

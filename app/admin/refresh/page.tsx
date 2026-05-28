@@ -64,15 +64,34 @@ export default function AdminRefreshPage() {
     setBusyYear(null);
   }
 
+  async function refreshAll() {
+    for (const y of years) {
+      // eslint-disable-next-line no-await-in-loop
+      await refresh(y);
+    }
+  }
+
   return (
     <section className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold">Refresh results</h1>
-        <p className="mt-2 text-sm text-slate-600">
-          Pull stage results + final GC from ProCyclingStats. The daily cron
-          handles the active year automatically; use this to back-fill
-          previous years or force a fresh pull mid-stage.
-        </p>
+      <div className="flex items-baseline justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Refresh results</h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Pull stage results + final GC from ProCyclingStats. The daily cron
+            handles the active year automatically; use this to back-fill
+            previous years or force a fresh pull mid-stage.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={refreshAll}
+          disabled={busyYear !== null}
+          className="rounded bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-50 whitespace-nowrap"
+        >
+          {busyYear !== null
+            ? `Refreshing ${busyYear}…`
+            : `Refresh all ${years.length} years`}
+        </button>
       </div>
 
       <ul className="space-y-3">
