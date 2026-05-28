@@ -157,7 +157,7 @@ function ParsedPreview({ parsed }: { parsed: ParsedPool }) {
   }
 
   function removeTeam(teamIdx: number) {
-    if (!confirm(`Remove ${teams[teamIdx].player}'s team from the import?`)) return;
+    if (!window.confirm(`Remove ${teams[teamIdx].player}'s team from the import?`)) return;
     setTeams((prev) => prev.filter((_, i) => i !== teamIdx));
   }
 
