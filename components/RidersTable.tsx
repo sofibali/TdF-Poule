@@ -19,6 +19,10 @@ type Props = {
 type Row = RiderTotalsRow & {
   stages: Record<number, number>;
   perfect: boolean;
+  // Flat per-stage columns so the sort hook can key on them directly:
+  // `stage_1`, `stage_2`, …, `stage_21`. Click a stage header → sorts by
+  // that stage's points (descending — top scorer first).
+  [k: `stage_${number}`]: number;
 };
 
 const PCS_BASE = "https://www.procyclingstats.com/rider/";
@@ -39,13 +43,20 @@ export default function RidersTable({
   }
   const stageCols = [...stageSet].sort((a, b) => a - b);
 
-  const rows: Row[] = totals.map((t) => ({
-    ...t,
-    stages:
+  const rows: Row[] = totals.map((t) => {
+    const stages =
       stagesByKey.get((t.rider_id ?? t.rider_name.toLowerCase()) as string) ??
-      {},
-    perfect: t.overall_rank <= perfectTeamSize,
-  }));
+      {};
+    // Flatten stages onto top-level `stage_N` props so they're sortable.
+    const flat: Record<string, number> = {};
+    for (const s of stageCols) flat[`stage_${s}`] = stages[s] ?? 0;
+    return {
+      ...t,
+      stages,
+      ...flat,
+      perfect: t.overall_rank <= perfectTeamSize,
+    } as Row;
+  });
 
   const sort = useSortable<Row>(rows, "total_points", "desc");
 
@@ -63,14 +74,29 @@ export default function RidersTable({
         <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
           <tr>
             <SortHeader<Row> label="Rider" sortKey="rider_name" state={sort} numeric={false} className="sticky left-0 z-10 bg-slate-50 text-left" />
-            <SortHeader<Row> label="Team" sortKey="pro_team" state={sort} numeric={false} className="text-left" />
-            {stageCols.map((s) => (
-              <th key={s} className="px-2 py-3 text-center font-mono">
-                {s}
-              </th>
-            ))}
+            {stageCols.map((s) => {
+              const key = `stage_${s}` as keyof Row;
+              const active = sort.key === key;
+              const arrow = !active ? "↕" : sort.dir === "asc" ? "▲" : "▼";
+              return (
+                <th
+                  key={s}
+                  onClick={() => sort.clickHeader(key, true)}
+                  className={`cursor-pointer select-none px-2 py-3 text-center font-mono ${active ? "text-slate-900" : "hover:text-slate-700"}`}
+                  title={`Sort by stage ${s} points (top scorer first)`}
+                >
+                  {s}
+                  <span
+                    className={`ml-1 text-[0.55rem] ${active ? "opacity-100" : "opacity-30"}`}
+                  >
+                    {arrow}
+                  </span>
+                </th>
+              );
+            })}
             <SortHeader<Row> label="GC" sortKey="gc_points" state={sort} className="text-right" />
             <SortHeader<Row> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
+            <SortHeader<Row> label="Team" sortKey="pro_team" state={sort} numeric={false} className="text-left" />
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
@@ -101,9 +127,6 @@ export default function RidersTable({
                   <span className="ml-2 text-xs text-emerald-700">★</span>
                 )}
               </td>
-              <td className="px-3 py-2 text-slate-600 whitespace-nowrap">
-                {r.pro_team ?? <span className="text-slate-300">—</span>}
-              </td>
               {stageCols.map((s) => {
                 const v = r.stages[s] ?? 0;
                 return (
@@ -123,13 +146,18 @@ export default function RidersTable({
               <td className="px-3 py-2 text-right tabular-nums font-bold">
                 {r.total_points}
               </td>
+              <td className="px-3 py-2 text-slate-600 whitespace-nowrap">
+                {r.pro_team ?? <span className="text-slate-300">—</span>}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       <p className="border-t border-slate-100 px-4 py-2 text-xs text-slate-400">
-        Click a rider name to open their ProCyclingStats profile · column headers sort.
-        Rows in green = the perfect team you could have picked (top {perfectTeamSize}).
+        Click a rider name to open their ProCyclingStats profile · click any
+        column header to sort (including individual stages — top scorers float
+        to the top). Rows in green = the perfect team you could have picked
+        (top {perfectTeamSize}).
       </p>
     </div>
   );
