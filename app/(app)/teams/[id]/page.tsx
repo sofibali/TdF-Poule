@@ -1,6 +1,3 @@
-// One team's detail — rider list with each rider's points, dropout status,
-// reserve substitutions, plus a stage-by-stage breakdown row.
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -47,13 +44,10 @@ export default async function TeamDetailPage({
         .select("stage, points")
         .eq("team_id", params.id)
         .order("stage"),
-      // Per-rider points for this team — joined client-side below.
       supabase
         .from("v_rider_stage_points")
         .select("rider_id, rider_name, points")
         .eq("pool_id", team.pool_id),
-      // Canonical riders for the year — used to resolve pcs_slug + pro_team
-      // + bib_number on each pick when we render the roster.
       supabase
         .from("riders")
         .select("id, full_name, last_name, pcs_slug, pro_team, bib_number")
@@ -87,7 +81,6 @@ export default async function TeamDetailPage({
     (dropouts as RiderDropout[]) ?? [],
   );
 
-  // Sum points by raw_name (best-effort match against rider_name in the view).
   const ptsByName = new Map<string, number>();
   for (const r of riderPts ?? []) {
     const k = (r.rider_name ?? "").toLowerCase();
@@ -96,7 +89,6 @@ export default async function TeamDetailPage({
   function ptsFor(raw: string): number {
     const k = raw.toLowerCase();
     if (ptsByName.has(k)) return ptsByName.get(k) ?? 0;
-    // last-name fallback
     const last = k.split(/\s+/).pop() ?? k;
     let total = 0;
     for (const [name, pts] of ptsByName) {
@@ -108,52 +100,61 @@ export default async function TeamDetailPage({
   const stageRows = stagePts ?? [];
   const main = events.filter((e) => e.kind === "main");
   const reserves = events.filter((e) => e.kind === "reserve");
+  const totalPoints = stageRows.reduce((sum, s) => sum + s.points, 0);
 
   return (
     <section className="space-y-8">
       <div>
         <Link
           href="/leaderboard"
-          className="text-sm text-slate-500 hover:underline"
+          className="inline-flex items-center gap-1 text-sm text-amber-700/60 hover:text-amber-800 hover:underline transition-colors"
         >
-          ← Leaderboard
+          ← Back to leaderboard
         </Link>
-        <h1 className="mt-2 text-3xl font-bold">{team.name}</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          {team.player_name} · Tour de France {pool?.year}
-        </p>
+        <div className="mt-3 flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-extrabold tracking-tight">{team.name}</h1>
+            <p className="mt-1 text-sm text-amber-800/60">
+              {team.player_name} · Tour de France {pool?.year}
+            </p>
+          </div>
+          <div className="text-right shrink-0">
+            <div className="text-3xl font-extrabold tabular-nums text-amber-700">{totalPoints}</div>
+            <div className="text-[10px] uppercase tracking-widest text-amber-700/50">total pts</div>
+          </div>
+        </div>
       </div>
 
+      {/* Roster */}
       <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-          Roster
+        <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
+          <span>🚴</span> Roster
         </h2>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {main.map((e) => {
             if (e.kind !== "main") return null;
             const points = ptsFor(e.raw_name);
-            // Look up rider meta — prefer the resolved rider_id from the pick.
             const pickRow = (picks ?? []).find((p) => p.id === e.team_rider_id);
             const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
             return (
               <li
                 key={e.team_rider_id}
-                className={`flex items-start justify-between rounded border px-3 py-2 text-sm ${
+                className={`flex items-start justify-between rounded-xl border px-4 py-3 text-sm transition-all ${
                   e.status === "active"
-                    ? "border-slate-200 bg-white"
+                    ? "border-emerald-200 bg-white/90 hover:shadow-sm"
                     : e.status === "dropped_out"
                       ? "border-rose-200 bg-rose-50/50"
-                      : "border-slate-200 bg-slate-50 text-slate-500"
+                      : "border-slate-200 bg-slate-50/50 text-slate-400"
                 }`}
               >
                 <div>
-                  <div className="font-medium text-slate-800">
+                  <div className="font-semibold text-slate-800">
                     {meta.pcs_slug ? (
                       <a
                         href={`https://www.procyclingstats.com/rider/${meta.pcs_slug}`}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="hover:text-blue-600 hover:underline"
+                        className="hover:text-amber-700 hover:underline"
                       >
                         {e.raw_name}
                       </a>
@@ -161,7 +162,7 @@ export default async function TeamDetailPage({
                       e.raw_name
                     )}
                     {meta.bib_number != null && (
-                      <span className="ml-2 rounded border border-slate-200 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
+                      <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
                         #{meta.bib_number}
                       </span>
                     )}
@@ -169,21 +170,21 @@ export default async function TeamDetailPage({
                   {meta.pro_team && (
                     <div className="text-xs text-slate-400">{meta.pro_team}</div>
                   )}
-                  <div className="mt-0.5 text-xs">
+                  <div className="mt-1 text-xs">
                     {e.status === "active" && (
-                      <span className="text-emerald-700">● Active</span>
+                      <span className="text-emerald-600">● Active</span>
                     )}
                     {e.status === "dropped_out" && (
-                      <span className="text-rose-700">
-                        ✗ Dropped out after stage {e.dropout_after_stage}
+                      <span className="text-rose-600">
+                        ✗ Out after stage {e.dropout_after_stage}
                       </span>
                     )}
                     {e.status === "didnt_start" && (
-                      <span className="text-slate-500">— Didn&apos;t start</span>
+                      <span className="text-slate-400">— DNS</span>
                     )}
                   </div>
                 </div>
-                <span className="tabular-nums text-slate-500">
+                <span className={`tabular-nums font-bold ${points ? "text-slate-900" : "text-slate-300"}`}>
                   {points || "—"}
                 </span>
               </li>
@@ -192,10 +193,11 @@ export default async function TeamDetailPage({
         </ul>
       </div>
 
+      {/* Reserves */}
       {reserves.length > 0 && (
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-            Reserves
+          <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
+            <span>🔄</span> Reserves
           </h2>
           <ul className="mt-3 grid gap-2 sm:grid-cols-2">
             {reserves.map((e) => {
@@ -205,54 +207,47 @@ export default async function TeamDetailPage({
               return (
                 <li
                   key={e.team_rider_id}
-                  className={`flex items-start justify-between rounded border px-3 py-2 text-sm ${
+                  className={`flex items-start justify-between rounded-xl border px-4 py-3 text-sm ${
                     e.status === "used"
-                      ? "border-blue-200 bg-blue-50/60"
+                      ? "border-blue-200 bg-blue-50/50"
                       : e.status === "didnt_start"
-                        ? "border-slate-200 bg-slate-50 text-slate-500"
-                        : "border-slate-200 bg-white"
+                        ? "border-slate-200 bg-slate-50/50 text-slate-400"
+                        : "border-slate-200 bg-white/80"
                   }`}
                 >
                   <div>
-                    <div className="font-medium text-slate-800">
-                      <span className="text-slate-400 mr-1">{e.reserve_order}.</span>
+                    <div className="font-semibold text-slate-800">
+                      <span className="text-slate-400 mr-1.5">{e.reserve_order}.</span>
                       {meta.pcs_slug ? (
                         <a
                           href={`https://www.procyclingstats.com/rider/${meta.pcs_slug}`}
                           target="_blank"
                           rel="noreferrer noopener"
-                          className="hover:text-blue-600 hover:underline"
+                          className="hover:text-amber-700 hover:underline"
                         >
                           {e.raw_name}
                         </a>
                       ) : (
                         e.raw_name
                       )}
-                      {meta.bib_number != null && (
-                        <span className="ml-2 rounded border border-slate-200 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
-                          #{meta.bib_number}
-                        </span>
-                      )}
                     </div>
                     {meta.pro_team && (
                       <div className="text-xs text-slate-400">{meta.pro_team}</div>
                     )}
-                    <div className="mt-0.5 text-xs">
+                    <div className="mt-1 text-xs">
                       {e.status === "used" && (
-                        <span className="text-blue-700">
-                          → Joined at stage {e.joined_at_stage}
+                        <span className="text-blue-600">
+                          → Subbed in at stage {e.joined_at_stage}
                           {e.replaced_raw_name && (
-                            <> · replacing {e.replaced_raw_name}</>
+                            <> for {e.replaced_raw_name}</>
                           )}
                         </span>
                       )}
                       {e.status === "unused" && (
-                        <span className="text-slate-500">Unused</span>
+                        <span className="text-slate-400">Bench</span>
                       )}
                       {e.status === "didnt_start" && (
-                        <span className="text-slate-500">
-                          — Didn&apos;t start
-                        </span>
+                        <span className="text-slate-400">— DNS</span>
                       )}
                     </div>
                   </div>
@@ -263,38 +258,41 @@ export default async function TeamDetailPage({
         </div>
       )}
 
-      <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-          Points by stage
-        </h2>
-        <div className="mt-3 overflow-x-auto rounded border border-slate-200 bg-white">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-xs text-slate-500">
-              <tr>
-                {stageRows.map((s) => (
-                  <th key={s.stage} className="px-2 py-2 font-mono">
-                    {s.stage}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {stageRows.map((s) => (
-                  <td
-                    key={s.stage}
-                    className={`px-2 py-2 text-center tabular-nums ${
-                      s.points > 0 ? "font-semibold text-slate-900" : "text-slate-400"
-                    }`}
-                  >
-                    {s.points || "—"}
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+      {/* Stage breakdown */}
+      {stageRows.length > 0 && (
+        <div>
+          <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
+            <span>📊</span> Points by stage
+          </h2>
+          <div className="mt-3 overflow-x-auto rounded-2xl border border-amber-200/60 bg-white/90">
+            <table className="w-full text-sm">
+              <thead className="bg-amber-50/80 text-xs text-amber-800/60">
+                <tr>
+                  {stageRows.map((s) => (
+                    <th key={s.stage} className="px-2 py-2 font-mono">
+                      {s.stage}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {stageRows.map((s) => (
+                    <td
+                      key={s.stage}
+                      className={`px-2 py-2 text-center tabular-nums ${
+                        s.points > 0 ? "font-bold text-slate-900" : "text-slate-300"
+                      }`}
+                    >
+                      {s.points || "—"}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

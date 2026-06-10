@@ -1,12 +1,5 @@
 "use client";
 
-// Per-rider stage points + GC + total. Top N rows are visually marked as
-// the "perfect team you could have picked" in retrospect. Sortable.
-//
-// Each rider name is a link to their ProCyclingStats profile. Bib number
-// shows next to the name, pro team shows in its own column. All three come
-// from the riders table (populated by fetchStartList on first refresh).
-
 import type { RiderStagePointsRow, RiderTotalsRow } from "@/lib/db/types";
 import { SortHeader, useSortable } from "@/components/useSortable";
 
@@ -19,9 +12,6 @@ type Props = {
 type Row = RiderTotalsRow & {
   stages: Record<number, number>;
   perfect: boolean;
-  // Flat per-stage columns so the sort hook can key on them directly:
-  // `stage_1`, `stage_2`, …, `stage_21`. Click a stage header → sorts by
-  // that stage's points (descending — top scorer first).
   [k: `stage_${number}`]: number;
 };
 
@@ -47,7 +37,6 @@ export default function RidersTable({
     const stages =
       stagesByKey.get((t.rider_id ?? t.rider_name.toLowerCase()) as string) ??
       {};
-    // Flatten stages onto top-level `stage_N` props so they're sortable.
     const flat: Record<string, number> = {};
     for (const s of stageCols) flat[`stage_${s}`] = stages[s] ?? 0;
     return {
@@ -62,18 +51,21 @@ export default function RidersTable({
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-        No riders have scored yet.
+      <div className="rounded-2xl border-2 border-dashed border-amber-300 bg-white/60 p-10 text-center">
+        <div className="text-4xl">🚴</div>
+        <p className="mt-3 text-sm font-medium text-slate-500">
+          No riders have scored yet.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-x-auto rounded-2xl border border-amber-200/60 bg-white/90 shadow-sm backdrop-blur">
       <table className="text-sm">
-        <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+        <thead className="bg-amber-50/80 text-xs uppercase tracking-wider text-amber-800/60">
           <tr>
-            <SortHeader<Row> label="Rider" sortKey="rider_name" state={sort} numeric={false} className="sticky left-0 z-10 bg-slate-50 text-left" />
+            <SortHeader<Row> label="Rider" sortKey="rider_name" state={sort} numeric={false} className="sticky left-0 z-10 bg-amber-50/95 text-left" />
             {stageCols.map((s) => {
               const key = `stage_${s}` as keyof Row;
               const active = sort.key === key;
@@ -83,11 +75,11 @@ export default function RidersTable({
                   key={s}
                   onClick={() => sort.clickHeader(key, true)}
                   className={`cursor-pointer select-none px-2 py-3 text-center font-mono ${active ? "text-slate-900" : "hover:text-slate-700"}`}
-                  title={`Sort by stage ${s} points (top scorer first)`}
+                  title={`Sort by stage ${s}`}
                 >
                   {s}
                   <span
-                    className={`ml-1 text-[0.55rem] ${active ? "opacity-100" : "opacity-30"}`}
+                    className={`ml-0.5 text-[0.55rem] ${active ? "opacity-100" : "opacity-30"}`}
                   >
                     {arrow}
                   </span>
@@ -99,10 +91,10 @@ export default function RidersTable({
             <SortHeader<Row> label="Team" sortKey="pro_team" state={sort} numeric={false} className="text-left" />
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-amber-100/40">
           {sort.rows.map((r) => (
-            <tr key={`${r.rider_id ?? r.rider_name}`} className={r.perfect ? "bg-emerald-50/60" : ""}>
-              <td className={`sticky left-0 z-10 px-4 py-2 ${r.perfect ? "bg-emerald-50/60" : "bg-white"}`}>
+            <tr key={`${r.rider_id ?? r.rider_name}`} className={r.perfect ? "bg-emerald-50/50" : ""}>
+              <td className={`sticky left-0 z-10 px-4 py-2 ${r.perfect ? "bg-emerald-50/80" : "bg-white/95"}`}>
                 <span className="mr-2 text-xs tabular-nums text-slate-400">
                   {r.overall_rank}
                 </span>
@@ -111,7 +103,7 @@ export default function RidersTable({
                     href={`${PCS_BASE}${r.pcs_slug}`}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="font-medium text-slate-800 hover:text-blue-600 hover:underline"
+                    className="font-medium text-slate-800 hover:text-amber-700 hover:underline"
                   >
                     {r.rider_name}
                   </a>
@@ -119,12 +111,12 @@ export default function RidersTable({
                   <span className="font-medium text-slate-800">{r.rider_name}</span>
                 )}
                 {r.bib_number != null && (
-                  <span className="ml-2 rounded border border-slate-200 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
+                  <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
                     #{r.bib_number}
                   </span>
                 )}
                 {r.perfect && (
-                  <span className="ml-2 text-xs text-emerald-700">★</span>
+                  <span className="ml-1 text-xs text-emerald-600">★</span>
                 )}
               </td>
               {stageCols.map((s) => {
@@ -132,33 +124,30 @@ export default function RidersTable({
                 return (
                   <td
                     key={s}
-                    className={`px-2 py-2 text-center tabular-nums ${
-                      v ? "font-medium text-slate-800" : "text-slate-300"
+                    className={`px-2 py-2 text-center tabular-nums text-xs ${
+                      v ? "font-medium text-slate-800" : "text-slate-200"
                     }`}
                   >
-                    {v || "·"}
+                    {v || "-"}
                   </td>
                 );
               })}
-              <td className="px-3 py-2 text-right tabular-nums text-slate-600">
+              <td className="px-3 py-2 text-right tabular-nums text-slate-500">
                 {r.gc_points || ""}
               </td>
               <td className="px-3 py-2 text-right tabular-nums font-bold">
                 {r.total_points}
               </td>
-              <td className="px-3 py-2 text-slate-600 whitespace-nowrap">
-                {r.pro_team ?? <span className="text-slate-300">—</span>}
+              <td className="px-3 py-2 text-slate-500 whitespace-nowrap text-xs">
+                {r.pro_team ?? <span className="text-slate-200">—</span>}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <p className="border-t border-slate-100 px-4 py-2 text-xs text-slate-400">
-        Click a rider name to open their ProCyclingStats profile · click any
-        column header to sort (including individual stages — top scorers float
-        to the top). Rows in green = the perfect team you could have picked
-        (top {perfectTeamSize}).
-      </p>
+      <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
+        Green rows = the perfect team (top {perfectTeamSize}) · click headers to sort
+      </div>
     </div>
   );
 }

@@ -5,11 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // TDF jersey palette — wired up later in components
         yellow_jersey: "#FDE047",
         green_jersey: "#22C55E",
         polkadot: "#EF4444",
         white_jersey: "#F8FAFC",
+      },
+      borderRadius: {
+        "2xl": "1rem",
       },
     },
   },

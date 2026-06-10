@@ -1,6 +1,3 @@
-// "All teams · stages" view — every team × every stage, with heat-mapping
-// of per-stage top scorer.
-
 import StageMatrix from "@/components/StageMatrix";
 import YearSelect from "@/components/YearSelect";
 import { createClient } from "@/lib/supabase/server";
@@ -15,7 +12,6 @@ export default async function MatrixPage({
 }) {
   const supabase = createClient();
 
-  // Default to most recent year with TEAMS (skip empty historical pools).
   const { data: pools } = await supabase
     .from("pools")
     .select("year")
@@ -36,7 +32,6 @@ export default async function MatrixPage({
     .select("*")
     .eq("year", year);
 
-  // GC totals per team for the rightmost column.
   const { data: gcRows } = await supabase
     .from("v_team_gc_points")
     .select("team_id, points");
@@ -47,12 +42,11 @@ export default async function MatrixPage({
     <section>
       <div className="flex items-baseline justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            All teams · stages
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+            All Teams · Stages
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Every team&apos;s points across every stage of {year}. Top scorer
-            per stage is highlighted in green.
+          <p className="mt-1 text-sm text-amber-800/60">
+            Every team&apos;s points across every stage of {year}. Green = stage top scorer.
           </p>
         </div>
         {years.length > 0 && <YearSelect years={years} current={year} />}

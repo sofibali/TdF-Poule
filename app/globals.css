@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 30%, #f5f5f4 60%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Yellow jersey gradient for hero elements */
+  .jersey-yellow {
+    background: linear-gradient(135deg, #fbbf24 0%, #fde047 50%, #fbbf24 100%);
+  }
+
+  /* Polka dot king-of-mountains pattern */
+  .jersey-polkadot {
+    background-image: radial-gradient(circle, #ef4444 2px, transparent 2px);
+    background-size: 12px 12px;
+  }
+
+  /* Road-stripe decorative border */
+  .road-stripe {
+    background: repeating-linear-gradient(
+      90deg,
+      #e2e8f0 0px,
+      #e2e8f0 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    height: 4px;
+  }
+
+  /* Animated cycling spinner */
+  @keyframes pedal {
+    0% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    100% { transform: translateX(-10px); }
+  }
+  .animate-pedal {
+    animation: pedal 1.5s ease-in-out infinite;
+  }
+
+  /* Podium glow */
+  .podium-gold {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 40%, #fbbf24 100%);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  }
+  .podium-silver {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 40%, #cbd5e1 100%);
+    box-shadow: 0 0 15px rgba(148, 163, 184, 0.3);
+  }
+  .podium-bronze {
+    background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 40%, #fdba74 100%);
+    box-shadow: 0 0 15px rgba(251, 146, 60, 0.2);
+  }
+}

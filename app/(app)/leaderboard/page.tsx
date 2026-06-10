@@ -1,5 +1,3 @@
-// Leaderboard page — current year's standings up top, all-time winners below.
-
 import HistoricalWinners, { type HistoricalWinner } from "@/components/HistoricalWinners";
 import Leaderboard from "@/components/Leaderboard";
 import YearSelect from "@/components/YearSelect";
@@ -15,12 +13,6 @@ export default async function LeaderboardPage({
 }) {
   const supabase = createClient();
 
-  // Resolve which year to show. Priority:
-  //   1. ?year=NNNN explicitly in URL
-  //   2. Most recent year that actually has TEAMS (via RPC) — skips empty
-  //      historical pools auto-created by 0011
-  //   3. Most recent year with any pool at all
-  //   4. TDF_YEAR env var (or 2026 as last resort)
   const { data: pools } = await supabase
     .from("pools")
     .select("year")
@@ -56,8 +48,10 @@ export default async function LeaderboardPage({
       <div>
         <div className="flex items-baseline justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Leaderboard</h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+              Leaderboard
+            </h1>
+            <p className="mt-1 text-sm text-amber-800/60">
               Tour de France {year} · {rows.length} team{rows.length === 1 ? "" : "s"}
               {" · "}updates live after each stage
             </p>
@@ -69,15 +63,19 @@ export default async function LeaderboardPage({
         </div>
       </div>
 
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">Historical winners</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Past pool champions. Click a year to view that year&apos;s standings.
-        </p>
-        <div className="mt-6">
-          <HistoricalWinners winners={winners} />
+      {winners.length > 0 && (
+        <div>
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">
+            Hall of Fame
+          </h2>
+          <p className="mt-1 text-sm text-amber-800/60">
+            Past champions. Click a year to relive the glory.
+          </p>
+          <div className="mt-6">
+            <HistoricalWinners winners={winners} />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

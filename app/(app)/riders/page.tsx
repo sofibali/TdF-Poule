@@ -1,6 +1,3 @@
-// "Riders" view — every rider that scored points across the field, with
-// stage-by-stage breakdown. Top 15 are highlighted as the "perfect team."
-
 import RidersTable from "@/components/RidersTable";
 import YearSelect from "@/components/YearSelect";
 import { createClient } from "@/lib/supabase/server";
@@ -18,7 +15,6 @@ export default async function RidersPage({
 }) {
   const supabase = createClient();
 
-  // Default to most recent year with TEAMS (skip empty historical pools).
   const { data: pools } = await supabase
     .from("pools")
     .select("year")
@@ -34,7 +30,6 @@ export default async function RidersPage({
       years[0] ??
       parseInt(process.env.TDF_YEAR ?? "2026", 10);
 
-  // Fetch the pool ID for filtering — the views filter by pool_id.
   const { data: pool } = await supabase
     .from("pools")
     .select("id, reserves_allowed")
@@ -64,10 +59,12 @@ export default async function RidersPage({
     <section>
       <div className="flex items-baseline justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Riders</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Every rider that scored across {year}, with stage-by-stage
-            breakdown. The top 15 represent the perfect retrospective team.
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+            Riders
+          </h1>
+          <p className="mt-1 text-sm text-amber-800/60">
+            Every rider that scored in {year}. Green = the dream team
+            you wish you&apos;d picked.
           </p>
         </div>
         {years.length > 0 && <YearSelect years={years} current={year} />}

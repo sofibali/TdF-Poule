@@ -1,11 +1,5 @@
 "use client";
 
-// Live leaderboard table. Server passes `initial` rows; this component
-// subscribes to Realtime updates on stage_results / final_gc / team_riders
-// and re-fetches the v_leaderboard view when anything changes.
-//
-// Whole-row click takes you to /teams/[id]; column headers sort.
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -30,16 +24,12 @@ export default function Leaderboard({ initial, year }: Props) {
         .eq("year", year)
         .order("rank", { ascending: true });
       if (error) {
-        // Don't blow away whatever we have if the refresh fails.
-        // eslint-disable-next-line no-console
         console.error("Leaderboard refresh failed:", error);
         return;
       }
       if (data) setRows(data as LeaderboardRow[]);
     }
 
-    // Run once on mount — covers the case where the server-rendered `initial`
-    // data is stale (e.g. an /admin/refresh just happened in another tab).
     refresh();
 
     const channel = supabase
@@ -56,83 +46,118 @@ export default function Leaderboard({ initial, year }: Props) {
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-        No scores yet — check back after stage 1.
+      <div className="rounded-2xl border-2 border-dashed border-amber-300 bg-white/60 p-10 text-center">
+        <div className="text-4xl">🏁</div>
+        <p className="mt-3 text-sm font-medium text-slate-500">
+          No scores yet — the race hasn&apos;t started! Check back after stage 1.
+        </p>
       </div>
     );
   }
 
+  const leader = sort.rows[0];
+
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-      <table className="w-full text-sm">
-        <thead className="bg-slate-50 text-left text-xs uppercase tracking-wider text-slate-500">
-          <tr>
-            <SortHeader<LeaderboardRow> label="#" sortKey="rank" state={sort} numeric />
-            <SortHeader<LeaderboardRow> label="Team" sortKey="name" state={sort} numeric={false} />
-            <SortHeader<LeaderboardRow> label="Player" sortKey="player_name" state={sort} numeric={false} className="hidden sm:table-cell" />
-            <SortHeader<LeaderboardRow> label="Stages" sortKey="stage_points" state={sort} className="text-right" />
-            <SortHeader<LeaderboardRow> label="GC" sortKey="gc_points" state={sort} className="text-right" />
-            <SortHeader<LeaderboardRow> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100">
-          {sort.rows.map((row) => {
-            const medal =
-              row.rank === 1 ? "🥇" : row.rank === 2 ? "🥈" : row.rank === 3 ? "🥉" : null;
-            // Distinct gold / silver / bronze treatment for the podium —
-            // left-border accent + soft background so the rows stand out.
-            const podium =
-              row.rank === 1
-                ? "bg-gradient-to-r from-amber-100/80 to-amber-50/40 border-l-4 border-amber-400"
-                : row.rank === 2
-                  ? "bg-gradient-to-r from-slate-200/70 to-slate-50/30 border-l-4 border-slate-400"
-                  : row.rank === 3
-                    ? "bg-gradient-to-r from-orange-100/70 to-orange-50/30 border-l-4 border-orange-400"
-                    : "";
-            const totalColor =
-              row.rank === 1
-                ? "text-amber-900"
-                : row.rank === 2
-                  ? "text-slate-700"
-                  : row.rank === 3
-                    ? "text-orange-900"
-                    : "text-slate-900";
+    <div className="space-y-4">
+      {/* Podium cards for top 3 */}
+      {rows.length >= 3 && (
+        <div className="grid gap-3 sm:grid-cols-3 mb-6">
+          {[
+            { rank: 1, emoji: "🥇", cls: "podium-gold", ring: "ring-amber-400" },
+            { rank: 2, emoji: "🥈", cls: "podium-silver", ring: "ring-slate-400" },
+            { rank: 3, emoji: "🥉", cls: "podium-bronze", ring: "ring-orange-400" },
+          ].map(({ rank, emoji, cls, ring }) => {
+            const r = rows.find((r) => r.rank === rank);
+            if (!r) return null;
             return (
-              <tr
-                key={row.team_id}
-                onClick={() => router.push(`/teams/${row.team_id}`)}
-                className={`cursor-pointer hover:bg-blue-50/50 transition-colors ${podium}`}
+              <div
+                key={rank}
+                onClick={() => router.push(`/teams/${r.team_id}`)}
+                className={`${cls} cursor-pointer rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02] ${
+                  rank === 1 ? "sm:order-2" : rank === 2 ? "sm:order-1" : "sm:order-3"
+                }`}
               >
-                <td className="px-4 py-3 text-slate-500 font-mono">
-                  {medal ? (
-                    <span className="text-lg">{medal}</span>
-                  ) : (
-                    row.rank
-                  )}
-                </td>
-                <td className="px-4 py-3 font-medium">{row.name}</td>
-                <td className="px-4 py-3 text-slate-600 hidden sm:table-cell">
-                  {row.player_name}
-                </td>
-                <td className="px-4 py-3 text-right tabular-nums text-slate-600">
-                  {row.stage_points}
-                </td>
-                <td className="px-4 py-3 text-right tabular-nums text-slate-600">
-                  {row.gc_points}
-                </td>
-                <td
-                  className={`px-4 py-3 text-right tabular-nums font-bold ${totalColor}`}
-                >
-                  {row.total_points}
-                </td>
-              </tr>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="text-2xl">{emoji}</span>
+                    <div className="mt-1 font-bold text-lg leading-tight">{r.name}</div>
+                    <div className="text-xs text-slate-600">{r.player_name}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-extrabold tabular-nums">{r.total_points}</div>
+                    <div className="text-[10px] uppercase tracking-wide text-slate-500">points</div>
+                  </div>
+                </div>
+                <div className="mt-2 flex gap-3 text-xs text-slate-600">
+                  <span>Stages: {r.stage_points}</span>
+                  <span>GC: {r.gc_points}</span>
+                </div>
+              </div>
             );
           })}
-        </tbody>
-      </table>
-      <p className="border-t border-slate-100 px-4 py-2 text-xs text-slate-400">
-        Click a row to open team details · click a column header to sort.
-      </p>
+        </div>
+      )}
+
+      {/* Full standings table */}
+      <div className="overflow-hidden rounded-2xl border border-amber-200/60 bg-white/90 shadow-sm backdrop-blur">
+        <table className="w-full text-sm">
+          <thead className="bg-amber-50/80 text-left text-xs uppercase tracking-wider text-amber-800/60">
+            <tr>
+              <SortHeader<LeaderboardRow> label="#" sortKey="rank" state={sort} numeric />
+              <SortHeader<LeaderboardRow> label="Team" sortKey="name" state={sort} numeric={false} />
+              <SortHeader<LeaderboardRow> label="Player" sortKey="player_name" state={sort} numeric={false} className="hidden sm:table-cell" />
+              <SortHeader<LeaderboardRow> label="Stages" sortKey="stage_points" state={sort} className="text-right" />
+              <SortHeader<LeaderboardRow> label="GC" sortKey="gc_points" state={sort} className="text-right" />
+              <SortHeader<LeaderboardRow> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-amber-100/60">
+            {sort.rows.map((row) => {
+              const medal =
+                row.rank === 1 ? "🥇" : row.rank === 2 ? "🥈" : row.rank === 3 ? "🥉" : null;
+              const podium =
+                row.rank === 1
+                  ? "bg-amber-50/80 border-l-4 border-amber-400 font-semibold"
+                  : row.rank === 2
+                    ? "bg-slate-50/50 border-l-4 border-slate-400"
+                    : row.rank === 3
+                      ? "bg-orange-50/50 border-l-4 border-orange-400"
+                      : "border-l-4 border-transparent";
+              return (
+                <tr
+                  key={row.team_id}
+                  onClick={() => router.push(`/teams/${row.team_id}`)}
+                  className={`cursor-pointer hover:bg-yellow-50/60 transition-colors ${podium}`}
+                >
+                  <td className="px-4 py-3 text-slate-500 font-mono">
+                    {medal ? (
+                      <span className="text-lg">{medal}</span>
+                    ) : (
+                      <span className="text-slate-400">{row.rank}</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 font-medium">{row.name}</td>
+                  <td className="px-4 py-3 text-slate-500 hidden sm:table-cell">
+                    {row.player_name}
+                  </td>
+                  <td className="px-4 py-3 text-right tabular-nums text-slate-500">
+                    {row.stage_points}
+                  </td>
+                  <td className="px-4 py-3 text-right tabular-nums text-slate-500">
+                    {row.gc_points}
+                  </td>
+                  <td className="px-4 py-3 text-right tabular-nums font-bold text-slate-900">
+                    {row.total_points}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
+          Click a row to see the team details · click headers to sort
+        </div>
+      </div>
     </div>
   );
 }

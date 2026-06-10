@@ -1,8 +1,6 @@
-// Magic-link login — admin only. Family doesn't need to log in to view the leaderboard.
 "use client";
 
 import { useState } from "react";
-
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
@@ -19,8 +17,6 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        // Magic link redirects to /auth/callback, which exchanges the code
-        // for a session cookie and then forwards to ?next=/admin/upload.
         emailRedirectTo: `${window.location.origin}/auth/callback?next=/admin/upload`,
       },
     });
@@ -31,29 +27,33 @@ export default function LoginPage() {
 
   return (
     <main className="mx-auto max-w-sm px-4 py-16">
-      <h1 className="text-2xl font-bold">Admin sign in</h1>
-      <p className="mt-2 text-sm text-slate-600">
-        Family viewing the leaderboard? You don&apos;t need this — just go to{" "}
-        <a className="text-blue-600 underline" href="/leaderboard">
-          /leaderboard
-        </a>
-        .
-      </p>
+      <div className="text-center mb-8">
+        <div className="text-5xl mb-3">🚴‍♂️</div>
+        <h1 className="text-2xl font-extrabold">Admin Sign In</h1>
+        <p className="mt-2 text-sm text-slate-500">
+          Just here to watch? Head to the{" "}
+          <a className="text-amber-700 underline font-medium" href="/leaderboard">
+            leaderboard
+          </a>
+          !
+        </p>
+      </div>
 
       {sent ? (
-        <div className="mt-8 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-800">
-          Check your email for a magic link.
+        <div className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-6 text-center text-sm text-emerald-800">
+          <div className="text-3xl mb-2">📬</div>
+          Check your email for a magic link!
         </div>
       ) : (
-        <form onSubmit={submit} className="mt-8 space-y-4">
-          <label className="block text-sm">
+        <form onSubmit={submit} className="space-y-4">
+          <label className="block text-sm font-medium">
             Email
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border-2 border-amber-200 px-4 py-2.5 text-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
               placeholder="sofia@example.com"
             />
           </label>
@@ -61,9 +61,9 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+            className="w-full rounded-full jersey-yellow px-4 py-2.5 text-sm font-bold text-slate-900 shadow-md hover:shadow-lg transition-all disabled:opacity-50"
           >
-            {busy ? "Sending…" : "Send magic link"}
+            {busy ? "Sending..." : "Send magic link"}
           </button>
         </form>
       )}
