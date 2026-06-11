@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 30%, #f5f5f4 60%);
+    background: #f8fafc;
     min-height: 100vh;
   }
 }
