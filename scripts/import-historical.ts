@@ -118,9 +118,9 @@ async function importPool(parsed: ParsedPool) {
         raw_name: raw,
         is_reserve: false,
         pick_order: idx + 1,
-        // match_status starts as 'unmatched' — the matcher (lib/scoring/match.ts)
-        // resolves it once the riders table for this pool exists. Until then,
-        // scoring treats unmatched picks as dropouts.
+        // match_status starts as 'unmatched' — the matcher
+        // (lib/scoring/canonical-match.ts) resolves it once the riders table for
+        // this pool exists. Until then, scoring treats unmatched picks as dropouts.
         match_status: "unmatched",
       })),
       ...team.reserves.map((raw, idx) => ({

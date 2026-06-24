@@ -11,6 +11,7 @@ import {
   lastNameOf,
   type StageResult,
 } from "@/lib/scraper/pcs";
+import { matchRider, type RiderRow } from "@/lib/scoring/canonical-match";
 
 export type RefreshSummary = {
   pool_id: string;
@@ -28,78 +29,9 @@ export type RefreshSummary = {
 // Name matching helpers
 // ---------------------------------------------------------------------------
 
-function normalize(s: string): string {
-  return s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "") // strip combining diacritics
-    .replace(/[^a-z]/g, "");
-}
-
-// nameKey moved to Postgres as public.rider_match_key — see migration 0008.
-
-type RiderRow = {
-  id: string;
-  full_name: string;
-  last_name: string;
-};
-
-/**
- * Token-based matcher. For a docx pick like "Pogacar" or "T. Pogacar" or
- * "Ca. Rodriguez", finds the matching rider in the canonical list by checking
- * if the pick's last name appears as a normalized token of the rider's full
- * name. Disambiguates by first initial when multiple riders share a last name.
- */
-function matchRider(
-  rawName: string,
-  riders: RiderRow[],
-):
-  | { kind: "matched"; rider: RiderRow }
-  | { kind: "ambiguous"; candidates: RiderRow[] }
-  | { kind: "unmatched" } {
-  const tokens = rawName
-    .replace(/[,]/g, " ")
-    .split(/\s+/)
-    .map((t) => t.trim())
-    .filter(Boolean);
-  if (tokens.length === 0) return { kind: "unmatched" };
-
-  const pickedLast = normalize(tokens[tokens.length - 1]);
-  const pickedInitial =
-    tokens.length > 1 ? normalize(tokens.slice(0, -1).join(" ")) : null;
-
-  // Build candidate set: any rider whose normalized full_name contains the
-  // picked last name as a complete token, OR whose stored last_name normalizes
-  // to the picked last name.
-  const candidates = riders.filter((r) => {
-    const lastNorm = normalize(r.last_name);
-    if (lastNorm === pickedLast) return true;
-    // Token match within full_name
-    const fullTokens = r.full_name.split(/\s+/).map(normalize);
-    return fullTokens.some((t) => t === pickedLast);
-  });
-
-  if (candidates.length === 0) return { kind: "unmatched" };
-  if (candidates.length === 1) return { kind: "matched", rider: candidates[0] };
-
-  // Multiple candidates — try first-initial / first-name narrowing.
-  if (pickedInitial) {
-    const narrowed = candidates.filter((r) => {
-      const tokens = r.full_name.split(/\s+/).map(normalize);
-      // Drop the last-name match from the tokens to avoid self-match.
-      const others = tokens.filter((t) => t !== pickedLast);
-      return others.some((t) =>
-        pickedInitial.length === 1
-          ? t.startsWith(pickedInitial)
-          : t === pickedInitial || t.startsWith(pickedInitial),
-      );
-    });
-    if (narrowed.length === 1) return { kind: "matched", rider: narrowed[0] };
-    if (narrowed.length > 0) return { kind: "ambiguous", candidates: narrowed };
-  }
-
-  return { kind: "ambiguous", candidates };
-}
+// normalize / matchRider / RiderRow now live in lib/scoring/canonical-match.ts
+// (single source of truth, shared with the import path). nameKey moved to
+// Postgres as public.rider_match_key — see migration 0008.
 
 // ---------------------------------------------------------------------------
 // Riders table seeding
@@ -266,6 +198,7 @@ async function resolveStageRiders(
 async function resolveTeamRiders(
   supabase: ReturnType<typeof createServiceClient>,
   poolId: string,
+  year: number | null,
 ): Promise<{ resolved: number; ambiguous: number; unmatched: number }> {
   const { data: riders } = await supabase
     .from("riders")
@@ -296,7 +229,7 @@ async function resolveTeamRiders(
   let unmatched = 0;
 
   for (const r of picks ?? []) {
-    const result = matchRider(r.raw_name, riders as RiderRow[]);
+    const result = matchRider(r.raw_name, riders as RiderRow[], year);
     if (result.kind === "matched") {
       await supabase
         .from("team_riders")
@@ -535,7 +468,7 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
   }
 
   try {
-    const resolution = await resolveTeamRiders(supabase, pool.id);
+    const resolution = await resolveTeamRiders(supabase, pool.id, pool.year);
     summary.picks_resolved = resolution.resolved;
     summary.picks_ambiguous = resolution.ambiguous;
     summary.picks_unmatched = resolution.unmatched;

@@ -9,6 +9,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { config } from "dotenv";
 import { join } from "node:path";
+import { matchRider, type RiderRow } from "../lib/scoring/canonical-match";
 
 config({ path: join(__dirname, "..", ".env.local") });
 
@@ -16,66 +17,11 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
 
-function normalize(s: string): string {
-  return s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z]/g, "");
-}
-
-type RiderRow = { id: string; full_name: string; last_name: string; pro_team: string | null };
-
-function matchRider(rawName: string, riders: RiderRow[]):
-  | { kind: "matched"; rider: RiderRow }
-  | { kind: "ambiguous"; candidates: RiderRow[] }
-  | { kind: "unmatched" } {
-
-  const tokens = rawName.replace(/[,]/g, " ").split(/\s+/).map(t => t.trim()).filter(Boolean);
-  if (tokens.length === 0) return { kind: "unmatched" };
-
-  const pickedLast = normalize(tokens[tokens.length - 1]);
-  const pickedInitial = tokens.length > 1 ? normalize(tokens.slice(0, -1).join(" ")) : null;
-
-  // Last-name match
-  let candidates = riders.filter(r => {
-    const lastNorm = normalize(r.last_name);
-    if (lastNorm === pickedLast) return true;
-    // substring fallback for compound names
-    if (lastNorm.includes(pickedLast) || pickedLast.includes(lastNorm)) return true;
-    // check all tokens of full name
-    const fullTokens = r.full_name.split(/\s+/).map(normalize);
-    return fullTokens.some(t => t === pickedLast);
-  });
-
-  if (candidates.length === 0) return { kind: "unmatched" };
-  if (candidates.length === 1) return { kind: "matched", rider: candidates[0] };
-
-  // Narrow by initial/first name
-  if (pickedInitial) {
-    const narrowed = candidates.filter(r => {
-      const full = r.full_name.trim();
-      const last = r.last_name.trim();
-      const firstName = full.toLowerCase().endsWith(last.toLowerCase())
-        ? full.slice(0, full.length - last.length).trim()
-        : full;
-      const fn = normalize(firstName);
-      return pickedInitial.length === 1
-        ? fn.startsWith(pickedInitial)
-        : fn === pickedInitial || fn.startsWith(pickedInitial);
-    });
-    if (narrowed.length === 1) return { kind: "matched", rider: narrowed[0] };
-    if (narrowed.length > 0) return { kind: "ambiguous", candidates: narrowed };
-  }
-
-  return { kind: "ambiguous", candidates };
-}
-
 async function resolvePool(poolId: string, year: number) {
   // Get riders for this pool
   const { data: riders } = await supabase
     .from("riders")
-    .select("id, full_name, last_name, pro_team")
+    .select("id, full_name, last_name")
     .eq("pool_id", poolId);
 
   if (!riders || riders.length === 0) {
@@ -104,7 +50,7 @@ async function resolvePool(poolId: string, year: number) {
   let resolved = 0, ambiguous = 0, unmatched = 0;
 
   for (const pick of picks ?? []) {
-    const result = matchRider(pick.raw_name, riders as RiderRow[]);
+    const result = matchRider(pick.raw_name, riders as RiderRow[], year);
 
     if (result.kind === "matched") {
       await supabase
@@ -120,7 +66,6 @@ async function resolvePool(poolId: string, year: number) {
       const cands = result.candidates.map(c => ({
         rider_id: c.id,
         full_name: c.full_name,
-        pro_team: c.pro_team,
       }));
       await supabase
         .from("team_riders")

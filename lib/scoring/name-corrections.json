@@ -1,0 +1,59 @@
+{
+  "_README": "Maps a raw pick name (as typed in the source docx/csv) to an unambiguous canonical name, per Tour year. Applied by lib/scoring/canonical-match.ts BEFORE matching against the riders table, so it fixes typos AND disambiguates shared last names in one place. Keys are matched case-insensitively against raw_name. Values are fed back through the normal matcher, so 'Geraint Thomas' still resolves via first-name narrowing. Extend this when a new ambiguous/misspelled pick shows up — no DB edits needed.",
+  "2020": {
+    "Bennett": "Sam Bennett",
+    "Bennet": "Sam Bennett",
+    "Quintana": "Nairo Quintana",
+    "Izagirre": "Ion Izagirre",
+    "Buchman": "Buchmann",
+    "Hirshi": "Hirschi",
+    "Nizollo": "Nizzolo"
+  },
+  "2021": {
+    "Thomas": "Geraint Thomas",
+    "Bisegger": "Bissegger",
+    "Buchman": "Buchmann",
+    "Chavez": "Chaves",
+    "Kruiswijk": "Kruijswijk",
+    "Keldermans": "Kelderman"
+  },
+  "2022": {
+    "Thomas": "Geraint Thomas",
+    "Coqard": "Coquard",
+    "Kristof": "Kristoff",
+    "Mathews": "Matthews",
+    "Dianese": "Dainese",
+    "Pinto": "Pinot",
+    "Quntana": "Nairo Quintana"
+  },
+  "2023": {
+    "Alaphillipe": "Alaphilippe",
+    "I. Izigirre": "Ion Izagirre",
+    "O Connor": "O'Connor",
+    "Phillipsen": "Philipsen"
+  },
+  "2024": {
+    "Pedersen": "Mads Pedersen",
+    "Thomas": "Geraint Thomas",
+    "G.Thomas": "Geraint Thomas",
+    "Jacoben": "Jakobsen",
+    "Jacobsen": "Jakobsen",
+    "L matinez": "Lenny Martinez",
+    "Mathews": "Matthews",
+    "Skelmose": "Skjelmose",
+    "GallEelco is still trying": "Gall",
+    "Kristof": "Kristoff",
+    "Rodrigues": "Carlos Rodriguez"
+  },
+  "2025": {
+    "Milan": "Jonathan Milan",
+    "Rodriguez": "Carlos Rodriguez",
+    "Thomas": "Geraint Thomas",
+    "Alaphillipe": "Alaphilippe",
+    "Amirail": "Armirail",
+    "TH Johannesen": "Tobias Johannessen",
+    "Butrigo": "Buitrago",
+    "Ca Rodrigues": "Carlos Rodriguez",
+    "Skjlemose": "Skjelmose"
+  }
+}
