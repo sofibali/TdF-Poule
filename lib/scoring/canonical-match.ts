@@ -91,6 +91,22 @@ export function matchRider(
     tokens.length > 1 ? normalize(tokens.slice(0, -1).join(" ")) : null;
   if (!pickedLast) return { kind: "unmatched" };
 
+  // 1) Token-set match (highest confidence, order-independent). Handles names
+  //    stored surname-first or with mangled particles: a stage result
+  //    "van Aert Wout" and a rider row "AERT Wout Van" share the exact token
+  //    set {aert, van, wout}. Only fires when the pick carries a full name
+  //    (>1 token), so bare last names fall through to the logic below.
+  if (tokens.length > 1) {
+    const pickedSet = tokens.map(normalize).filter(Boolean).sort().join(" ");
+    const exact = riders.filter(
+      (r) =>
+        r.full_name.split(/\s+/).map(normalize).filter(Boolean).sort().join(" ") ===
+        pickedSet,
+    );
+    if (exact.length === 1) return { kind: "matched", rider: exact[0] };
+    if (exact.length > 1) return { kind: "ambiguous", candidates: exact };
+  }
+
   // 2) Exact: last_name equals, or appears as a complete token of full_name.
   let candidates = riders.filter((r) => {
     if (normalize(r.last_name) === pickedLast) return true;

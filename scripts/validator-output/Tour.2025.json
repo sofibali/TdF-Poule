@@ -139,8 +139,8 @@
       "needs_attention": false
     },
     {
-      "player": "Unknown_6",
-      "team_name": "",
+      "player": "Coert ",
+      "team_name": "gets it right",
       "riders": [
         "Pogacar",
         "Vingegaard",
@@ -162,7 +162,7 @@
         "A Yates",
         "Rodriguez"
       ],
-      "needs_attention": true
+      "needs_attention": false
     },
     {
       "player": "Eelco",
@@ -192,8 +192,8 @@
       "needs_attention": false
     },
     {
-      "player": "Unknown_8",
-      "team_name": "",
+      "player": "Hubert ",
+      "team_name": "is still Hoping",
       "riders": [
         "Pogacar",
         "Vingegaard",
@@ -216,7 +216,7 @@
         "Skjlemose",
         "Mas"
       ],
-      "needs_attention": true
+      "needs_attention": false
     },
     {
       "player": "Kielen",
@@ -354,8 +354,8 @@
       "needs_attention": false
     },
     {
-      "player": "Unknown_14",
-      "team_name": "",
+      "player": "Rein ",
+      "team_name": "Goes For It!",
       "riders": [
         "Pogacar",
         "Vingegaard",
@@ -378,7 +378,7 @@
         "De Lie",
         "Martinez"
       ],
-      "needs_attention": true
+      "needs_attention": false
     },
     {
       "player": "Bas Otto",
@@ -408,7 +408,7 @@
       "needs_attention": false
     },
     {
-      "player": "Unknown_16",
+      "player": "CoPilot",
       "team_name": "",
       "riders": [
         "Pogacar",
@@ -432,13 +432,8 @@
         "Meeus",
         "Nys"
       ],
-      "needs_attention": true
+      "needs_attention": false
     }
   ],
-  "unresolved": [
-    "Unknown_6",
-    "Unknown_8",
-    "Unknown_14",
-    "Unknown_16"
-  ]
+  "unresolved": []
 }

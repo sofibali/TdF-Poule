@@ -166,8 +166,8 @@
       "needs_attention": false
     },
     {
-      "player": "Unknown_7",
-      "team_name": "",
+      "player": "Eelco ",
+      "team_name": "is still trying",
       "riders": [
         "Pogacar",
         "Vingegaard",
@@ -190,11 +190,11 @@
         "Lazkano",
         "Healy"
       ],
-      "needs_attention": true
+      "needs_attention": false
     },
     {
-      "player": "Unknown_8",
-      "team_name": "",
+      "player": "Hubert",
+      "team_name": " is still Hoping",
       "riders": [
         "Pogacar",
         "Vingegaard",
@@ -217,7 +217,7 @@
         "A Yates",
         "Almeida"
       ],
-      "needs_attention": true
+      "needs_attention": false
     },
     {
       "player": "Kielen",
@@ -409,8 +409,8 @@
       "needs_attention": false
     },
     {
-      "player": "Unknown_16",
-      "team_name": "",
+      "player": "Rein ",
+      "team_name": "just couldn’t let it pass",
       "riders": [
         "Pogacar",
         "Vingegaard",
@@ -433,12 +433,8 @@
         "Gaudu",
         "Asgreen"
       ],
-      "needs_attention": true
+      "needs_attention": false
     }
   ],
-  "unresolved": [
-    "Unknown_7",
-    "Unknown_8",
-    "Unknown_16"
-  ]
+  "unresolved": []
 }
