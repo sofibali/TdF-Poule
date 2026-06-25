@@ -318,7 +318,17 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     .from("stage_results")
     .select("stage")
     .eq("pool_id", pool.id);
-  const haveStages = new Set((existing ?? []).map((r) => r.stage));
+  // Track how many rows we have per stage, not just presence. A stage that was
+  // only partially saved (e.g. a fetch that died after 2 rows) must be
+  // re-fetched, otherwise it's skipped forever and everyone loses those points.
+  const stageRowCount = new Map<number, number>();
+  for (const r of existing ?? [])
+    stageRowCount.set(r.stage, (stageRowCount.get(r.stage) ?? 0) + 1);
+  // A full Tour stage stores ~50 placings; treat anything thinner as incomplete.
+  const MIN_COMPLETE_ROWS = 45;
+  const haveStages = {
+    has: (stage: number) => (stageRowCount.get(stage) ?? 0) >= MIN_COMPLETE_ROWS,
+  };
 
   type RiderHarvest = {
     full_name: string;
