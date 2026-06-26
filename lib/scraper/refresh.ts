@@ -291,6 +291,29 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     );
   }
 
+  // Frozen = a completed Tour whose results are verified and immutable. Never
+  // re-scrape it: PCS is Cloudflare-protected and its /gc page parses to the
+  // wrong table, so a refresh would overwrite good data with a stage result.
+  // Read defensively so this still works if migration 0016 hasn't run yet.
+  const { data: frozenRow } = await supabase
+    .from("pools")
+    .select("frozen")
+    .eq("id", pool.id)
+    .maybeSingle();
+  if (frozenRow?.frozen) {
+    return {
+      pool_id: pool.id,
+      year: pool.year,
+      stages_fetched: [],
+      gc_fetched: false,
+      riders_seeded: 0,
+      picks_resolved: 0,
+      picks_ambiguous: 0,
+      picks_unmatched: 0,
+      errors: [`Pool ${pool.year} is frozen — skipped (results are final).`],
+    };
+  }
+
   const summary: RefreshSummary = {
     pool_id: pool.id,
     year: pool.year,
