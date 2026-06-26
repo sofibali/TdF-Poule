@@ -140,12 +140,19 @@ function parseResultsTable($: cheerio.CheerioAPI): StageResult[] {
 function normalizeRiderName(raw: string): string {
   const parts = raw.trim().split(/\s+/);
   if (parts.length < 2) return raw.trim();
-  // Detect "LASTNAME First" by first token being all uppercase letters.
-  if (parts[0] === parts[0].toUpperCase() && /[A-ZÀ-Ý]/.test(parts[0])) {
-    const last = parts[0];
-    const first = parts.slice(1).join(" ");
-    // Title-case the last name: "POGAČAR" → "Pogačar"
-    const lastTitle = last.charAt(0) + last.slice(1).toLowerCase();
+  // Detect "LASTNAME First" by leading all-uppercase tokens. The surname can be
+  // MULTIPLE caps tokens for nobiliary particles: "VAN AERT Wout",
+  // "VAN DER POEL Mathieu", "DE LIE Arnaud" — take ALL leading caps tokens as
+  // the surname, not just the first (which produced "AERT Wout Van").
+  const isCaps = (t: string) => t === t.toUpperCase() && /[A-ZÀ-Ý]/.test(t);
+  if (isCaps(parts[0])) {
+    let n = 0;
+    while (n < parts.length - 1 && isCaps(parts[n])) n++;
+    const lastTitle = parts
+      .slice(0, n)
+      .map((t) => t.charAt(0) + t.slice(1).toLowerCase())
+      .join(" ");
+    const first = parts.slice(n).join(" ");
     return `${first} ${lastTitle}`.trim();
   }
   return raw.trim();
