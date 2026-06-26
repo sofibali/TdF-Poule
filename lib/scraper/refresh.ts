@@ -217,12 +217,15 @@ async function resolveTeamRiders(
     return { resolved: 0, ambiguous: 0, unmatched: 0 };
   }
 
-  // Re-resolve EVERY pick — including ones we previously marked unmatched, so
-  // earlier failures get retried with the now-richer riders table.
+  // Only retry picks that are still UNRESOLVED. Never re-touch ones already
+  // 'matched' or 'manual' — re-resolving them on every refresh is what made
+  // good resolutions flip back to 'ambiguous'. Team-pick resolution is now a
+  // forward-only ratchet, decoupled from the rider/result scraping.
   const { data: picks } = await supabase
     .from("team_riders")
     .select("id, raw_name")
-    .in("team_id", teamIds);
+    .in("team_id", teamIds)
+    .in("match_status", ["unmatched", "ambiguous"]);
 
   let resolved = 0;
   let ambiguous = 0;
