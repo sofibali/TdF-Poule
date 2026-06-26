@@ -427,29 +427,13 @@ export async function refreshPool(year: number): Promise<RefreshSummary> {
     await new Promise((r) => setTimeout(r, 200));
   }
 
-  // Final GC — also harvest rider meta from here.
-  if (currentStage >= (pool.num_stages ?? 21)) {
-    try {
-      const gc = await fetchFinalGc(pool.year);
-      if (gc.length > 0) {
-        for (const r of gc) harvest(r);
-        const upserts = gc.map((r: StageResult) => ({
-          pool_id: pool.id,
-          position: r.position,
-          rider_id: null,
-          raw_name: r.rider,
-        }));
-        await supabase
-          .from("final_gc")
-          .upsert(upserts, { onConflict: "pool_id,position" });
-        summary.gc_fetched = true;
-      }
-    } catch (e) {
-      summary.errors.push(
-        `gc: ${e instanceof Error ? e.message : String(e)}`,
-      );
-    }
-  }
+  // Final GC scrape is DISABLED. PCS's /gc page parses to the wrong table (it
+  // returns a stage sprint result, not the GC), which silently corrupted the
+  // final classification for every year. Until that parser is fixed (or GC
+  // comes from NOS), final_gc is maintained authoritatively by
+  // scripts/fix-historical-gc.ts. Leaving this off means a stage-result
+  // re-scrape can safely run without clobbering correct GC data.
+  void fetchFinalGc;
 
   // Seed the canonical riders table.
   //
