@@ -43,7 +43,17 @@ export default function HistoricalWinners({
             {champions.map((c) => (
               <tr key={c.year} className="hover:bg-yellow-50/60 transition-colors">
                 <td className="px-4 py-3 font-mono text-slate-500">{c.year}</td>
-                <td className="px-4 py-3 font-medium">🏆 {c.winner}</td>
+                <td className="px-4 py-3 font-medium">
+                  <span className="inline-flex items-center gap-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/tdf-icon.png"
+                      alt=""
+                      className="h-5 w-5 shrink-0"
+                    />
+                    {c.winner}
+                  </span>
+                </td>
                 <td className="px-4 py-3 text-right">
                   {linkable.has(c.year) && (
                     <Link
