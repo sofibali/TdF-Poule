@@ -66,6 +66,7 @@ export default function RidersTable({
         <thead className="bg-amber-50/80 text-xs uppercase tracking-wider text-amber-800/60">
           <tr>
             <SortHeader<Row> label="Rider" sortKey="rider_name" state={sort} numeric={false} className="sticky left-0 z-10 bg-amber-50/95 text-left" />
+            <SortHeader<Row> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
             {stageCols.map((s) => {
               const key = `stage_${s}` as keyof Row;
               const active = sort.key === key;
@@ -87,7 +88,6 @@ export default function RidersTable({
               );
             })}
             <SortHeader<Row> label="GC" sortKey="gc_points" state={sort} className="text-right" />
-            <SortHeader<Row> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
             <SortHeader<Row> label="Team" sortKey="pro_team" state={sort} numeric={false} className="text-left" />
           </tr>
         </thead>
@@ -119,6 +119,9 @@ export default function RidersTable({
                   <span className="ml-1 text-xs text-emerald-600">★</span>
                 )}
               </td>
+              <td className="px-3 py-2 text-right tabular-nums font-bold">
+                {r.total_points}
+              </td>
               {stageCols.map((s) => {
                 const v = r.stages[s] ?? 0;
                 return (
@@ -134,9 +137,6 @@ export default function RidersTable({
               })}
               <td className="px-3 py-2 text-right tabular-nums text-slate-500">
                 {r.gc_points || ""}
-              </td>
-              <td className="px-3 py-2 text-right tabular-nums font-bold">
-                {r.total_points}
               </td>
               <td className="px-3 py-2 text-slate-500 whitespace-nowrap text-xs">
                 {r.pro_team ?? <span className="text-slate-200">—</span>}

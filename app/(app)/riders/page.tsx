@@ -1,6 +1,7 @@
 import RidersTable from "@/components/RidersTable";
 import YearSelect from "@/components/YearSelect";
 import { createClient } from "@/lib/supabase/server";
+import { yearsWithTeams } from "@/lib/db/years";
 import type {
   RiderStagePointsRow,
   RiderTotalsRow,
@@ -15,11 +16,7 @@ export default async function RidersPage({
 }) {
   const supabase = createClient();
 
-  const { data: pools } = await supabase
-    .from("pools")
-    .select("year")
-    .order("year", { ascending: false });
-  const years = (pools ?? []).map((p) => p.year as number);
+  const years = await yearsWithTeams(supabase);
 
   const { data: defaultYearRpc } = await supabase.rpc(
     "most_recent_year_with_teams",

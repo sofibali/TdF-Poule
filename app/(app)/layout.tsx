@@ -64,7 +64,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-amber-200/50 bg-amber-50/50 py-4 text-center text-xs text-amber-800/40">
-        <div>Tour de France Poule — Family bragging rights since 2020</div>
+        <div>Tour de France Poule — since 1991</div>
       </footer>
     </div>
   );

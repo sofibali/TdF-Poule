@@ -268,6 +268,9 @@ export default async function TeamDetailPage({
             <table className="w-full text-sm">
               <thead className="bg-amber-50/80 text-xs text-amber-800/60">
                 <tr>
+                  <th className="px-3 py-2 text-left font-bold uppercase tracking-wide text-amber-800/70">
+                    Total
+                  </th>
                   {stageRows.map((s) => (
                     <th key={s.stage} className="px-2 py-2 font-mono">
                       {s.stage}
@@ -277,6 +280,9 @@ export default async function TeamDetailPage({
               </thead>
               <tbody>
                 <tr>
+                  <td className="px-3 py-2 text-left tabular-nums font-extrabold text-amber-700">
+                    {totalPoints}
+                  </td>
                   {stageRows.map((s) => (
                     <td
                       key={s.stage}

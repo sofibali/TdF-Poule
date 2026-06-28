@@ -1,7 +1,9 @@
-import HistoricalWinners, { type HistoricalWinner } from "@/components/HistoricalWinners";
+import HistoricalWinners from "@/components/HistoricalWinners";
 import Leaderboard from "@/components/Leaderboard";
 import YearSelect from "@/components/YearSelect";
 import { createClient } from "@/lib/supabase/server";
+import { CHAMPIONS } from "@/lib/data/champions";
+import { yearsWithTeams } from "@/lib/db/years";
 import type { LeaderboardRow } from "@/lib/db/types";
 
 export const dynamic = "force-dynamic";
@@ -13,11 +15,7 @@ export default async function LeaderboardPage({
 }) {
   const supabase = createClient();
 
-  const { data: pools } = await supabase
-    .from("pools")
-    .select("year")
-    .order("year", { ascending: false });
-  const years = (pools ?? []).map((p) => p.year as number);
+  const years = await yearsWithTeams(supabase);
 
   const { data: defaultYearRpc } = await supabase.rpc(
     "most_recent_year_with_teams",
@@ -28,20 +26,13 @@ export default async function LeaderboardPage({
       years[0] ??
       parseInt(process.env.TDF_YEAR ?? "2026", 10);
 
-  const [{ data: lb }, { data: hist }] = await Promise.all([
-    supabase
-      .from("v_leaderboard")
-      .select("*")
-      .eq("year", year)
-      .order("rank", { ascending: true }),
-    supabase
-      .from("v_historical_winners")
-      .select("*")
-      .order("year", { ascending: false }),
-  ]);
+  const { data: lb } = await supabase
+    .from("v_leaderboard")
+    .select("*")
+    .eq("year", year)
+    .order("rank", { ascending: true });
 
   const rows = (lb as LeaderboardRow[]) ?? [];
-  const winners = (hist as HistoricalWinner[]) ?? [];
 
   return (
     <section className="space-y-12">
@@ -63,19 +54,17 @@ export default async function LeaderboardPage({
         </div>
       </div>
 
-      {winners.length > 0 && (
-        <div>
-          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Hall of Fame
-          </h2>
-          <p className="mt-1 text-sm text-amber-800/60">
-            Past champions. Click a year to relive the glory.
-          </p>
-          <div className="mt-6">
-            <HistoricalWinners winners={winners} />
-          </div>
+      <div>
+        <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">
+          All-Time Hall of Fame
+        </h2>
+        <p className="mt-1 text-sm text-amber-800/60">
+          Every champion since 1991.
+        </p>
+        <div className="mt-6">
+          <HistoricalWinners champions={CHAMPIONS} linkableYears={years} />
         </div>
-      )}
+      </div>
     </section>
   );
 }
