@@ -13,10 +13,9 @@ import { matchRider, type RiderRow } from "@/lib/scoring/canonical-match";
 import { lastNameOf } from "@/lib/scraper/pcs";
 import {
   fetchLetourGc,
-  fetchLetourJerseyLeaders,
   fetchLetourStage,
+  fetchLetourStageJerseys,
   fetchLetourWithdrawals,
-  type Jersey,
 } from "@/lib/scraper/letour";
 
 // Minimal shape we need — compatible with both supabase clients.
@@ -186,9 +185,19 @@ export async function refreshLive(
   for (const stage of summary.stages_fetched) {
     if (jerseyStages.has(stage)) continue;
     try {
-      const leaders = await fetchLetourJerseyLeaders(stage);
-      const rows = (Object.entries(leaders) as [Jersey, string][])
-        .filter(([, name]) => name)
+      const { bestYouthFinisher, holders } = await fetchLetourStageJerseys(stage);
+      // 'youth' = the bonus recipient (best young finisher of the stage).
+      // The jersey holders are stored as a backup feed; the white-jersey
+      // wearer goes under 'youth_leader' to not collide with the bonus row.
+      const entries: [string, string | null | undefined][] = [
+        ["youth", bestYouthFinisher],
+        ["gc", holders.gc],
+        ["points", holders.points],
+        ["mountain", holders.mountain],
+        ["youth_leader", holders.youth],
+      ];
+      const rows = entries
+        .filter((e): e is [string, string] => Boolean(e[1]))
         .map(([classification, name]) => ({
           pool_id: poolId,
           stage,

@@ -123,6 +123,36 @@ export async function fetchLetourJerseyLeaders(
 }
 
 /**
+ * Everything we need per stage for scoring + backup:
+ *   - bestYouthFinisher: the highest-placed YOUNG rider IN this stage's result
+ *     (this is who earns the youth bonus — NOT the white-jersey holder).
+ *   - holders: each jersey's wearer after the stage (backup feed / display).
+ * Youth eligibility comes from the youth (ijg) classification membership.
+ */
+export async function fetchLetourStageJerseys(stage: number): Promise<{
+  bestYouthFinisher: string | null;
+  holders: Partial<Record<Jersey, string>>;
+}> {
+  const [result, j] = await Promise.all([
+    fetchLetourStage(stage),
+    fetchLetourJerseys(stage),
+  ]);
+  const holders: Partial<Record<Jersey, string>> = {};
+  for (const k of Object.values(JERSEY_CODES)) if (j[k]?.[0]) holders[k] = j[k][0].rider;
+
+  const youthSet = new Set(j.youth.map((r) => r.rider.toLowerCase()));
+  let bestYouthFinisher: string | null = null;
+  for (const r of result) {
+    // result is position-ordered; first youth-eligible finisher wins the bonus.
+    if (youthSet.has(r.rider.toLowerCase())) {
+      bestYouthFinisher = r.rider;
+      break;
+    }
+  }
+  return { bestYouthFinisher, holders };
+}
+
+/**
  * Withdrawals grouped by the stage they happened in. A rider listed under
  * "stage N" left during/before stage N, so dropout_after_stage = N - 1
  * (matches scripts/populate-dropouts.ts).
