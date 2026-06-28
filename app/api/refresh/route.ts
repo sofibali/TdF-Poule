@@ -3,12 +3,10 @@
 
 import { NextResponse, type NextRequest } from "next/server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { refreshPool } from "@/lib/scraper/refresh";
+import { refreshLive } from "@/lib/scraper/live-refresh";
 
-// A full 21-stage backfill can take ~30s with the polite 750ms jitter
-// between PCS requests. Vercel's default is 10s; bump to 60 (the Hobby tier
-// max) so back-fills don't get killed mid-fetch.
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
@@ -21,10 +19,16 @@ export async function POST(request: NextRequest) {
   }
 
   const body = (await request.json().catch(() => ({}))) as { year?: number };
-  const year = body.year ?? parseInt(process.env.TDF_YEAR || "2026", 10);
+  const liveYear = parseInt(process.env.TDF_YEAR || "2026", 10);
+  const year = body.year ?? liveYear;
 
   try {
-    const summary = await refreshPool(year);
+    // The live year uses letour.fr (PCS is blocked). Other years fall back to
+    // the legacy PCS path — but those pools are frozen, so it's a no-op.
+    const summary =
+      year === liveYear
+        ? await refreshLive(createServiceClient(), year)
+        : await refreshPool(year);
     return NextResponse.json(summary);
   } catch (e) {
     return NextResponse.json(

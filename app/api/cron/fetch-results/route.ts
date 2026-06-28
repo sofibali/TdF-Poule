@@ -1,11 +1,14 @@
-// Daily Vercel Cron: pulls latest stage results from PCS into Postgres.
-// Schedule lives in vercel.json (currently 21:00 UTC daily).
+// Daily Vercel Cron: pulls the live edition's results from letour.fr into
+// Postgres (PCS is Cloudflare-blocked). Schedule lives in vercel.json (21:00 UTC).
+// letour.fr only serves the CURRENT edition, so this is correct for the live
+// year (TDF_YEAR); frozen historical pools are skipped inside refreshLive.
 
 import { NextResponse, type NextRequest } from "next/server";
 
-import { refreshPool } from "@/lib/scraper/refresh";
+import { createServiceClient } from "@/lib/supabase/server";
+import { refreshLive } from "@/lib/scraper/live-refresh";
 
-// Full-year backfills take ~30s; bump from the 10s default to 60s.
+// A full pass fetches up to 21 stage pages + GC + withdrawals; allow 60s.
 export const maxDuration = 60;
 
 export async function GET(request: NextRequest) {
@@ -17,7 +20,7 @@ export async function GET(request: NextRequest) {
 
   const year = parseInt(process.env.TDF_YEAR || "2026", 10);
   try {
-    const summary = await refreshPool(year);
+    const summary = await refreshLive(createServiceClient(), year);
     return NextResponse.json(summary);
   } catch (e) {
     return NextResponse.json(
