@@ -1,86 +1,76 @@
-# Tour de France Pool — v2
+# TdF-Poule — family Tour de France pool
 
-A hosted, multi-user web app for the family TDF pool. Replaces the local React + Python scripts in the parent folder with a Next.js app backed by Supabase (Postgres + Auth + Realtime).
-
-## What's different from v1
-
-| | v1 (parent folder) | v2 (this folder) |
-| - | - | - |
-| Hosting | Run locally with `npm start` | Deployed to Vercel, public URL |
-| Auth | None | Supabase magic-link email login |
-| Data | JSON files in `public/` | Postgres (Supabase) |
-| Updates | You re-run `run_pool.py` after each stage | Vercel Cron auto-fetches daily |
-| Team submission | You parse a CSV they emailed | You drop the in-laws' Word doc into /admin/upload |
-| Family access | Email a screenshot | Public URL — no login, just visit |
-| Live leaderboard | Refresh page | Realtime — updates automatically |
+A hosted web app for the family Tour de France "poule" (running since 1991).
+Players draft riders into teams (15 mains + 3 reserves); the app scores them from
+the real race results — stage placings, final GC, reserve substitutions, and
+per-year rule tweaks. Public read-only leaderboard; admin-only data management.
 
 ## Stack
 
-- **Next.js 14** (App Router, Server Components, Route Handlers)
-- **Supabase** — Postgres, magic-link auth, Realtime, Row Level Security
-- **TypeScript**
-- **Tailwind CSS**
-- **cheerio** for parsing ProCyclingStats HTML
-- **Vercel** hosting + Cron Jobs
+- **Next.js 14** (App Router, Server Components) + **TypeScript** + **Tailwind**
+- **Supabase** (Postgres + magic-link auth + RLS)
+- **Vercel** hosting + daily Cron
+- **cheerio** for HTML parsing
 
-## Folder layout
+## How scoring works
+
+All scoring is in SQL (`supabase/migrations/`), read by the leaderboard views:
+
+- **Stage points** — top-10 of each stage: 20/15/12/10/8/6/5/4/3/2, to each of a
+  team's active riders.
+- **Final GC** — top-10: 100/80/60/40/30/25/20/18/16/15, to the team's final
+  roster (surviving mains + any subbed-in reserves).
+- **Reserve substitution** — if a main doesn't finish stage `reserve_lock_stage`
+  (default 6), the next available reserve takes over from the drop stage to the
+  end and earns GC too.
+- **Per-year rules** (`pools` columns) — e.g. 2026: `reserve_lock_stage = 10`,
+  and a `youth_bonus_points = 4` to the best-placed young rider in each stage.
+
+See the [scoring-correctness] notes in project memory for the full model. Points
+tables and reserve rules are taken from the pool's Word doc each year.
+
+## Data sources
+
+**ProCyclingStats is unusable** (Cloudflare blocks the app, Vercel, and local).
+
+- **letour.fr** — the live source for the current edition (`lib/scraper/letour.ts`):
+  GC, per-stage results, withdrawals, and all four jersey classifications.
+- **cyclingstage.com** — per-year withdrawal lists → rider dropouts.
+- **bikeraceinfo.com** / **Wikipedia** — historical stage results and authoritative GC.
+
+Historical pool teams are seeded from the in-laws' Word/CSV/PDF files in
+`historical-inputs/` (2020–2025 have teams; 2000–2019 are a race-result archive).
+
+## Layout
 
 ```
-tdf-pool-v2/
-├── app/
-│   ├── (auth)/login/         Magic-link login (admin only)
-│   ├── (app)/                PUBLIC pages — no login required
-│   │   ├── leaderboard/      Live standings
-│   │   └── teams/[id]/       One participant's team breakdown
-│   ├── admin/                Authed pages — Sofia only
-│   │   ├── upload/           Drop in-laws' .docx → parse → import
-│   │   ├── refresh/          Force a PCS pull
-│   │   └── results/          Manual stage-result overrides
-│   └── api/
-│       ├── cron/fetch-results/   Daily auto-fetch (Vercel Cron)
-│       └── refresh/              Manual on-demand refresh
-├── lib/
-│   ├── supabase/             Browser + server client factories
-│   ├── scoring/              Port of tdf_engine.py
-│   ├── scraper/              ProCyclingStats fetcher (cheerio)
-│   ├── parsers/              .docx and .csv → ParsedPool
-│   └── db/                   Generated DB types
-├── supabase/migrations/      SQL schema (run via supabase CLI)
-├── components/               Shared React components
-└── scripts/                  One-shot historical importers
+app/
+  (app)/        public pages — leaderboard, riders, matrix, teams/[id]
+  admin/        authed — upload, results, refresh
+  api/          cron/fetch-results, refresh (both use the live letour scraper)
+lib/
+  scraper/      letour.ts (live), live-refresh.ts, pcs.ts (legacy), bikeraceinfo helpers
+  scoring/      canonical-match.ts (rider matcher) + name-corrections.json
+  supabase/     client factories
+  data/         champions.ts (Hall of Fame, 1991+)
+supabase/migrations/   SQL schema + scoring (0001–0018)
+scripts/        one-shot importers + reproducible fixers (fix-historical-gc, populate-dropouts, …)
 ```
 
-## Setup (first time)
+## Live updates
 
-See [SETUP.md](./SETUP.md) — step-by-step from `git push` through magic-link login,
-seeding 5 years of historical teams, and configuring the daily cron.
+The Vercel cron (and `/admin/refresh`) call `refreshLive(year)` for the live
+year (`TDF_YEAR`): it pulls stages + GC + withdrawals + jersey leaders from
+letour.fr, seeds riders from the result names, resolves IDs, and scores. Frozen
+historical pools are skipped so finished data can't be re-corrupted.
 
 ## Running locally
 
 ```bash
 npm install
-cp .env.example .env.local   # fill in Supabase keys
+cp .env.example .env.local   # Supabase URL + keys
 npm run dev
 ```
 
-## Access model
-
-- **Family**: just visits the public URL. No accounts, no logins. They see the leaderboard, click into any team, see stage-by-stage points.
-- **Sofia (admin)**: signs in with magic link to upload teams (.docx from the in-laws), trigger result refreshes, or correct scraper misses.
-
-## Status
-
-Build complete — ready to deploy.
-
-1. ✅ Folder skeleton
-2. ✅ Database schema + RLS (public read, admin write)
-3. ✅ Scoring (SQL views + TS substitution simulator)
-4. ✅ ProCyclingStats scraper + cron + manual refresh
-5. ✅ Public leaderboard, all-teams matrix, riders view, team detail, admin upload, login
-6. ✅ Historical years 2020-2025 → seed_history.sql
-7. ✅ [Deployment guide](./SETUP.md)
-8. ✅ Word doc / CSV parser
-
-Run `python3 scripts/build_preview.py` to regenerate `preview.html` (a self-contained
-demo of the UI using your real 2025 team data — useful for showing the family what
-they'll be looking at).
+Migrations are applied in the Supabase SQL editor (no local DB connection):
+`cat supabase/migrations/NNNN_*.sql | pbcopy`, then paste and run.
