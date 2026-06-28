@@ -2,6 +2,7 @@
 
 import type { RiderStagePointsRow, RiderTotalsRow } from "@/lib/db/types";
 import { SortHeader, useSortable } from "@/components/useSortable";
+import { rollEgg, type Egg } from "@/lib/data/rider-eggs";
 
 type Props = {
   totals: RiderTotalsRow[];
@@ -12,6 +13,7 @@ type Props = {
 type Row = RiderTotalsRow & {
   stages: Record<number, number>;
   perfect: boolean;
+  egg: Egg | null;
   [k: `stage_${number}`]: number;
 };
 
@@ -44,6 +46,7 @@ export default function RidersTable({
       stages,
       ...flat,
       perfect: t.overall_rank <= perfectTeamSize,
+      egg: rollEgg(t.rider_name),
     } as Row;
   });
 
@@ -98,7 +101,16 @@ export default function RidersTable({
                 <span className="mr-2 text-xs tabular-nums text-slate-400">
                   {r.overall_rank}
                 </span>
-                {r.pcs_slug ? (
+                {r.egg ? (
+                  <a
+                    href={r.egg.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="font-medium text-slate-800 hover:text-amber-700 hover:underline"
+                  >
+                    {r.rider_name}
+                  </a>
+                ) : r.pcs_slug ? (
                   <a
                     href={`${PCS_BASE}${r.pcs_slug}`}
                     target="_blank"
