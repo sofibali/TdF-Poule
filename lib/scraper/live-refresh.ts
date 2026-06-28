@@ -13,8 +13,10 @@ import { matchRider, type RiderRow } from "@/lib/scoring/canonical-match";
 import { lastNameOf } from "@/lib/scraper/pcs";
 import {
   fetchLetourGc,
+  fetchLetourJerseyLeaders,
   fetchLetourStage,
   fetchLetourWithdrawals,
+  type Jersey,
 } from "@/lib/scraper/letour";
 
 // Minimal shape we need — compatible with both supabase clients.
@@ -29,6 +31,7 @@ export type LiveRefreshSummary = {
   withdrawals: number;
   riders_seeded: number;
   picks_resolved: number;
+  jersey_stages: number[];
   errors: string[];
 };
 
@@ -45,6 +48,7 @@ export async function refreshLive(
     withdrawals: 0,
     riders_seeded: 0,
     picks_resolved: 0,
+    jersey_stages: [],
     errors: [],
   };
 
@@ -171,6 +175,38 @@ export async function refreshLive(
   await resolveColumn(supabase, "stage_results", poolId, peloton, year);
   await resolveColumn(supabase, "final_gc", poolId, peloton, year);
   summary.picks_resolved = await resolveTeamPicks(supabase, poolId, peloton, year);
+
+  // 7) Jersey leaders per stage (drives the white-jersey youth bonus; the other
+  //    jerseys are stored as a backup feed). Incremental — only new stages.
+  const { data: haveJersey } = await supabase
+    .from("stage_jersey_leaders")
+    .select("stage")
+    .eq("pool_id", poolId);
+  const jerseyStages = new Set((haveJersey ?? []).map((r: { stage: number }) => r.stage));
+  for (const stage of summary.stages_fetched) {
+    if (jerseyStages.has(stage)) continue;
+    try {
+      const leaders = await fetchLetourJerseyLeaders(stage);
+      const rows = (Object.entries(leaders) as [Jersey, string][])
+        .filter(([, name]) => name)
+        .map(([classification, name]) => ({
+          pool_id: poolId,
+          stage,
+          classification,
+          raw_name: name,
+          rider_id: ridByName.get(name.toLowerCase()) ?? null,
+        }));
+      if (rows.length) {
+        await supabase
+          .from("stage_jersey_leaders")
+          .upsert(rows, { onConflict: "pool_id,stage,classification" });
+        summary.jersey_stages.push(stage);
+      }
+    } catch (e) {
+      summary.errors.push(`jerseys stage ${stage}: ${e instanceof Error ? e.message : e}`);
+    }
+    await new Promise((r) => setTimeout(r, 200));
+  }
 
   return summary;
 }

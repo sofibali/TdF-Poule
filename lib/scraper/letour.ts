@@ -17,12 +17,13 @@ import * as cheerio from "cheerio";
 
 import type { StageResult } from "./pcs";
 
-const BASE = "https://www.letour.fr/en";
+const HOST = "https://www.letour.fr";
 const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36";
 
+/** Fetch a host-relative path (e.g. "/en/rankings" or an ajax "/en/ajax/..."). */
 async function fetchHtml(path: string): Promise<string> {
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetch(`${HOST}${path}`, {
     headers: { "User-Agent": UA },
     next: { revalidate: 300 },
   });
@@ -69,11 +70,56 @@ function parseRankingTable(html: string): StageResult[] {
 }
 
 export async function fetchLetourGc(): Promise<StageResult[]> {
-  return parseRankingTable(await fetchHtml("/rankings"));
+  return parseRankingTable(await fetchHtml("/en/rankings"));
 }
 
 export async function fetchLetourStage(stage: number): Promise<StageResult[]> {
-  return parseRankingTable(await fetchHtml(`/rankings/stage-${stage}`));
+  return parseRankingTable(await fetchHtml(`/en/rankings/stage-${stage}`));
+}
+
+// letour classification codes → our jersey names.
+const JERSEY_CODES = {
+  itg: "gc", // yellow
+  ipg: "points", // green
+  img: "mountain", // polka dot
+  ijg: "youth", // white
+} as const;
+export type Jersey = (typeof JERSEY_CODES)[keyof typeof JERSEY_CODES];
+export type JerseyStandings = Record<Jersey, StageResult[]>;
+
+/**
+ * The four jersey classifications AS OF a given stage. Each stage page embeds
+ * per-classification ajax endpoints (with a per-page hash); we read those.
+ * Standings[..][0] is the jersey holder after that stage.
+ */
+export async function fetchLetourJerseys(stage: number): Promise<JerseyStandings> {
+  const page = await fetchHtml(`/en/rankings/stage-${stage}`);
+  const urls: Record<string, string> = {};
+  for (const m of page.matchAll(/&quot;(itg|ipg|img|ijg)&quot;:&quot;([^&]+)&quot;/g)) {
+    urls[m[1]] = m[2].replace(/\\\//g, "/");
+  }
+  const out = { gc: [], points: [], mountain: [], youth: [] } as JerseyStandings;
+  for (const [code, name] of Object.entries(JERSEY_CODES)) {
+    if (!urls[code]) continue;
+    try {
+      out[name] = parseRankingTable(await fetchHtml(urls[code]));
+    } catch {
+      /* leave empty on a missing classification */
+    }
+  }
+  return out;
+}
+
+/** Just the jersey holders (position 1) after a stage. */
+export async function fetchLetourJerseyLeaders(
+  stage: number,
+): Promise<Partial<Record<Jersey, string>>> {
+  const j = await fetchLetourJerseys(stage);
+  const leaders: Partial<Record<Jersey, string>> = {};
+  for (const k of Object.values(JERSEY_CODES)) {
+    if (j[k]?.[0]) leaders[k] = j[k][0].rider;
+  }
+  return leaders;
 }
 
 /**
@@ -84,7 +130,7 @@ export async function fetchLetourStage(stage: number): Promise<StageResult[]> {
 export async function fetchLetourWithdrawals(): Promise<
   { rider: string; stage: number }[]
 > {
-  const html = await fetchHtml("/withdrawal");
+  const html = await fetchHtml("/en/withdrawal");
   const out: { rider: string; stage: number }[] = [];
   const parts = html.split(/id="stage-(\d+)"/);
   // parts = [pre, "1", chunk1, "2", chunk2, ...]
