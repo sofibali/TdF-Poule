@@ -25,7 +25,7 @@ async function parseArticle(url: string): Promise<Record<string, string[]>> {
   const stages: Record<string, string[]> = {};
   let cur: string | null = null, haveResult = false;
   $("h2,h3,h4,table.wikitable").each((_i, el) => {
-    if ((el as cheerio.Element).tagName === "table") {
+    if ((el as { tagName?: string }).tagName === "table") {
       const hdr = $(el).find("tr").first().find("th").map((_, c) => $(c).text().trim()).get().join("|");
       if (!/Rank/i.test(hdr) || !/Rider|Cyclist/i.test(hdr)) return;
       if (cur && !haveResult) {
