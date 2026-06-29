@@ -2,7 +2,7 @@
 
 import type { RiderStagePointsRow, RiderTotalsRow } from "@/lib/db/types";
 import { SortHeader, useSortable } from "@/components/useSortable";
-import { rollEgg, type Egg } from "@/lib/data/rider-eggs";
+import EggOrLink from "@/components/EggOrLink";
 
 type Props = {
   totals: RiderTotalsRow[];
@@ -13,7 +13,6 @@ type Props = {
 type Row = RiderTotalsRow & {
   stages: Record<number, number>;
   perfect: boolean;
-  egg: Egg | null;
   [k: `stage_${number}`]: number;
 };
 
@@ -46,7 +45,6 @@ export default function RidersTable({
       stages,
       ...flat,
       perfect: t.overall_rank <= perfectTeamSize,
-      egg: rollEgg(t.rider_name),
     } as Row;
   });
 
@@ -101,27 +99,13 @@ export default function RidersTable({
                 <span className="mr-2 text-xs tabular-nums text-slate-400">
                   {r.overall_rank}
                 </span>
-                {r.egg ? (
-                  <a
-                    href={r.egg.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="font-medium text-slate-800 hover:text-amber-700 hover:underline"
-                  >
-                    {r.rider_name}
-                  </a>
-                ) : r.pcs_slug ? (
-                  <a
-                    href={`${PCS_BASE}${r.pcs_slug}`}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="font-medium text-slate-800 hover:text-amber-700 hover:underline"
-                  >
-                    {r.rider_name}
-                  </a>
-                ) : (
-                  <span className="font-medium text-slate-800">{r.rider_name}</span>
-                )}
+                <EggOrLink
+                  name={r.rider_name}
+                  href={r.pcs_slug ? `${PCS_BASE}${r.pcs_slug}` : null}
+                  className="font-medium text-slate-800 hover:text-amber-700 hover:underline"
+                >
+                  {r.rider_name}
+                </EggOrLink>
                 {r.bib_number != null && (
                   <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
                     #{r.bib_number}

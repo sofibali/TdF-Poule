@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { computePickEvents, type RiderDropout } from "@/lib/scoring/substitutions";
-import { rollEgg } from "@/lib/data/rider-eggs";
+import EggOrLink from "@/components/EggOrLink";
 import type { TeamRider } from "@/lib/db/types";
 
 export const dynamic = "force-dynamic";
@@ -137,7 +137,6 @@ export default async function TeamDetailPage({
             const points = ptsFor(e.raw_name);
             const pickRow = (picks ?? []).find((p) => p.id === e.team_rider_id);
             const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
-            const egg = rollEgg(e.raw_name);
             return (
               <li
                 key={e.team_rider_id}
@@ -151,27 +150,13 @@ export default async function TeamDetailPage({
               >
                 <div>
                   <div className="font-semibold text-slate-800">
-                    {egg ? (
-                      <a
-                        href={egg.url}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="hover:text-amber-700 hover:underline"
-                      >
-                        {e.raw_name}
-                      </a>
-                    ) : meta.pcs_slug ? (
-                      <a
-                        href={`https://www.procyclingstats.com/rider/${meta.pcs_slug}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="hover:text-amber-700 hover:underline"
-                      >
-                        {e.raw_name}
-                      </a>
-                    ) : (
-                      e.raw_name
-                    )}
+                    <EggOrLink
+                      name={e.raw_name}
+                      href={meta.pcs_slug ? `https://www.procyclingstats.com/rider/${meta.pcs_slug}` : null}
+                      className="hover:text-amber-700 hover:underline"
+                    >
+                      {e.raw_name}
+                    </EggOrLink>
                     {meta.bib_number != null && (
                       <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
                         #{meta.bib_number}
@@ -215,7 +200,6 @@ export default async function TeamDetailPage({
               if (e.kind !== "reserve") return null;
               const pickRow = (picks ?? []).find((p) => p.id === e.team_rider_id);
               const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
-            const egg = rollEgg(e.raw_name);
               return (
                 <li
                   key={e.team_rider_id}

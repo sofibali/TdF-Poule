@@ -3,8 +3,15 @@
 // picture of the literal thing) plus a few rider in-jokes. Keyed by a name word
 // (lower-cased, accent-stripped) so it matches "Tadej Pogačar", "Pogacar", or
 // even a mangled "DER POEL Mathieu Van". Extend freely.
+//
+// ADD YOUR OWN FAMILY PICTURE:
+//   1. Drop the image in `public/eggs/`, e.g. public/eggs/uncle-on-a-bike.jpg
+//   2. Add a line below keyed by a word in the rider's name:
+//        kruijswijk: { url: "/eggs/uncle-on-a-bike.jpg", label: "Uncle Steven", image: true },
+//   `image: true` makes it pop up IN the page (a click-to-dismiss lightbox)
+//   instead of opening a new tab. Without it, the url opens in a new tab.
 
-export type Egg = { url: string; label: string };
+export type Egg = { url: string; label: string; image?: boolean };
 
 const G = (q: string) =>
   `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(q)}`;
@@ -29,6 +36,9 @@ const EGGS: Record<string, Egg> = {
   cavendish: { url: G("rocket launch"), label: "Manx Missile 🚀" },
   poel: { url: "https://en.wikipedia.org/wiki/Raymond_Poulidor", label: "grandpa Poulidor" },
   cancellara: { url: G("spartacus"), label: "Spartacus" },
+
+  // --- family pictures (image: true → loads in-page). Examples to fill in: ---
+  // kruijswijk: { url: "/eggs/uncle.jpg", label: "Uncle Steven", image: true },
 };
 
 /** The egg for a rider name, if any (matches on any name word). */
@@ -43,11 +53,5 @@ export function riderEgg(name: string): Egg | null {
   return null;
 }
 
-// Rare surprise: ~1 in 6 clicks on an egg-rider hits the gag.
-export const EGG_CHANCE = 1 / 6;
-
-/** Returns the egg only when the dice say so — otherwise null (use the normal link). */
-export function rollEgg(name: string): Egg | null {
-  const e = riderEgg(name);
-  return e && Math.random() < EGG_CHANCE ? e : null;
-}
+// Surprise rate: ~every other click on an egg-rider hits the gag.
+export const EGG_CHANCE = 1 / 2;
