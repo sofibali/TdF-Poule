@@ -53,11 +53,21 @@ export async function refreshLive(
 
   const { data: pool } = await supabase
     .from("pools")
-    .select("id, frozen")
+    .select("id, frozen, start_date")
     .eq("year", year)
     .maybeSingle();
   if (!pool) {
     summary.errors.push(`No pool for ${year}`);
+    return summary;
+  }
+  // Don't pull before the race starts. letour.fr serves the PREVIOUS edition's
+  // results under the new year's banner until the Tour actually begins, so a
+  // pre-race refresh would mislabel last year's data as this year's. Gate on
+  // the pool's start_date (set it to this edition's Grand Départ).
+  if (!pool.start_date || new Date() < new Date(pool.start_date)) {
+    summary.errors.push(
+      `Pool ${year} hasn't started (start_date=${pool.start_date ?? "unset"}) — skipped`,
+    );
     return summary;
   }
   if (pool.frozen) {
