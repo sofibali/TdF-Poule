@@ -168,33 +168,58 @@ export async function fetchLetourJerseyLeaders(
 }
 
 /**
- * Everything we need per stage for scoring + backup:
- *   - bestYouthFinisher: the highest-placed YOUNG rider IN this stage's result
- *     (this is who earns the youth bonus — NOT the white-jersey holder).
- *   - holders: each jersey's wearer after the stage (backup feed / display).
- * Youth eligibility comes from the youth (ijg) classification membership.
+ * Youth bonus awards for a stage, plus jersey holders for display.
+ *
+ * Normal stages: top-3 youth-eligible finishers earn 3/2/1 bonus points.
+ * TTT:           every youth-eligible rider on a top-3 team earns +1.
+ *
+ * TTT is detected by fetchLetourStageWithTTT (same logic: team appears
+ * twice in first 10 rows). When TTT, youthAwards contains one entry per
+ * youth-eligible rider on a top-3 team, each with bonusPoints=1.
+ *
+ * holders: the four jersey wearers after the stage (backup / display feed).
  */
 export async function fetchLetourStageJerseys(stage: number): Promise<{
-  bestYouthFinisher: string | null;
+  youthAwards: Array<{ rider: string; bonusPoints: number }>;
   holders: Partial<Record<Jersey, string>>;
 }> {
-  const [result, j] = await Promise.all([
-    fetchLetourStage(stage),
+  const [stageRows, j] = await Promise.all([
+    fetchLetourStageWithTTT(stage),
     fetchLetourJerseys(stage),
   ]);
+
   const holders: Partial<Record<Jersey, string>> = {};
   for (const k of Object.values(JERSEY_CODES)) if (j[k]?.[0]) holders[k] = j[k][0].rider;
 
   const youthSet = new Set(j.youth.map((r) => r.rider.toLowerCase()));
-  let bestYouthFinisher: string | null = null;
-  for (const r of result) {
-    // result is position-ordered; first youth-eligible finisher wins the bonus.
-    if (youthSet.has(r.rider.toLowerCase())) {
-      bestYouthFinisher = r.rider;
-      break;
+  const youthAwards: Array<{ rider: string; bonusPoints: number }> = [];
+
+  // Detect TTT by checking scoring_position (set by fetchLetourStageWithTTT).
+  const isTTT = stageRows.some((r) => r.scoring_position !== null);
+
+  if (isTTT) {
+    // TTT: all youth riders on teams with scoring_position 1/2/3 each get +1.
+    const TOP_TEAMS = 3;
+    for (const r of stageRows) {
+      const sp = r.scoring_position ?? 0;
+      if (sp > 0 && sp <= TOP_TEAMS && youthSet.has(r.rider.toLowerCase())) {
+        youthAwards.push({ rider: r.rider, bonusPoints: 1 });
+      }
+    }
+  } else {
+    // Normal stage: top-3 youth finishers get 3/2/1 points.
+    const bonusScale = [3, 2, 1];
+    let youthRank = 0;
+    for (const r of stageRows) {
+      if (youthSet.has(r.rider.toLowerCase())) {
+        youthAwards.push({ rider: r.rider, bonusPoints: bonusScale[youthRank] });
+        youthRank++;
+        if (youthRank >= bonusScale.length) break;
+      }
     }
   }
-  return { bestYouthFinisher, holders };
+
+  return { youthAwards, holders };
 }
 
 export type StartListEntry = {

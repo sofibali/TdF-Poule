@@ -187,8 +187,10 @@ export async function refreshLive(
   await resolveColumn(supabase, "final_gc", poolId, peloton, year);
   summary.picks_resolved = await resolveTeamPicks(supabase, poolId, peloton, year);
 
-  // 7) Jersey leaders per stage (drives the white-jersey youth bonus; the other
-  //    jerseys are stored as a backup feed). Incremental — only new stages.
+  // 7) Jersey leaders + tiered youth bonus per stage. Incremental.
+  //    Youth bonus rule: normal stages → top-3 young finishers get 3/2/1 pts;
+  //    TTT → every youth-eligible rider on a top-3 team gets +1 pt.
+  //    Awards stored in stage_youth_bonus; jersey holders in stage_jersey_leaders.
   const { data: haveJersey } = await supabase
     .from("stage_jersey_leaders")
     .select("stage")
@@ -197,18 +199,16 @@ export async function refreshLive(
   for (const stage of summary.stages_fetched) {
     if (jerseyStages.has(stage)) continue;
     try {
-      const { bestYouthFinisher, holders } = await fetchLetourStageJerseys(stage);
-      // 'youth' = the bonus recipient (best young finisher of the stage).
-      // The jersey holders are stored as a backup feed; the white-jersey
-      // wearer goes under 'youth_leader' to not collide with the bonus row.
-      const entries: [string, string | null | undefined][] = [
-        ["youth", bestYouthFinisher],
+      const { youthAwards, holders } = await fetchLetourStageJerseys(stage);
+
+      // Store jersey holders (gc/points/mountain/youth_leader) as backup/display.
+      const holderEntries: [string, string | null | undefined][] = [
         ["gc", holders.gc],
         ["points", holders.points],
         ["mountain", holders.mountain],
         ["youth_leader", holders.youth],
       ];
-      const rows = entries
+      const holderRows = holderEntries
         .filter((e): e is [string, string] => Boolean(e[1]))
         .map(([classification, name]) => ({
           pool_id: poolId,
@@ -217,12 +217,29 @@ export async function refreshLive(
           raw_name: name,
           rider_id: ridByName.get(name.toLowerCase()) ?? null,
         }));
-      if (rows.length) {
+      if (holderRows.length) {
         await supabase
           .from("stage_jersey_leaders")
-          .upsert(rows, { onConflict: "pool_id,stage,classification" });
-        summary.jersey_stages.push(stage);
+          .upsert(holderRows, { onConflict: "pool_id,stage,classification" });
       }
+
+      // Store tiered youth bonus awards in stage_youth_bonus.
+      if (youthAwards.length) {
+        const bonusRows = youthAwards
+          .map(({ rider, bonusPoints }) => {
+            const rider_id = ridByName.get(rider.toLowerCase()) ?? null;
+            if (!rider_id) return null;
+            return { pool_id: poolId, stage, rider_id, bonus_points: bonusPoints };
+          })
+          .filter((r): r is NonNullable<typeof r> => r !== null);
+        if (bonusRows.length) {
+          await supabase
+            .from("stage_youth_bonus")
+            .upsert(bonusRows, { onConflict: "pool_id,stage,rider_id" });
+        }
+      }
+
+      summary.jersey_stages.push(stage);
     } catch (e) {
       summary.errors.push(`jerseys stage ${stage}: ${e instanceof Error ? e.message : e}`);
     }
