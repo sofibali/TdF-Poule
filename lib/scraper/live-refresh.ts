@@ -15,6 +15,7 @@ import {
   fetchLetourGc,
   fetchLetourStage,
   fetchLetourStageJerseys,
+  fetchLetourStageWithTTT,
   fetchLetourWithdrawals,
 } from "@/lib/scraper/letour";
 
@@ -88,7 +89,7 @@ export async function refreshLive(
   for (let stage = 1; stage <= maxStages; stage++) {
     let rows;
     try {
-      rows = await fetchLetourStage(stage);
+      rows = await fetchLetourStageWithTTT(stage);
     } catch (e) {
       summary.errors.push(`stage ${stage}: ${e instanceof Error ? e.message : e}`);
       continue;
@@ -99,6 +100,7 @@ export async function refreshLive(
       pool_id: poolId,
       stage,
       position: r.position,
+      scoring_position: r.scoring_position ?? null,
       rider_id: null,
       raw_name: r.rider,
     }));

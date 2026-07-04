@@ -77,6 +77,51 @@ export async function fetchLetourStage(stage: number): Promise<StageResult[]> {
   return parseRankingTable(await fetchHtml(`/en/rankings/stage-${stage}`));
 }
 
+/**
+ * StageResult extended with an optional scoring_position for TTT stages.
+ * For a TTT all riders on the same team share the same scoring_position
+ * (= their team's finishing rank), even though letour assigns unique
+ * individual positions. scoring_position is what v_team_stage_points uses
+ * for the point table lookup via COALESCE(scoring_position, position).
+ */
+export type StageResultWithScoring = StageResult & { scoring_position: number | null };
+
+/**
+ * Fetch a stage result, detecting Team Time Trials automatically.
+ *
+ * Detection: if >1 rider from the same team appears in the first 10 rows,
+ * it's a TTT. In that case all riders are returned with scoring_position =
+ * their team's finishing rank (first occurrence of that team in the ordered
+ * list). Individual letour positions (1–184) are preserved as position.
+ */
+export async function fetchLetourStageWithTTT(
+  stage: number,
+): Promise<StageResultWithScoring[]> {
+  const html = await fetchHtml(`/en/rankings/stage-${stage}`);
+  const rows = parseRankingTable(html);
+  if (rows.length === 0) return [];
+
+  // Detect TTT: check whether any team appears twice in the first 10 rows.
+  const first10Teams = rows.slice(0, 10).map((r) => r.pro_team ?? "");
+  const uniqueFirst10 = new Set(first10Teams.filter(Boolean));
+  const isTTT = uniqueFirst10.size < first10Teams.filter(Boolean).length;
+
+  if (!isTTT) {
+    return rows.map((r) => ({ ...r, scoring_position: null }));
+  }
+
+  // TTT: assign scoring_position = team rank (1-indexed first occurrence).
+  const teamRank = new Map<string, number>();
+  for (const r of rows) {
+    const team = r.pro_team ?? "";
+    if (team && !teamRank.has(team)) teamRank.set(team, teamRank.size + 1);
+  }
+  return rows.map((r) => ({
+    ...r,
+    scoring_position: teamRank.get(r.pro_team ?? "") ?? null,
+  }));
+}
+
 // letour classification codes → our jersey names.
 const JERSEY_CODES = {
   itg: "gc", // yellow
