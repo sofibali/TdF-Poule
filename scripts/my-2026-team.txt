@@ -1,0 +1,159 @@
+======================================================
+  TdF POULE 2026 — FINAL TEAM SELECTION
+  Grand Départ: July 4, 2026
+  Rules: reserve_lock_stage=10, youth_bonus=+4/stage
+======================================================
+
+STRATEGY NOTE
+-------------
+2026 rules heavily reward youth. With +4 points to the BEST YOUNG
+FINISHER (not jersey holder) every stage, a top-5 youth-eligible rider
+can earn 80+ bonus points across the race. The extended reserve window
+(stage 10 vs. 6) also means reserves who enter early have real value —
+so a slightly riskier main is acceptable if the reserve is strong.
+
+The team is built around two unassailable GC anchors, a deep youth-bonus
+bench, and enough sprinter/all-rounder coverage to score on flat days.
+
+
+MAINS (15)
+----------
+
+1.  TADEJ POGAČAR (UAE Team Emirates)
+    2025 TdF: 276 pts | 4 stage wins
+    The pick you cannot not make. Won 2024 and 2025; if he finishes he
+    scores 60–70 pts from GC alone before a single stage win. No injury
+    concerns. Scores youth bonus on mountain stages — born 1998, just
+    inside U26 for 2026.
+
+2.  JONAS VINGEGAARD (Visma-Lease a Bike)
+    2025 TdF: 198 pts
+    Two-time winner. Even when not winning he hauls in GC points.
+    Visma builds the race around him; he almost never abandons. The
+    floor on this pick is extremely high.
+
+3.  REMCO EVENEPOEL (Soudal Quick-Step)
+    2025 TdF: 36 pts (limited by Vuelta focus)
+    When Evenepoel targets the Tour he finishes podium (3rd in 2024).
+    Born 2000 — U26 in 2026 = full youth bonus eligibility. A stage
+    on the TT alone is worth 8–10 pts + youth bonus. High upside.
+
+4.  PRIMOŽ ROGLIČ (Red Bull-Bora-Hansgrohe)
+    2025 TdF: 45 pts
+    Veteran GC who reliably finishes top-5 and hunts stages. The Bora
+    team is built for two leaders (Roglič + Lipowitz), doubling our
+    coverage on that roster.
+
+5.  FLORIAN LIPOWITZ (Red Bull-Bora-Hansgrohe)
+    2025 TdF: 108 pts | Born 2001 — youth eligible
+    Breakout 2025 result. Strong enough to contest GC (top-5 threat)
+    AND young enough to earn the youth bonus most mountain stages.
+    Best single pick for combined GC + youth value.
+
+6.  OSCAR ONLEY (dsm-firmenich PostNL)
+    2025 TdF: 105 pts | Born 2002 — youth eligible
+    Another 2025 revelation. Pure climber who can stay with the GC
+    group on summit finishes. Youth bonus on every hard mountain stage;
+    could sweep the bonus on days Lipowitz is off the front.
+
+7.  BEN HEALY (EF Education-EasyPost)
+    2025 TdF: 72 pts | Born 2000 — youth eligible
+    The most dangerous breakaway rider in the peloton. Attacks from
+    distance on hard stages. Youth bonus candidate when he gets clear.
+    EF's entire race plan is "send Healy" — reliable stage-hunting.
+
+8.  JONATHAN MILAN (Lidl-Trek)
+    2025 TdF: 70 pts
+    Best pure sprinter in the race. Wins flat stages that no other
+    pick on this team targets. GC riders score 0 on sprint finishes;
+    Milan fills that gap every flat stage.
+
+9.  FELIX GALL (Decathlon AG2R La Mondiale)
+    2025 TdF: 68 pts
+    Consistently top-10 in the mountains. Low crash risk (climber style,
+    rarely in sprint chaos), strong enough to stay in the GC group.
+    Reliable 40–70 pts baseline.
+
+10. THYMEN ARENSMAN (INEOS Grenadiers)
+    2025 TdF: 55 pts | Born 1999 — youth eligible (just inside U26)
+    GC support rider who goes for stages when teammates don't need him.
+    INEOS always has a TdF plan; Arensman is their best young option.
+
+11. WOUT VAN AERT (Visma-Lease a Bike)
+    2025 TdF: 53 pts
+    All-rounder who scores in time trials, cobble stages, Pyrénées
+    finishes, and bunch sprints. Impossible to predict which stages he
+    wins, which is part of the value — diversified scoring across
+    every stage type.
+
+12. KEVIN VAUQUELIN (Arkéa-B&B Hotels)
+    2025 TdF: 51 pts | Born 2000 — youth eligible
+    French climber who thrives under Tour pressure (home crowds push
+    him). Actively chases youth-bonus stages when out of GC contention.
+    Good value relative to roster cost.
+
+13. TOBIAS JOHANNESSEN (Uno-X Mobility)
+    2025 TdF: 48 pts | Born 2002 — youth eligible
+    Norwegian climber who came of age in 2025. Pure mountain stage
+    hunter; when the GC leaders neutralise each other he attacks.
+    Youth bonus upside on days Lipowitz/Onley go for GC.
+
+14. ARNAUD DE LIE (Lotto Dstny)
+    2025 TdF: 45 pts | Born 2002 — youth eligible
+    The youth bonus on flat stages. When the bunch sprint happens,
+    De Lie is young enough to sweep the youth classification finish;
+    Milan wins the stage but De Lie gets +4 youth bonus if he outsprints
+    other U26 riders. Validated: in 2025 he was best youth finisher on
+    multiple sprint stages (Healy held the jersey but De Lie took the
+    per-stage award).
+
+15. MATTEO JORGENSON (Visma-Lease a Bike)
+    2025 TdF: 33 pts | Born 1999 — youth eligible
+    Improving GC trajectory (US champion, strong TT). Visma insurance:
+    if Vingegaard struggles, Jorgenson inherits the GC role and keeps
+    scoring. Low downside — 33p floor, GC podium ceiling.
+
+
+RESERVES (3)
+------------
+
+R1. MATHIEU VAN DER POEL (Alpecin-Deceuninck)
+    2025 TdF: 51 pts
+    Rationale: MvdP targets the cobbled stages and opening week, then
+    often abandons before the mountains. With reserve_lock=10, if he
+    drops out in stages 1–10 we automatically sub in R2 and still get
+    full mountain coverage. Use him for opening-week stage wins;
+    treat abandonment as a feature not a bug.
+
+R2. ROMAIN GRÉGOIRE (Groupama-FDJ)
+    2025 TdF: 26 pts | Born 2002 — youth eligible
+    Young French climber with stage-winning ability. Enters as R1's
+    replacement if MvdP DNFs early. Young enough to continue earning
+    youth bonuses through the mountains.
+
+R3. CARLOS RODRÍGUEZ (INEOS Grenadiers)
+    Reserve for a GC rider loss. If Roglič, Evenepoel, or a top-5 main
+    drops before stage 10, Rodríguez inherits their GC role. Strong
+    enough for top-10 GC, consistent mountain scorer (finished 4th TdF
+    2023). Low volatility insurance for the back half of the race.
+
+
+TEAM SUMMARY
+------------
+  GC anchors (floor ~200 pts each):  Pogačar, Vingegaard
+  GC tier-2 (floor ~50 pts each):    Evenepoel, Roglič, Jorgenson
+  Youth+GC double-dip:               Lipowitz, Onley, Healy, Arensman
+  Youth-bonus specialists:           Vauquelin, Johannessen, De Lie
+  Stage hunters (non-GC days):       Milan, Gall, Van Aert
+  Reserves (dropout insurance):      MvdP (opener), Grégoire (youth),
+                                     Rodríguez (GC backup)
+
+  Youth-eligible mains: Pogačar, Evenepoel, Lipowitz, Onley, Healy,
+                        Arensman, Vauquelin, Johannessen, De Lie, Jorgenson
+  (10 of 15 mains are U26 — maximises youth-bonus hit rate)
+
+  Projected floor:  ~550 pts (no luck, no bonus)
+  Projected target: ~750–850 pts (normal race, some youth bonuses)
+  Ceiling (Pogačar + youth sweep):   ~1,000 pts
+
+======================================================
