@@ -119,7 +119,7 @@ async function main() {
 
     if (!match) continue;
 
-    const dbRider = ridersByBib.get(match.bib ?? 0) ??
+    const dbRider = ridersByBib.get((match as any).bib_number ?? 0) ??
       ridersById.get(match.full_name.toLowerCase());
     if (!dbRider) continue;
 
