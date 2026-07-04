@@ -152,6 +152,66 @@ export async function fetchLetourStageJerseys(stage: number): Promise<{
   return { bestYouthFinisher, holders };
 }
 
+export type StartListEntry = {
+  bib: number;
+  full_name: string;
+  last_name: string;
+  team_name: string; // official name e.g. "UAE TEAM EMIRATES XRG"
+  team_slug: string; // letour slug e.g. "uae-team-emirates-xrg" (TTT matching key)
+};
+
+/**
+ * Full 2026 start list from /en/riders.
+ * Returns all 184 riders with bib number, official team name, and team slug.
+ * Team slug is critical for TTT result matching — letour shows team names in
+ * TTT results and we need to expand them to individual riders.
+ */
+export async function fetchLetourStartList(): Promise<StartListEntry[]> {
+  const html = await fetchHtml("/en/riders");
+  const entries: StartListEntry[] = [];
+
+  // Build bib-ordered entry list from rider links.
+  const riderLinks: Array<{ bib: number; team_slug: string; rider_slug: string }> = [];
+  for (const m of html.matchAll(/\/en\/rider\/(\d+)\/([^/\"]+)\/([^\"]+)/g)) {
+    riderLinks.push({
+      bib: parseInt(m[1], 10),
+      team_slug: m[2],
+      rider_slug: m[3],
+    });
+  }
+
+  // Find official team name for each team slug: it appears in the HTML just
+  // before the first rider of each team (all-caps header text).
+  const teamNames = new Map<string, string>();
+  for (const { bib, team_slug } of riderLinks) {
+    if (teamNames.has(team_slug)) continue;
+    const idx = html.indexOf(`/en/rider/${bib}/${team_slug}/`);
+    const before = html.slice(Math.max(0, idx - 500), idx);
+    // Extract last run of ALL-CAPS text (10–80 chars, includes spaces/hyphens/pipes)
+    const caps = [...before.matchAll(/[A-Z][A-Z &|'\-ÀÂÉÈÊËÎÏÔÙÛÜ\.]{8,79}/g)];
+    if (caps.length) teamNames.set(team_slug, caps[caps.length - 1][0].trim());
+  }
+
+  for (const { bib, team_slug, rider_slug } of riderLinks) {
+    const full_name = nameFromSlug(rider_slug);
+    // last_name = last hyphen-group in the slug (handles "del-toro-romero" → "Romero")
+    // but for matching purposes we want the full canonical last-name as stored.
+    // Use the same lastNameOf logic the rest of the app uses (imported via pcs).
+    const parts = rider_slug.split("-").filter(Boolean);
+    const last_name = parts[parts.length - 1]
+      ? parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
+      : full_name;
+    entries.push({
+      bib,
+      full_name,
+      last_name,
+      team_name: teamNames.get(team_slug) ?? team_slug,
+      team_slug,
+    });
+  }
+  return entries.sort((a, b) => a.bib - b.bib);
+}
+
 /**
  * Withdrawals grouped by the stage they happened in. A rider listed under
  * "stage N" left during/before stage N, so dropout_after_stage = N - 1

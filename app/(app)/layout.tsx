@@ -21,10 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <span className="text-2xl">🚴‍♂️</span>
             <div>
               <div className="font-extrabold text-lg tracking-tight text-slate-900 leading-tight">
-                Tour de France Poule
-              </div>
-              <div className="text-[10px] font-medium text-amber-800/70 uppercase tracking-widest">
-                Family Edition
+                Zuurbier Tour de France Poule
               </div>
             </div>
           </Link>
@@ -64,7 +61,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-amber-200/50 bg-amber-50/50 py-4 text-center text-xs text-amber-800/40">
-        <div>Tour de France Poule — since 1991</div>
+        <div>Zuurbier Tour de France Poule — since 1991</div>
       </footer>
     </div>
   );
