@@ -208,7 +208,7 @@ export async function fetchLetourStageJerseys(stage: number): Promise<{
     }
   } else {
     // Normal stage: top-3 youth finishers get 3/2/1 points.
-    const bonusScale = [3, 2, 1];
+    const bonusScale = [4, 3, 2];
     let youthRank = 0;
     for (const r of stageRows) {
       if (youthSet.has(r.rider.toLowerCase())) {
