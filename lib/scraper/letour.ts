@@ -194,28 +194,17 @@ export async function fetchLetourStageJerseys(stage: number): Promise<{
   const youthSet = new Set(j.youth.map((r) => r.rider.toLowerCase()));
   const youthAwards: Array<{ rider: string; bonusPoints: number }> = [];
 
-  // Detect TTT by checking scoring_position (set by fetchLetourStageWithTTT).
-  const isTTT = stageRows.some((r) => r.scoring_position !== null);
-
-  if (isTTT) {
-    // TTT: all youth riders on teams with scoring_position 1/2/3 each get +1.
-    const TOP_TEAMS = 3;
-    for (const r of stageRows) {
-      const sp = r.scoring_position ?? 0;
-      if (sp > 0 && sp <= TOP_TEAMS && youthSet.has(r.rider.toLowerCase())) {
-        youthAwards.push({ rider: r.rider, bonusPoints: 1 });
-      }
-    }
-  } else {
-    // Normal stage: top-3 youth finishers get 3/2/1 points.
-    const bonusScale = [4, 3, 2];
-    let youthRank = 0;
-    for (const r of stageRows) {
-      if (youthSet.has(r.rider.toLowerCase())) {
-        youthAwards.push({ rider: r.rider, bonusPoints: bonusScale[youthRank] });
-        youthRank++;
-        if (youthRank >= bonusScale.length) break;
-      }
+  // Top-3 youth finishers by individual finish position get 4/3/2.
+  // Works for both normal stages and TTT: stageRows is ordered by individual
+  // finish position in both cases, so iterating it gives the correct youth
+  // finishing order regardless of stage type.
+  const bonusScale = [4, 3, 2];
+  let youthRank = 0;
+  for (const r of stageRows) {
+    if (youthSet.has(r.rider.toLowerCase())) {
+      youthAwards.push({ rider: r.rider, bonusPoints: bonusScale[youthRank] });
+      youthRank++;
+      if (youthRank >= bonusScale.length) break;
     }
   }
 
