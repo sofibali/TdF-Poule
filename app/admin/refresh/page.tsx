@@ -39,7 +39,7 @@ export default function AdminRefreshPage() {
 
   async function refresh(year: number) {
     setBusyYear(year);
-    setResults((prev) => ({ ...prev, [year]: "Fetching from PCS — this can take ~30s for a full year..." }));
+    setResults((prev) => ({ ...prev, [year]: "Fetching from letour.fr — this can take ~30s for a full year..." }));
     try {
       const res = await fetch("/api/refresh", {
         method: "POST",

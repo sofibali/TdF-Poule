@@ -107,7 +107,7 @@ export default function Leaderboard({ initial, year }: Props) {
               <SortHeader<LeaderboardRow> label="Team" sortKey="name" state={sort} numeric={false} />
               <SortHeader<LeaderboardRow> label="Player" sortKey="player_name" state={sort} numeric={false} className="hidden sm:table-cell" />
               <SortHeader<LeaderboardRow> label="Stages" sortKey="stage_points" state={sort} className="text-right" />
-              <SortHeader<LeaderboardRow> label="GC" sortKey="gc_points" state={sort} className="text-right" />
+              <SortHeader<LeaderboardRow> label="GC*" sortKey="gc_points" state={sort} className="text-right" />
               <SortHeader<LeaderboardRow> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
             </tr>
           </thead>
@@ -155,7 +155,7 @@ export default function Leaderboard({ initial, year }: Props) {
           </tbody>
         </table>
         <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
-          Click a row to see the team details · click headers to sort
+          Click a row to see the team details · click headers to sort · * GC shown for reference, counted in Total only after stage 21
         </div>
       </div>
     </div>

@@ -84,8 +84,33 @@ export async function refreshLive(
     if (t) harvest.set(t.toLowerCase(), t);
   };
 
-  // 1) Stages — fetch sequentially, stop after the first stage with no results
-  //    (i.e. not raced yet).
+  // 1) GC first — used as a bleed-through reference for stage detection.
+  //    letour.fr sometimes returns the current GC standings for future stage
+  //    endpoints. By fetching GC up front we can detect and skip those rows.
+  let gcRiderSet = new Set<string>(); // normalised names of GC top-10
+  let gcRows: { position: number; rider: string; pcs_slug: string | null; pro_team: string | null }[] = [];
+  try {
+    gcRows = await fetchLetourGc();
+    for (const r of gcRows) addName(r.rider);
+    if (gcRows.length > 0) {
+      gcRiderSet = new Set(gcRows.slice(0, 10).map((r) => r.rider.toLowerCase()));
+      const ups = gcRows.map((r) => ({
+        pool_id: poolId,
+        position: r.position,
+        rider_id: null,
+        raw_name: r.rider,
+      }));
+      await supabase.from("final_gc").upsert(ups, { onConflict: "pool_id,position" });
+      summary.gc_rows = gcRows.length;
+    }
+  } catch (e) {
+    summary.errors.push(`gc: ${e instanceof Error ? e.message : e}`);
+  }
+
+  // 2) Stages — fetch sequentially, stop after the first stage with no results.
+  //    Guard against GC bleed-through: if letour.fr returns the current GC
+  //    standings for a future stage endpoint, the top-10 will exactly match the
+  //    GC top-10. Break when that happens instead of writing stale data.
   for (let stage = 1; stage <= maxStages; stage++) {
     let rows;
     try {
@@ -94,7 +119,21 @@ export async function refreshLive(
       summary.errors.push(`stage ${stage}: ${e instanceof Error ? e.message : e}`);
       continue;
     }
-    if (rows.length === 0) break; // future stage
+    if (rows.length === 0) break; // future stage (empty page)
+
+    // Detect GC data recycled as a future-stage result.
+    // A real stage result has a different top-10 order than the standing GC.
+    // If 9+ of the top-10 stage finishers appear in the GC top-10, it is very
+    // likely GC data being returned for a future stage — skip it.
+    if (gcRiderSet.size >= 10) {
+      const stageTop10 = rows.slice(0, 10).map((r) => r.rider.toLowerCase());
+      const gcOverlap = stageTop10.filter((n) => gcRiderSet.has(n)).length;
+      if (gcOverlap >= 9) {
+        summary.errors.push(`stage ${stage}: skipped (looks like GC data, ${gcOverlap}/10 top riders match GC)`);
+        break;
+      }
+    }
+
     for (const r of rows) addName(r.rider);
     const ups = rows.map((r) => ({
       pool_id: poolId,
@@ -110,24 +149,6 @@ export async function refreshLive(
     if (error) summary.errors.push(`stage ${stage} write: ${error.message}`);
     else summary.stages_fetched.push(stage);
     await new Promise((r) => setTimeout(r, 200));
-  }
-
-  // 2) GC (the current classification; becomes final once the Tour ends).
-  try {
-    const gc = await fetchLetourGc();
-    for (const r of gc) addName(r.rider);
-    if (gc.length > 0) {
-      const ups = gc.map((r) => ({
-        pool_id: poolId,
-        position: r.position,
-        rider_id: null,
-        raw_name: r.rider,
-      }));
-      await supabase.from("final_gc").upsert(ups, { onConflict: "pool_id,position" });
-      summary.gc_rows = gc.length;
-    }
-  } catch (e) {
-    summary.errors.push(`gc: ${e instanceof Error ? e.message : e}`);
   }
 
   // 3) Withdrawals → rider_dropouts (dropout_after_stage = stage - 1).
@@ -188,8 +209,7 @@ export async function refreshLive(
   summary.picks_resolved = await resolveTeamPicks(supabase, poolId, peloton, year);
 
   // 7) Jersey leaders + tiered youth bonus per stage. Incremental.
-  //    Youth bonus rule: normal stages → top-3 young finishers get 3/2/1 pts;
-  //    TTT → every youth-eligible rider on a top-3 team gets +1 pt.
+  //    Youth bonus rule: top-3 young finishers per stage get 4/3/2 pts.
   //    Awards stored in stage_youth_bonus; jersey holders in stage_jersey_leaders.
   const { data: haveJersey } = await supabase
     .from("stage_jersey_leaders")
