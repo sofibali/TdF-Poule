@@ -6,6 +6,7 @@ import type { TeamStageMatrixRow } from "@/lib/db/types";
 type Props = {
   rows: TeamStageMatrixRow[];
   gcByTeam: Record<string, number>;
+  gcLocked: boolean;
 };
 
 function heatClass(points: number, max: number): string {
@@ -17,7 +18,7 @@ function heatClass(points: number, max: number): string {
   return "bg-emerald-50/40";
 }
 
-export default function StageMatrix({ rows, gcByTeam }: Props) {
+export default function StageMatrix({ rows, gcByTeam, gcLocked }: Props) {
   const teams = new Map<
     string,
     {
@@ -54,7 +55,7 @@ export default function StageMatrix({ rows, gcByTeam }: Props) {
   const teamRows = [...teams.values()].map((t) => {
     const stageTotal = stageCols.reduce((acc, s) => acc + (t.stages[s] ?? 0), 0);
     const gc = gcByTeam[t.team_id] ?? 0;
-    return { ...t, stage_total: stageTotal, gc, total: stageTotal + gc };
+    return { ...t, stage_total: stageTotal, gc, total: stageTotal + (gcLocked ? gc : 0) };
   });
   teamRows.sort((a, b) => b.total - a.total);
 
@@ -80,7 +81,7 @@ export default function StageMatrix({ rows, gcByTeam }: Props) {
                 {s}
               </th>
             ))}
-            <th className="px-3 py-3 text-right">GC</th>
+            <th className="px-3 py-3 text-right">{gcLocked ? "GC" : "GC*"}</th>
             <th className="px-3 py-3 text-right font-bold">Total</th>
           </tr>
         </thead>
@@ -126,7 +127,7 @@ export default function StageMatrix({ rows, gcByTeam }: Props) {
         </tbody>
       </table>
       <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
-        Green = stage winner · scroll right for all stages
+        Green = stage winner · scroll right for all stages{!gcLocked && " · * GC shown for reference, counted in Total only after stage 21"}
       </div>
     </div>
   );

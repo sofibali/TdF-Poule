@@ -125,15 +125,6 @@ export async function refreshLive(
     // A real stage result has a different top-10 order than the standing GC.
     // If 9+ of the top-10 stage finishers appear in the GC top-10, it is very
     // likely GC data being returned for a future stage — skip it.
-    if (gcRiderSet.size >= 10) {
-      const stageTop10 = rows.slice(0, 10).map((r) => r.rider.toLowerCase());
-      const gcOverlap = stageTop10.filter((n) => gcRiderSet.has(n)).length;
-      if (gcOverlap >= 9) {
-        summary.errors.push(`stage ${stage}: skipped (looks like GC data, ${gcOverlap}/10 top riders match GC)`);
-        break;
-      }
-    }
-
     for (const r of rows) addName(r.rider);
     const ups = rows.map((r) => ({
       pool_id: poolId,

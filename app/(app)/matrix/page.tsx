@@ -35,6 +35,19 @@ export default async function MatrixPage({
   const gcByTeam: Record<string, number> = {};
   for (const r of gcRows ?? []) gcByTeam[r.team_id] = r.points;
 
+  // GC counts toward total only once stage 21 exists (race fully complete).
+  const { data: stage21 } = await supabase
+    .from("stage_results")
+    .select("stage")
+    .eq("stage", 21)
+    .eq("pool_id",
+      (await supabase.from("pools").select("id").eq("year", year).maybeSingle())
+        .data?.id ?? "",
+    )
+    .limit(1)
+    .maybeSingle();
+  const gcLocked = stage21 !== null;
+
   return (
     <section>
       <div className="flex items-baseline justify-between gap-4">
@@ -53,6 +66,7 @@ export default async function MatrixPage({
         <StageMatrix
           rows={(matrixRows as TeamStageMatrixRow[]) ?? []}
           gcByTeam={gcByTeam}
+          gcLocked={gcLocked}
         />
       </div>
     </section>
