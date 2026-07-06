@@ -175,6 +175,8 @@ export async function refreshLive(
   const ridByName = new Map(peloton.map((r) => [r.full_name.toLowerCase(), r.id]));
 
   // 5) rider_dropouts from withdrawals (now that riders exist).
+  //    Use upsert (not delete+insert) to preserve manually-added DNS riders
+  //    (e.g. Meeus, Roglic) who are absent from the letour withdrawals list.
   const drops = new Map<string, number>();
   for (const w of withdrawals) {
     const id = ridByName.get(w.rider.toLowerCase());
@@ -184,13 +186,13 @@ export async function refreshLive(
     if (cur === undefined || after < cur) drops.set(id, after);
   }
   if (drops.size) {
-    await supabase.from("rider_dropouts").delete().eq("pool_id", poolId);
-    await supabase.from("rider_dropouts").insert(
+    await supabase.from("rider_dropouts").upsert(
       [...drops.entries()].map(([rider_id, dropout_after_stage]) => ({
         pool_id: poolId,
         rider_id,
         dropout_after_stage,
       })),
+      { onConflict: "pool_id,rider_id" },
     );
   }
 

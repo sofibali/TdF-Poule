@@ -81,7 +81,7 @@ export default function StageMatrix({ rows, gcByTeam, gcLocked }: Props) {
                 {s}
               </th>
             ))}
-            <th className="px-3 py-3 text-right">{gcLocked ? "GC" : "GC*"}</th>
+            {gcLocked && <th className="px-3 py-3 text-right">GC</th>}
             <th className="px-3 py-3 text-right font-bold">Total</th>
           </tr>
         </thead>
@@ -116,9 +116,11 @@ export default function StageMatrix({ rows, gcByTeam, gcLocked }: Props) {
                   </td>
                 );
               })}
-              <td className="px-3 py-2 text-right tabular-nums text-slate-500">
-                {t.gc || ""}
-              </td>
+              {gcLocked && (
+                <td className="px-3 py-2 text-right tabular-nums text-slate-500">
+                  {t.gc || ""}
+                </td>
+              )}
               <td className="px-3 py-2 text-right tabular-nums font-bold text-slate-900">
                 {t.total}
               </td>
@@ -127,7 +129,7 @@ export default function StageMatrix({ rows, gcByTeam, gcLocked }: Props) {
         </tbody>
       </table>
       <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
-        Green = stage winner · scroll right for all stages{!gcLocked && " · * GC shown for reference, counted in Total only after stage 21"}
+        Green = stage winner · scroll right for all stages
       </div>
     </div>
   );

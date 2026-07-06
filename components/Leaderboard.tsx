@@ -11,6 +11,9 @@ type Props = { initial: LeaderboardRow[]; year: number };
 
 export default function Leaderboard({ initial, year }: Props) {
   const [rows, setRows] = useState<LeaderboardRow[]>(initial);
+  // GC counts in totals only once stage 21 exists. Derive from data so the
+  // live subscription automatically unlocks the column without a page reload.
+  const gcLocked = rows.some((r) => r.total_points !== r.stage_points);
   const router = useRouter();
   const sort = useSortable<LeaderboardRow>(rows, "rank", "asc");
 
@@ -90,7 +93,7 @@ export default function Leaderboard({ initial, year }: Props) {
                 </div>
                 <div className="mt-2 flex gap-3 text-xs text-slate-600">
                   <span>Stages: {r.stage_points}</span>
-                  <span>GC: {r.gc_points}</span>
+                  {gcLocked && <span>GC: {r.gc_points}</span>}
                 </div>
               </div>
             );
@@ -107,7 +110,7 @@ export default function Leaderboard({ initial, year }: Props) {
               <SortHeader<LeaderboardRow> label="Team" sortKey="name" state={sort} numeric={false} />
               <SortHeader<LeaderboardRow> label="Player" sortKey="player_name" state={sort} numeric={false} className="hidden sm:table-cell" />
               <SortHeader<LeaderboardRow> label="Stages" sortKey="stage_points" state={sort} className="text-right" />
-              <SortHeader<LeaderboardRow> label="GC*" sortKey="gc_points" state={sort} className="text-right" />
+              {gcLocked && <SortHeader<LeaderboardRow> label="GC" sortKey="gc_points" state={sort} className="text-right" />}
               <SortHeader<LeaderboardRow> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
             </tr>
           </thead>
@@ -143,9 +146,11 @@ export default function Leaderboard({ initial, year }: Props) {
                   <td className="px-4 py-3 text-right tabular-nums text-slate-500">
                     {row.stage_points}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums text-slate-500">
-                    {row.gc_points}
-                  </td>
+                  {gcLocked && (
+                    <td className="px-4 py-3 text-right tabular-nums text-slate-500">
+                      {row.gc_points}
+                    </td>
+                  )}
                   <td className="px-4 py-3 text-right tabular-nums font-bold text-slate-900">
                     {row.total_points}
                   </td>
@@ -155,7 +160,7 @@ export default function Leaderboard({ initial, year }: Props) {
           </tbody>
         </table>
         <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
-          Click a row to see the team details · click headers to sort · * GC shown for reference, counted in Total only after stage 21
+          Click a row to see the team details · click headers to sort
         </div>
       </div>
     </div>
