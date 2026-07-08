@@ -60,44 +60,63 @@ export default function Leaderboard({ initial, year }: Props) {
 
   const leader = sort.rows[0];
 
+  const podiumMeta: Record<number, { emoji: string; cls: string; ring: string }> = {
+    1: { emoji: "🥇", cls: "podium-gold", ring: "ring-amber-400" },
+    2: { emoji: "🥈", cls: "podium-silver", ring: "ring-slate-400" },
+    3: { emoji: "🥉", cls: "podium-bronze", ring: "ring-orange-400" },
+  };
+
+  // All teams whose rank puts them on the podium (handles ties: e.g. two rank-2 → no rank-3)
+  const podiumRows = rows.filter((r) => r.rank <= 3);
+
   return (
     <div className="space-y-4">
-      {/* Podium cards for top 3 */}
-      {rows.length >= 3 && (
-        <div className="grid gap-3 sm:grid-cols-3 mb-6">
-          {[
-            { rank: 1, emoji: "🥇", cls: "podium-gold", ring: "ring-amber-400" },
-            { rank: 2, emoji: "🥈", cls: "podium-silver", ring: "ring-slate-400" },
-            { rank: 3, emoji: "🥉", cls: "podium-bronze", ring: "ring-orange-400" },
-          ].map(({ rank, emoji, cls, ring }) => {
-            const r = rows.find((r) => r.rank === rank);
-            if (!r) return null;
-            return (
-              <div
-                key={rank}
-                onClick={() => router.push(`/teams/${r.team_id}`)}
-                className={`${cls} cursor-pointer rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02] ${
-                  rank === 1 ? "sm:order-2" : rank === 2 ? "sm:order-1" : "sm:order-3"
-                }`}
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <span className="text-2xl">{emoji}</span>
-                    <div className="mt-1 font-bold text-lg leading-tight">{r.name}</div>
-                    <div className="text-xs text-slate-600">{r.player_name}</div>
+      {/* Podium cards — show all tied teams within top 3 */}
+      {podiumRows.length >= 3 && (
+        <div
+          className="grid gap-3 mb-6"
+          style={{ gridTemplateColumns: `repeat(${podiumRows.length}, minmax(0, 1fr))` }}
+        >
+          {podiumRows
+            .slice()
+            .sort((a, b) => {
+              // Display order: 2nd left, 1st centre, 3rd right (only for exactly 3 teams)
+              if (podiumRows.length === 3) {
+                const order: Record<number, number> = { 2: 0, 1: 1, 3: 2 };
+                return (order[a.rank] ?? a.rank) - (order[b.rank] ?? b.rank);
+              }
+              return a.rank - b.rank;
+            })
+            .map((r) => {
+              const { emoji, cls, ring } = podiumMeta[r.rank] ?? {
+                emoji: "",
+                cls: "",
+                ring: "ring-slate-300",
+              };
+              return (
+                <div
+                  key={r.team_id}
+                  onClick={() => router.push(`/teams/${r.team_id}`)}
+                  className={`${cls} cursor-pointer rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02]`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="text-2xl">{emoji}</span>
+                      <div className="mt-1 font-bold text-lg leading-tight">{r.name}</div>
+                      <div className="text-xs text-slate-600">{r.player_name}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-extrabold tabular-nums">{r.total_points}</div>
+                      <div className="text-[10px] uppercase tracking-wide text-slate-500">points</div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-extrabold tabular-nums">{r.total_points}</div>
-                    <div className="text-[10px] uppercase tracking-wide text-slate-500">points</div>
+                  <div className="mt-2 flex gap-3 text-xs text-slate-600">
+                    <span>Stages: {r.stage_points}</span>
+                    {gcLocked && <span>GC: {r.gc_points}</span>}
                   </div>
                 </div>
-                <div className="mt-2 flex gap-3 text-xs text-slate-600">
-                  <span>Stages: {r.stage_points}</span>
-                  {gcLocked && <span>GC: {r.gc_points}</span>}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       )}
 
