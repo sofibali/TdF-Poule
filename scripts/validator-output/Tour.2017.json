@@ -1,0 +1,303 @@
+{
+  "source": "Tour.2017.docx",
+  "year": 2017,
+  "team_count": 11,
+  "teams": [
+    {
+      "player": "Freek",
+      "team_name": "Special names",
+      "riders": [
+        "Pantano",
+        "Meintjes",
+        "Froome",
+        "Bardet",
+        "Aru",
+        "Fuglsang",
+        "Quintana",
+        "Porte",
+        "Roglic",
+        "Colbrelli S",
+        "Groenewegen",
+        "Swift",
+        "Demare",
+        "Kittel",
+        "Sagan"
+      ],
+      "reserves": [
+        "Bouhanni",
+        "Contador",
+        "Chaves"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rein",
+      "team_name": "Last Hope",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Bardet",
+        "Porte",
+        "Chavez",
+        "Martin T",
+        "Matthews",
+        "Sagan",
+        "Greipel",
+        "Kittel",
+        "Cavendish",
+        "Kwiatkowski",
+        "De Gendt",
+        "Maijka",
+        "Yates S"
+      ],
+      "reserves": [
+        "van Emden",
+        "Aru",
+        "Groenewegen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Coert",
+      "team_name": "Come back team",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Mollema",
+        "Chaves",
+        "Meintjes",
+        "Quintana",
+        "Bardet",
+        "Barguil",
+        "Maijka",
+        "Cavendish",
+        "Kittel",
+        "Sagan",
+        "Kristoff",
+        "Greipel",
+        "Roglic"
+      ],
+      "reserves": [
+        "Demare",
+        "Groenewegen",
+        "Izagirre"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Quintana",
+        "Porte",
+        "Valverde",
+        "Maijka",
+        "Aru",
+        "Van Avermaet",
+        "Sagan",
+        "Kittel",
+        "Cavendish",
+        "Matthews",
+        "Demare",
+        "Bouhanni",
+        "Bardet"
+      ],
+      "reserves": [
+        "Fuglsang",
+        "Meintjes",
+        "D Martin"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Quintana",
+        "Porte",
+        "Bardet",
+        "Sagan",
+        "Matthews",
+        "Kittel",
+        "Kristoff",
+        "Groenewegen",
+        "S Yates",
+        "Aru",
+        "Meintjes",
+        "Izagirre",
+        "Talansky"
+      ],
+      "reserves": [
+        "Colbrelli",
+        "Chaves"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "dream team",
+      "riders": [
+        "Froome",
+        "Porte",
+        "Bardet",
+        "Contador",
+        "Quintana",
+        "Yates",
+        "Pinot",
+        "Aru",
+        "D Martin",
+        "Sagan",
+        "Kittel",
+        "greipel",
+        "Kristoff",
+        "Matthews",
+        "Roglic"
+      ],
+      "reserves": [
+        "Valverde",
+        "Chaves",
+        "Fugelsang"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Trophee holders",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Bardet",
+        "Quintana",
+        "Porte",
+        "Colbrelli",
+        "Sagan",
+        "Valverde",
+        "Van Avermaet",
+        "Matthews",
+        "Cavendish",
+        "Greipel",
+        "Kittel",
+        "Bouhanni",
+        "DEmare"
+      ],
+      "reserves": [
+        "Aru",
+        "Kristoff",
+        "Maijka"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Porte",
+        "Quintana",
+        "Valverde",
+        "A Yates",
+        "Aru",
+        "Bardet",
+        "Sagan",
+        "Kittel",
+        "Greipel",
+        "Cavendish",
+        "Demare",
+        "Matthews",
+        "Roglic"
+      ],
+      "reserves": [
+        "Chaves",
+        "Maijka",
+        "Gesink"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "Dallas boys",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Porte",
+        "Quintana",
+        "Bardet",
+        "Aru",
+        "D Martin",
+        "Fuglsang",
+        "Van Avermaet",
+        "Greipel",
+        "Sagan",
+        "Demare",
+        "Cavendish",
+        "Valverde",
+        "Groenewegen"
+      ],
+      "reserves": [
+        "Henao",
+        "Mollema"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "Second Try",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Quintana",
+        "Porte",
+        "Sagan",
+        "Landa",
+        "Bardet",
+        "kristoff",
+        "Cavendish",
+        "Kittel",
+        "Greipel",
+        "Bouhanni",
+        "Matthews",
+        "Demare",
+        "Maijkan"
+      ],
+      "reserves": [
+        "Thomas",
+        "Pinot",
+        "Aru"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "almost lost in the noise",
+      "riders": [
+        "Froome",
+        "Bardet",
+        "Quintana",
+        "Contador",
+        "Demare",
+        "Groenewegen",
+        "Degenkolb",
+        "Valverde",
+        "Porte",
+        "Aru",
+        "Chaves",
+        "Cavendish",
+        "Kittel",
+        "Sagan",
+        "greipel"
+      ],
+      "reserves": [
+        "Yates",
+        "Mollema",
+        "Gesink"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": []
+}

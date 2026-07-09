@@ -271,24 +271,50 @@ export async function fetchLetourStartList(): Promise<StartListEntry[]> {
   return entries.sort((a, b) => a.bib - b.bib);
 }
 
+export type WithdrawalType = "dns" | "dnf" | "otl";
+
 /**
- * Withdrawals grouped by the stage they happened in. A rider listed under
- * "stage N" left during/before stage N, so dropout_after_stage = N - 1
- * (matches scripts/populate-dropouts.ts).
+ * Withdrawals grouped by the stage they happened in.
+ *
+ * type distinguishes how the rider left:
+ *   "dns" – did not start stage N (letour shows "DNS")
+ *   "otl" – started and finished but outside the time limit
+ *   "dnf" – started but did not finish (withdrawal, abandon, etc.)
+ *
+ * This matters for reserve substitution timing:
+ *   DNS  → reserve can join at stage N   (dropout_after_stage = N - 1)
+ *   DNF/OTL → reserve joins at stage N+1 (dropout_after_stage = N)
  */
 export async function fetchLetourWithdrawals(): Promise<
-  { rider: string; stage: number }[]
+  { rider: string; stage: number; type: WithdrawalType }[]
 > {
   const html = await fetchHtml("/en/withdrawal");
-  const out: { rider: string; stage: number }[] = [];
-  const parts = html.split(/id="stage-(\d+)"/);
-  // parts = [pre, "1", chunk1, "2", chunk2, ...]
-  for (let i = 1; i < parts.length; i += 2) {
-    const stage = parseInt(parts[i], 10);
-    const chunk = parts[i + 1] ?? "";
-    for (const m of chunk.matchAll(/\/rider\/\d+\/[^/]+\/([^/?#"]+)/g)) {
-      out.push({ rider: nameFromSlug(m[1]), stage });
-    }
-  }
+  const $ = cheerio.load(html);
+  const out: { rider: string; stage: number; type: WithdrawalType }[] = [];
+
+  $('[id^="stage-"]').each((_i, section) => {
+    const idAttr = $(section).attr("id") ?? "";
+    const stageMatch = idAttr.match(/^stage-(\d+)$/);
+    if (!stageMatch) return;
+    const stage = parseInt(stageMatch[1], 10);
+
+    $(section)
+      .find("tr")
+      .each((_j, tr) => {
+        const slug = riderSlug(
+          $(tr).find('a[href*="/rider/"]').first().attr("href"),
+        );
+        if (!slug) return;
+        const tds = $(tr).find("td").toArray();
+        const raw = $(tds[tds.length - 1]).text().trim().toLowerCase();
+        const type: WithdrawalType = raw === "dns"
+          ? "dns"
+          : raw.includes("time limit") || raw === "otl"
+          ? "otl"
+          : "dnf";
+        out.push({ rider: nameFromSlug(slug), stage, type });
+      });
+  });
+
   return out;
 }

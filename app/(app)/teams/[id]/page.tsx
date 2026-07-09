@@ -3,10 +3,25 @@ import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { computePickEvents, type RiderDropout } from "@/lib/scoring/substitutions";
-import EggOrLink from "@/components/EggOrLink";
 import type { TeamRider } from "@/lib/db/types";
 
 export const dynamic = "force-dynamic";
+
+function RiderCountBadge({ count, total }: { count: number; total: number }) {
+  const pct = count / total;
+  const cls =
+    count === 1
+      ? "bg-emerald-100 text-emerald-700"
+      : pct <= 0.25
+        ? "bg-amber-100 text-amber-700"
+        : "bg-slate-100 text-slate-500";
+  const label = count === 1 ? "unique" : `${count}/${total}`;
+  return (
+    <span className={`ml-1.5 rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums ${cls}`}>
+      {label}
+    </span>
+  );
+}
 
 export default async function TeamDetailPage({
   params,
@@ -28,7 +43,7 @@ export default async function TeamDetailPage({
     .eq("id", team.pool_id)
     .single();
 
-  const [{ data: picks }, { data: dropouts }, { data: stagePts }, { data: riderPts }, { data: riders }] =
+  const [{ data: picks }, { data: dropouts }, { data: stagePts }, { data: riderPts }, { data: riders }, { data: poolTeams }] =
     await Promise.all([
       supabase
         .from("team_riders")
@@ -53,7 +68,32 @@ export default async function TeamDetailPage({
         .from("riders")
         .select("id, full_name, last_name, pcs_slug, pro_team, bib_number")
         .eq("pool_id", team.pool_id),
+      supabase
+        .from("teams")
+        .select("id")
+        .eq("pool_id", team.pool_id),
     ]);
+
+  // Rider popularity: count how many teams in this pool picked each rider.
+  const poolTeamIds = (poolTeams ?? []).map((t) => t.id);
+  const totalTeams = poolTeamIds.length;
+  const riderTeamCount = new Map<string, number>(); // rider_id → # teams
+  const rawNameTeamCount = new Map<string, number>(); // lower(raw_name) → # teams
+  if (poolTeamIds.length > 0) {
+    const { data: allPicks } = await supabase
+      .from("team_riders")
+      .select("rider_id, raw_name")
+      .in("team_id", poolTeamIds);
+    for (const p of allPicks ?? []) {
+      if (p.rider_id) riderTeamCount.set(p.rider_id, (riderTeamCount.get(p.rider_id) ?? 0) + 1);
+      const k = (p.raw_name ?? "").toLowerCase().trim();
+      if (k) rawNameTeamCount.set(k, (rawNameTeamCount.get(k) ?? 0) + 1);
+    }
+  }
+  function teamCountFor(rider_id: string | null, raw_name: string): number {
+    if (rider_id && riderTeamCount.has(rider_id)) return riderTeamCount.get(rider_id)!;
+    return rawNameTeamCount.get(raw_name.toLowerCase().trim()) ?? 0;
+  }
 
   type RiderMeta = {
     pcs_slug: string | null;
@@ -131,62 +171,75 @@ export default async function TeamDetailPage({
         <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
           <span>🚴</span> Roster
         </h2>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {main.map((e) => {
             if (e.kind !== "main") return null;
             const points = ptsFor(e.raw_name);
             const pickRow = (picks ?? []).find((p) => p.id === e.team_rider_id);
             const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
-            return (
-              <li
-                key={e.team_rider_id}
-                className={`flex items-start justify-between rounded-xl border px-4 py-3 text-sm transition-all ${
-                  e.status === "active"
-                    ? "border-emerald-200 bg-white/90 hover:shadow-sm"
-                    : e.status === "dropped_out"
-                      ? "border-rose-200 bg-rose-50/50"
-                      : "border-slate-200 bg-slate-50/50 text-slate-400"
-                }`}
-              >
+            const count = teamCountFor(pickRow?.rider_id ?? null, e.raw_name);
+            const pcsUrl = meta.pcs_slug
+              ? `https://www.procyclingstats.com/rider/${meta.pcs_slug}`
+              : null;
+            const statusCls =
+              e.status === "active"
+                ? "border-emerald-200 bg-white/90"
+                : e.status === "dropped_out"
+                  ? "border-rose-200 bg-rose-50/50"
+                  : "border-slate-200 bg-slate-50/50 text-slate-400";
+            const cardCls = `flex items-start justify-between rounded-xl border px-4 py-3 text-sm transition-all ${statusCls}`;
+            const inner = (
+              <>
                 <div>
-                  <div className="font-semibold text-slate-800">
-                    <EggOrLink
-                      name={e.raw_name}
-                      href={meta.pcs_slug ? `https://www.procyclingstats.com/rider/${meta.pcs_slug}` : null}
-                      className="hover:text-amber-700 hover:underline"
-                    >
-                      {e.raw_name}
-                    </EggOrLink>
+                  <div className="font-semibold text-slate-800 flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
+                    <span>{e.raw_name}</span>
+                    {pcsUrl && (
+                      <svg className="w-3 h-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    )}
                     {meta.bib_number != null && (
-                      <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
+                      <span className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
                         #{meta.bib_number}
                       </span>
+                    )}
+                    {count > 0 && totalTeams > 1 && (
+                      <RiderCountBadge count={count} total={totalTeams} />
                     )}
                   </div>
                   {meta.pro_team && (
                     <div className="text-xs text-slate-400">{meta.pro_team}</div>
                   )}
                   <div className="mt-1 text-xs">
-                    {e.status === "active" && (
-                      <span className="text-emerald-600">● Active</span>
-                    )}
+                    {e.status === "active" && <span className="text-emerald-600">● Active</span>}
                     {e.status === "dropped_out" && (
-                      <span className="text-rose-600">
-                        ✗ Out after stage {e.dropout_after_stage}
-                      </span>
+                      <span className="text-rose-600">✗ Out after stage {e.dropout_after_stage}</span>
                     )}
-                    {e.status === "didnt_start" && (
-                      <span className="text-slate-400">— DNS</span>
-                    )}
+                    {e.status === "didnt_start" && <span className="text-slate-400">— DNS</span>}
                   </div>
                 </div>
-                <span className={`tabular-nums font-bold ${points ? "text-slate-900" : "text-slate-300"}`}>
+                <span className={`tabular-nums font-bold shrink-0 ml-2 ${points ? "text-slate-900" : "text-slate-300"}`}>
                   {points || "—"}
                 </span>
-              </li>
+              </>
+            );
+            return pcsUrl ? (
+              <a
+                key={e.team_rider_id}
+                href={pcsUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={`${cardCls} cursor-pointer select-none active:scale-[0.97] active:opacity-90 hover:shadow-sm`}
+              >
+                {inner}
+              </a>
+            ) : (
+              <div key={e.team_rider_id} className={cardCls}>
+                {inner}
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
 
       {/* Reserves */}
@@ -195,62 +248,83 @@ export default async function TeamDetailPage({
           <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
             <span>🔄</span> Reserves
           </h2>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
             {reserves.map((e) => {
               if (e.kind !== "reserve") return null;
               const pickRow = (picks ?? []).find((p) => p.id === e.team_rider_id);
               const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
+              const count = teamCountFor(pickRow?.rider_id ?? null, e.raw_name);
+              const pcsUrl = meta.pcs_slug
+                ? `https://www.procyclingstats.com/rider/${meta.pcs_slug}`
+                : null;
+              const statusCls =
+                e.status === "used"
+                  ? "border-blue-200 bg-blue-50/50"
+                  : e.status === "didnt_start"
+                    ? "border-slate-200 bg-slate-50/50 text-slate-400"
+                    : "border-slate-200 bg-white/80";
+              const cardCls = `flex items-start justify-between rounded-xl border px-4 py-3 text-sm ${statusCls}`;
               return (
-                <li
-                  key={e.team_rider_id}
-                  className={`flex items-start justify-between rounded-xl border px-4 py-3 text-sm ${
-                    e.status === "used"
-                      ? "border-blue-200 bg-blue-50/50"
-                      : e.status === "didnt_start"
-                        ? "border-slate-200 bg-slate-50/50 text-slate-400"
-                        : "border-slate-200 bg-white/80"
-                  }`}
-                >
-                  <div>
-                    <div className="font-semibold text-slate-800">
-                      <span className="text-slate-400 mr-1.5">{e.reserve_order}.</span>
-                      {meta.pcs_slug ? (
-                        <a
-                          href={`https://www.procyclingstats.com/rider/${meta.pcs_slug}`}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className="hover:text-amber-700 hover:underline"
-                        >
-                          {e.raw_name}
-                        </a>
-                      ) : (
-                        e.raw_name
+                <div key={e.team_rider_id} className={pcsUrl ? `${cardCls} cursor-pointer select-none active:scale-[0.97] active:opacity-90` : cardCls}>
+                  {pcsUrl ? (
+                    <a
+                      href={pcsUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="flex-1 min-w-0"
+                    >
+                      <div className="font-semibold text-slate-800 flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
+                        <span className="text-slate-400 mr-0.5">{e.reserve_order}.</span>
+                        <span>{e.raw_name}</span>
+                        <svg className="w-3 h-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        {count > 0 && totalTeams > 1 && (
+                          <RiderCountBadge count={count} total={totalTeams} />
+                        )}
+                      </div>
+                      {meta.pro_team && (
+                        <div className="text-xs text-slate-400">{meta.pro_team}</div>
                       )}
+                      <div className="mt-1 text-xs">
+                        {e.status === "used" && (
+                          <span className="text-blue-600">
+                            → Subbed in at stage {e.joined_at_stage}
+                            {e.replaced_raw_name && <> for {e.replaced_raw_name}</>}
+                          </span>
+                        )}
+                        {e.status === "unused" && <span className="text-slate-400">Bench</span>}
+                        {e.status === "didnt_start" && <span className="text-slate-400">— DNS</span>}
+                      </div>
+                    </a>
+                  ) : (
+                    <div>
+                      <div className="font-semibold text-slate-800 flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
+                        <span className="text-slate-400 mr-0.5">{e.reserve_order}.</span>
+                        <span>{e.raw_name}</span>
+                        {count > 0 && totalTeams > 1 && (
+                          <RiderCountBadge count={count} total={totalTeams} />
+                        )}
+                      </div>
+                      {meta.pro_team && (
+                        <div className="text-xs text-slate-400">{meta.pro_team}</div>
+                      )}
+                      <div className="mt-1 text-xs">
+                        {e.status === "used" && (
+                          <span className="text-blue-600">
+                            → Subbed in at stage {e.joined_at_stage}
+                            {e.replaced_raw_name && <> for {e.replaced_raw_name}</>}
+                          </span>
+                        )}
+                        {e.status === "unused" && <span className="text-slate-400">Bench</span>}
+                        {e.status === "didnt_start" && <span className="text-slate-400">— DNS</span>}
+                      </div>
                     </div>
-                    {meta.pro_team && (
-                      <div className="text-xs text-slate-400">{meta.pro_team}</div>
-                    )}
-                    <div className="mt-1 text-xs">
-                      {e.status === "used" && (
-                        <span className="text-blue-600">
-                          → Subbed in at stage {e.joined_at_stage}
-                          {e.replaced_raw_name && (
-                            <> for {e.replaced_raw_name}</>
-                          )}
-                        </span>
-                      )}
-                      {e.status === "unused" && (
-                        <span className="text-slate-400">Bench</span>
-                      )}
-                      {e.status === "didnt_start" && (
-                        <span className="text-slate-400">— DNS</span>
-                      )}
-                    </div>
-                  </div>
-                </li>
+                  )}
+                </div>
               );
             })}
-          </ul>
+          </div>
         </div>
       )}
 

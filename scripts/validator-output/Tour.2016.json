@@ -1,0 +1,390 @@
+{
+  "source": "Tour.2016.docx",
+  "year": 2016,
+  "team_count": 14,
+  "teams": [
+    {
+      "player": "Freek",
+      "team_name": "Trophy Hunters",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Barguil",
+        "Quintana",
+        "Bardet",
+        "Aru",
+        "Pinot",
+        "Kelderman",
+        "Rolland",
+        "Sagan",
+        "Kittel",
+        "Greippel",
+        "Caleb Ewan",
+        "Coquard",
+        "Groenewegen"
+      ],
+      "reserves": [
+        "Rui Costa",
+        "Cavendish",
+        "Matthews"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rein",
+      "team_name": "Last Hope",
+      "riders": [
+        "Froome",
+        "Quintana",
+        "Aru",
+        "Contador",
+        "Bardet",
+        "Mollema",
+        "Dumoulin",
+        "Porte",
+        "Rodriques",
+        "Martin (185)",
+        "Greipel",
+        "Kittel",
+        "Groenewegen",
+        "Cavendish",
+        "Degenkolb"
+      ],
+      "reserves": [
+        "Kelderman",
+        "Gerrans",
+        "v Garderen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Martijn",
+      "team_name": "Novices",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Van Garderen",
+        "Pinot",
+        "Valverde",
+        "Aru",
+        "Kittel",
+        "Greipel",
+        "Cancellara",
+        "Cavendish",
+        "Sagan",
+        "Rolland",
+        "Mollema"
+      ],
+      "reserves": [
+        "Hagen",
+        "F Schleck",
+        "Sorensen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Quintana",
+        "Aru",
+        "Nibali",
+        "Pinot",
+        "V garderen",
+        "Porte",
+        "Bardet",
+        "Mollema",
+        "Sagan",
+        "Greipel",
+        "Cavendish",
+        "Coquard",
+        "Kittel"
+      ],
+      "reserves": [
+        "Kristoff",
+        "Majka",
+        "Valverde"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Quintana",
+        "Barguil",
+        "V Garderen",
+        "Aru",
+        "Greipel",
+        "Kittel",
+        "Cavendish",
+        "Sagan",
+        "Kristoff",
+        "Pinot",
+        "Dumoulin",
+        "Porte",
+        "Groenewegen"
+      ],
+      "reserves": [
+        "Degenkolb",
+        "Kelderman",
+        "Mollema"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Koert",
+      "team_name": "Conservatives",
+      "riders": [
+        "Froome",
+        "Barguil",
+        "Alaphilippe",
+        "Quintana",
+        "Aru",
+        "Contador",
+        "Bardet",
+        "Polanc",
+        "Valverde",
+        "Degenkolb",
+        "Kittel",
+        "Greipel",
+        "Dumoulin",
+        "Groenewegen",
+        "Sagan"
+      ],
+      "reserves": [
+        "Kelderman",
+        "Grmay",
+        "Navarro"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "dream team",
+      "riders": [
+        "Froome",
+        "Maijka",
+        "Dumoulin",
+        "Contador",
+        "Aru",
+        "Bardet",
+        "Valverde",
+        "Barguil",
+        "Quintana",
+        "Kittell",
+        "Greipel",
+        "Van garderen",
+        "Sagan",
+        "Kelderman",
+        "Cavendish"
+      ],
+      "reserves": [
+        "Pinot",
+        "J Rodriguez",
+        "Nibali"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Karin's team",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Bardet",
+        "Quintana",
+        "Pinot",
+        "Aru",
+        "Rodriguez",
+        "Valverde",
+        "Coquard",
+        "Alaphilippe",
+        "Meintjes",
+        "Greipel",
+        "Sagan",
+        "Kittel",
+        "Pantano"
+      ],
+      "reserves": [
+        "Nibali",
+        "D Martin",
+        "v Avermaet"
+      ],
+      "needs_attention": true,
+      "parse_notes": "Player name not in document; inferred as Karin from Winners_byYear (1st in 2016). Champion in 2016 matches champions.ts."
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Quintana",
+        "Aru",
+        "Bardet",
+        "Pinot",
+        "Kittel",
+        "Greipel",
+        "Sagan",
+        "Valverde",
+        "Barguil",
+        "Alaphillipe",
+        "Rodrigues",
+        "V Avermaet",
+        "Kelderman"
+      ],
+      "reserves": [
+        "Rolland",
+        "Porte",
+        "v Garderen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "voorbeeldmannen",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Porte",
+        "Quintana",
+        "Bardet",
+        "D Martin",
+        "Kelderman",
+        "Aru",
+        "Pinot",
+        "Van garderen",
+        "Sagan",
+        "Greipel",
+        "Kittel",
+        "Cavendish",
+        "Groenewegen"
+      ],
+      "reserves": [
+        "MOllema",
+        "Valverde"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "Rich Riders",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Porte",
+        "alaphilippe",
+        "Greipel",
+        "Valverde",
+        "Barguil",
+        "Kittel",
+        "Sagan",
+        "Kristoff",
+        "Aru",
+        "Pinot",
+        "Degenkolb"
+      ],
+      "reserves": [
+        "Bardet",
+        "Rolland",
+        "van Garderen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "Second Try",
+      "riders": [
+        "Froome",
+        "Contador",
+        "Quintana",
+        "Pinot",
+        "Mollema",
+        "Bardet",
+        "Sagan",
+        "Porte",
+        "Greipel",
+        "Kittel",
+        "Cavendish",
+        "Barguil",
+        "Kristoff",
+        "Aru",
+        "Valverde"
+      ],
+      "reserves": [
+        "Rolland",
+        "J Rodriques",
+        "R Costa"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas ot",
+      "team_name": "Bas ot's team",
+      "riders": [
+        "Froome",
+        "Quintana",
+        "Mollema",
+        "Contador",
+        "Pinot",
+        "Nibali",
+        "Kittel",
+        "Dumoulin",
+        "Kelderman",
+        "Sagan",
+        "Rodriguez",
+        "Greipel",
+        "Garrans",
+        "Cavendish",
+        "Aru"
+      ],
+      "reserves": [
+        "Bardet",
+        "Fugelsang",
+        "Poels"
+      ],
+      "needs_attention": true,
+      "parse_notes": "Player name not in document; inferred as Bas ot from Winners_byYear (5th in 2016, only unmatched regular participant)."
+    },
+    {
+      "player": "Han",
+      "team_name": "almost lost in the noise",
+      "riders": [
+        "Froome",
+        "Poels",
+        "Quintana",
+        "Contador",
+        "Bardet",
+        "Kelderman",
+        "Groenewegen",
+        "Porte",
+        "Cavendish",
+        "Dumoulin",
+        "Rodriquez",
+        "Greipel",
+        "Kittel",
+        "Pinot",
+        "Barguil"
+      ],
+      "reserves": [
+        "Mollema",
+        "Aru",
+        "Valverde"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": [
+    "Unknown_8",
+    "Unknown_13"
+  ]
+}

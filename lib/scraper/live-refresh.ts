@@ -17,6 +17,7 @@ import {
   fetchLetourStageJerseys,
   fetchLetourStageWithTTT,
   fetchLetourWithdrawals,
+  type WithdrawalType,
 } from "@/lib/scraper/letour";
 
 // Minimal shape we need — compatible with both supabase clients.
@@ -143,7 +144,7 @@ export async function refreshLive(
   }
 
   // 3) Withdrawals → rider_dropouts (dropout_after_stage = stage - 1).
-  let withdrawals: { rider: string; stage: number }[] = [];
+  let withdrawals: { rider: string; stage: number; type: WithdrawalType }[] = [];
   try {
     withdrawals = await fetchLetourWithdrawals();
     for (const w of withdrawals) addName(w.rider);
@@ -177,20 +178,25 @@ export async function refreshLive(
   // 5) rider_dropouts from withdrawals (now that riders exist).
   //    Use upsert (not delete+insert) to preserve manually-added DNS riders
   //    (e.g. Meeus, Roglic) who are absent from the letour withdrawals list.
-  const drops = new Map<string, number>();
+  //
+  //    DNS  → dropout_after_stage = stage - 1  (reserve subs in that same stage)
+  //    DNF/OTL → dropout_after_stage = stage   (reserve subs in the following stage,
+  //              because the rider did start — only DNS vacates the slot immediately)
+  const drops = new Map<string, { after: number; reason: string }>();
   for (const w of withdrawals) {
     const id = ridByName.get(w.rider.toLowerCase());
     if (!id) continue;
-    const after = w.stage - 1;
+    const after = w.type === "dns" ? w.stage - 1 : w.stage;
     const cur = drops.get(id);
-    if (cur === undefined || after < cur) drops.set(id, after);
+    if (cur === undefined || after < cur.after) drops.set(id, { after, reason: w.type });
   }
   if (drops.size) {
     await supabase.from("rider_dropouts").upsert(
-      [...drops.entries()].map(([rider_id, dropout_after_stage]) => ({
+      [...drops.entries()].map(([rider_id, { after, reason }]) => ({
         pool_id: poolId,
         rider_id,
-        dropout_after_stage,
+        dropout_after_stage: after,
+        reason,
       })),
       { onConflict: "pool_id,rider_id" },
     );

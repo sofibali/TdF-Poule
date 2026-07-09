@@ -7,12 +7,10 @@ import { createClient } from "@/lib/supabase/client";
 import type { LeaderboardRow } from "@/lib/db/types";
 import { SortHeader, useSortable } from "@/components/useSortable";
 
-type Props = { initial: LeaderboardRow[]; year: number };
+type Props = { initial: LeaderboardRow[]; year: number; isLive?: boolean };
 
-export default function Leaderboard({ initial, year }: Props) {
+export default function Leaderboard({ initial, year, isLive = true }: Props) {
   const [rows, setRows] = useState<LeaderboardRow[]>(initial);
-  // GC counts in totals only once stage 21 exists. Derive from data so the
-  // live subscription automatically unlocks the column without a page reload.
   const gcLocked = rows.some((r) => r.total_points !== r.stage_points);
   const router = useRouter();
   const sort = useSortable<LeaderboardRow>(rows, "rank", "asc");
@@ -58,21 +56,25 @@ export default function Leaderboard({ initial, year }: Props) {
     );
   }
 
-  const leader = sort.rows[0];
-
   const podiumMeta: Record<number, { emoji: string; cls: string; ring: string }> = {
     1: { emoji: "🥇", cls: "podium-gold", ring: "ring-amber-400" },
     2: { emoji: "🥈", cls: "podium-silver", ring: "ring-slate-400" },
     3: { emoji: "🥉", cls: "podium-bronze", ring: "ring-orange-400" },
   };
 
-  // All teams whose rank puts them on the podium (handles ties: e.g. two rank-2 → no rank-3)
   const podiumRows = rows.filter((r) => r.rank <= 3);
 
   return (
     <div className="space-y-4">
-      {/* Podium cards — show all tied teams within top 3 */}
-      {podiumRows.length >= 3 && (
+      {/* Historical mode banner */}
+      {!isLive && (
+        <div className="rounded-lg border border-amber-300 bg-amber-50/80 px-4 py-3 text-sm text-amber-800">
+          Historical data — reserve substitutions are not calculated. All picks score across all stages.
+        </div>
+      )}
+
+      {/* Podium cards — only for the live year, 3+ teams */}
+      {isLive && podiumRows.length >= 3 && (
         <div
           className="grid gap-3 mb-6"
           style={{ gridTemplateColumns: `repeat(${podiumRows.length}, minmax(0, 1fr))` }}
@@ -80,7 +82,6 @@ export default function Leaderboard({ initial, year }: Props) {
           {podiumRows
             .slice()
             .sort((a, b) => {
-              // Display order: 2nd left, 1st centre, 3rd right (only for exactly 3 teams)
               if (podiumRows.length === 3) {
                 const order: Record<number, number> = { 2: 0, 1: 1, 3: 2 };
                 return (order[a.rank] ?? a.rank) - (order[b.rank] ?? b.rank);
@@ -97,7 +98,7 @@ export default function Leaderboard({ initial, year }: Props) {
                 <div
                   key={r.team_id}
                   onClick={() => router.push(`/teams/${r.team_id}`)}
-                  className={`${cls} cursor-pointer rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02]`}
+                  className={`${cls} cursor-pointer select-none rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02] active:scale-[0.98]`}
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -120,17 +121,79 @@ export default function Leaderboard({ initial, year }: Props) {
         </div>
       )}
 
-      {/* Full standings table */}
-      <div className="overflow-hidden rounded-2xl border border-amber-200/60 bg-white/90 shadow-sm backdrop-blur">
+      {/* ── Mobile card list (hidden sm+) ── */}
+      <ul className="sm:hidden space-y-2">
+        {sort.rows.map((row) => {
+          const medal =
+            row.rank === 1 ? "🥇" : row.rank === 2 ? "🥈" : row.rank === 3 ? "🥉" : null;
+          const cardCls =
+            row.rank === 1
+              ? "bg-amber-50 border-amber-300"
+              : row.rank === 2
+                ? "bg-slate-50 border-slate-300"
+                : row.rank === 3
+                  ? "bg-orange-50 border-orange-300"
+                  : "bg-white border-slate-200";
+          return (
+            <li
+              key={row.team_id}
+              onClick={() => router.push(`/teams/${row.team_id}`)}
+              className={`flex items-center gap-3 rounded-xl border px-4 py-3 cursor-pointer select-none
+                transition-transform active:scale-[0.97] active:opacity-90 ${cardCls}`}
+            >
+              {/* Rank / medal */}
+              <div className="w-7 shrink-0 text-center">
+                {medal ? (
+                  <span className="text-xl leading-none">{medal}</span>
+                ) : (
+                  <span className="text-slate-400 font-mono text-sm">{row.rank}</span>
+                )}
+              </div>
+
+              {/* Name + player */}
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-slate-900 truncate leading-tight">{row.name}</div>
+                <div className="text-xs text-slate-500 truncate">{row.player_name}</div>
+                {gcLocked && (
+                  <div className="mt-0.5 text-[11px] text-slate-400">
+                    Stg&nbsp;{row.stage_points} · GC&nbsp;{row.gc_points}
+                  </div>
+                )}
+              </div>
+
+              {/* Points + chevron */}
+              <div className="flex items-center gap-1 shrink-0">
+                <div className="text-right">
+                  <div className="text-xl font-extrabold tabular-nums text-slate-900">
+                    {row.total_points}
+                  </div>
+                  <div className="text-[10px] text-slate-400 leading-none">pts</div>
+                </div>
+                <svg
+                  className="w-4 h-4 text-slate-300 shrink-0"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* ── Desktop table (hidden on mobile) ── */}
+      <div className="hidden sm:block overflow-hidden rounded-2xl border border-amber-200/60 bg-white/90 shadow-sm backdrop-blur">
         <table className="w-full text-sm">
           <thead className="bg-amber-50/80 text-left text-xs uppercase tracking-wider text-amber-800/60">
             <tr>
               <SortHeader<LeaderboardRow> label="#" sortKey="rank" state={sort} numeric />
               <SortHeader<LeaderboardRow> label="Team" sortKey="name" state={sort} numeric={false} />
-              <SortHeader<LeaderboardRow> label="Player" sortKey="player_name" state={sort} numeric={false} className="hidden sm:table-cell" />
+              <SortHeader<LeaderboardRow> label="Player" sortKey="player_name" state={sort} numeric={false} />
               <SortHeader<LeaderboardRow> label="Stages" sortKey="stage_points" state={sort} className="text-right" />
               {gcLocked && <SortHeader<LeaderboardRow> label="GC" sortKey="gc_points" state={sort} className="text-right" />}
               <SortHeader<LeaderboardRow> label="Total" sortKey="total_points" state={sort} className="text-right font-bold" />
+              {/* chevron column — no header */}
+              <th className="w-6" />
             </tr>
           </thead>
           <tbody className="divide-y divide-amber-100/60">
@@ -149,7 +212,7 @@ export default function Leaderboard({ initial, year }: Props) {
                 <tr
                   key={row.team_id}
                   onClick={() => router.push(`/teams/${row.team_id}`)}
-                  className={`cursor-pointer hover:bg-yellow-50/60 transition-colors ${podium}`}
+                  className={`cursor-pointer select-none hover:bg-yellow-50/60 active:bg-amber-100/60 transition-colors ${podium}`}
                 >
                   <td className="px-4 py-3 text-slate-500 font-mono">
                     {medal ? (
@@ -159,9 +222,7 @@ export default function Leaderboard({ initial, year }: Props) {
                     )}
                   </td>
                   <td className="px-4 py-3 font-medium">{row.name}</td>
-                  <td className="px-4 py-3 text-slate-500 hidden sm:table-cell">
-                    {row.player_name}
-                  </td>
+                  <td className="px-4 py-3 text-slate-500">{row.player_name}</td>
                   <td className="px-4 py-3 text-right tabular-nums text-slate-500">
                     {row.stage_points}
                   </td>
@@ -173,13 +234,18 @@ export default function Leaderboard({ initial, year }: Props) {
                   <td className="px-4 py-3 text-right tabular-nums font-bold text-slate-900">
                     {row.total_points}
                   </td>
+                  <td className="pr-3 text-slate-300">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
         <div className="border-t border-amber-100/60 bg-amber-50/40 px-4 py-2 text-xs text-amber-700/50">
-          Click a row to see the team details · click headers to sort
+          Tap a row to see the team · tap column headers to sort
         </div>
       </div>
     </div>

@@ -34,6 +34,12 @@ export default async function LeaderboardPage({
 
   const rows = (lb as LeaderboardRow[]) ?? [];
 
+  // Years other than the most-recent active year are treated as historical:
+  // no podium shown, banner added explaining reserves aren't tracked.
+  const liveYear =
+    (defaultYearRpc as number | null) ?? years[0] ?? parseInt(process.env.TDF_YEAR ?? "2026", 10);
+  const isLive = year === liveYear;
+
   return (
     <section className="space-y-12">
       <div>
@@ -44,13 +50,13 @@ export default async function LeaderboardPage({
             </h1>
             <p className="mt-1 text-sm text-amber-800/60">
               Tour de France {year} · {rows.length} team{rows.length === 1 ? "" : "s"}
-              {" · "}updates live after each stage
+              {isLive ? " · updates live after each stage" : ""}
             </p>
           </div>
           {years.length > 0 && <YearSelect years={years} current={year} />}
         </div>
         <div className="mt-6">
-          <Leaderboard initial={rows} year={year} />
+          <Leaderboard initial={rows} year={year} isLive={isLive} />
         </div>
       </div>
 

@@ -1,0 +1,280 @@
+{
+  "source": "Tour.2019.docx",
+  "year": 2019,
+  "team_count": 10,
+  "teams": [
+    {
+      "player": "Freek",
+      "team_name": "Special names",
+      "riders": [
+        "Bernal",
+        "Bardet",
+        "Aru",
+        "Pinot",
+        "Kruijswijk",
+        "Yates A",
+        "Woods M",
+        "Mas E",
+        "Groenewegen",
+        "Sagan",
+        "Ewan",
+        "Demare",
+        "Viviani",
+        "Matthews",
+        "Colbrelli"
+      ],
+      "reserves": [
+        "Fuglsang",
+        "Benoot",
+        "Kristoff"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Koert",
+      "team_name": "Come back team",
+      "riders": [
+        "Sagan",
+        "Ewan",
+        "Groenewegen",
+        "Viviani",
+        "Dennis R",
+        "Fuglsang",
+        "Pinot",
+        "Bernal",
+        "Kruijswijk",
+        "Thomas",
+        "Bardet",
+        "Quintana",
+        "Yates A",
+        "Alapahilippe",
+        "Schachman"
+      ],
+      "reserves": [
+        "E Mas",
+        "Demare",
+        "Matthews"
+      ],
+      "needs_attention": true,
+      "parse_notes": "Document spells as \"Coert\"; normalized to Koert (consistent with all other years). Koert placed 7th in 2019."
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Thomas",
+        "Bernal",
+        "Bardet",
+        "Pinot",
+        "Kruijswijk",
+        "Fuglsang",
+        "Yates A",
+        "Quintana",
+        "Viviani",
+        "Sagan",
+        "Groenewegen",
+        "Alaphilippe",
+        "Ewan",
+        "Matthews",
+        "Porte"
+      ],
+      "reserves": [
+        "Landa",
+        "D martin",
+        "D Mas"
+      ],
+      "needs_attention": true,
+      "parse_notes": "Quinten appears in 2019 docx but has no 2019 entry in Winners_byYear spreadsheet. Possibly participated but final placement not recorded, or did not finish. Rich (5th in 2019 per spreadsheet) is absent from this docx \u2014 Rich may be the missing team."
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Thomas",
+        "Bernal",
+        "Landa",
+        "Quintana",
+        "Porte",
+        "Kruijswijk",
+        "Pinot",
+        "Sagan",
+        "Matthwes",
+        "Groenewegen",
+        "Viviani",
+        "Mas",
+        "Fuglsang",
+        "Schachman",
+        "Yates A"
+      ],
+      "reserves": [
+        "Konrad",
+        "Ewan",
+        "De Gendt"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "dream team",
+      "riders": [
+        "Bernal",
+        "Kruijswijk",
+        "Fuglsang",
+        "Thomas",
+        "Pinot",
+        "Yates A",
+        "Nibali",
+        "Landa",
+        "Buchmann",
+        "Groenewegen",
+        "Sagan",
+        "Ewan",
+        "Viviani",
+        "Trentin",
+        "Alaphilippe"
+      ],
+      "reserves": [
+        "Valverde",
+        "Dennis",
+        "Bardet"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Trophee holders",
+      "riders": [
+        "Bernal",
+        "Thomas",
+        "Fuglsang",
+        "Quintana",
+        "Yates A",
+        "Kruijsiwjk",
+        "Mas",
+        "Sagan",
+        "Ewan",
+        "Alaphilippe",
+        "Groenewegen",
+        "Matthwes",
+        "Colbrelli",
+        "Van Aert",
+        "Valverde"
+      ],
+      "reserves": [
+        "Bardet",
+        "Pinot",
+        "Landa"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Bardet",
+        "Thomas",
+        "Bernal",
+        "Pinot",
+        "Landa",
+        "Kruijswijk",
+        "Fuglsang",
+        "Buchman",
+        "Yates A",
+        "Groenewegen",
+        "Matthews",
+        "Ewan",
+        "Sagan",
+        "Alaphilippe",
+        "Van Aert"
+      ],
+      "reserves": [
+        "Quintana",
+        "van Avermaet",
+        "Valverde"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "Dallas boys",
+      "riders": [
+        "Thomas",
+        "Bernal",
+        "Yates A",
+        "Kruijswijk",
+        "Fuglsang",
+        "Pinot",
+        "Bardet",
+        "Quintana",
+        "Alaphilippe",
+        "Landa",
+        "Groenewegen",
+        "Viviani",
+        "Kristoff",
+        "Sagan",
+        "Matthhews"
+      ],
+      "reserves": [
+        "D martin",
+        "Porte",
+        "Uran"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "Third Try",
+      "riders": [
+        "Thomas",
+        "Bernal",
+        "Bardet",
+        "Kruijswijk",
+        "Landa",
+        "Woods",
+        "Van Avermaet",
+        "Van Aert",
+        "Alaphilippe",
+        "Groenewegen",
+        "Viviani",
+        "Ewan",
+        "Sagan",
+        "Nibali",
+        "Fuglsang"
+      ],
+      "reserves": [
+        "Matthews",
+        "Herrada",
+        "Valverde"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Han",
+      "team_name": "experience",
+      "riders": [
+        "Thomas",
+        "Bernal",
+        "Sagan",
+        "Bardet",
+        "Nibali",
+        "Landa",
+        "Fuglsang",
+        "Kruijswijk",
+        "Groenewegen",
+        "Van Aert",
+        "Yates A",
+        "Martin D",
+        "Porte",
+        "Ewan",
+        "Viviani"
+      ],
+      "reserves": [
+        "Aru",
+        "S yates",
+        "Pinot"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": []
+}

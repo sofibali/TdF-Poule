@@ -1,0 +1,107 @@
+{
+  "source": "Tour.2004.doc",
+  "year": 2003,
+  "team_count": 14,
+  "parse_notes": "WARNING: File is named Tour.2004.doc but intro text clearly states 'Tour 2003 pool'. Riders match 2003 era (Armstrong, Ullrich, Petacchi). Player 'Annebel' spelled differently than spreadsheet 'Annabel'. 'Justus' not in the standard placement spreadsheet. Champion Tosca matches champions.ts (2003: Tosca). Text extracted via strings() from old .doc format.",
+  "teams": [
+    {
+      "player": "Han",
+      "team_name": "Trophy Holders",
+      "riders": ["Armstrong", "Ullrich", "Zabel", "Hamilton", "Sevilla", "Mayo", "Petacchi", "Mancebo", "G de Galdeano", "Serrano", "Leipheimer", "Cooke", "Simoni", "Cipollini", "Botero"],
+      "reserves": ["Beltran", "Moreau"],
+      "needs_attention": true
+    },
+    {
+      "player": "Rein",
+      "team_name": "Last Hope",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "Zubeldia", "Heras", "Botero", "McGee", "Chavanel", "Basso", "Wegmann", "Cooke", "Petacchi", "McEwen", "Boonen"],
+      "reserves": ["Zabel", "Rasmussen", "Simoni"],
+      "needs_attention": false
+    },
+    {
+      "player": "Tosca",
+      "team_name": "Thrilling Hope",
+      "riders": ["Armstrong", "Ullrich", "Zabel", "Hamilton", "Petacchi", "Mayo", "Zubeldia", "Boonen", "Mentchov", "Heras", "Leipheimer", "McGee", "Cooke", "McEwen", "Basso"],
+      "reserves": ["Rasmussen", "Boogerd", "Botero"],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "McGee", "Heras", "Cippollini", "Simoni", "Mancebo", "Chavanel", "Pettachi", "Cooke", "McEwan", "OGrady", "Zabel"],
+      "reserves": ["Boogert", "Barro", "Nazon"],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "Zubeldia", "Chavanel", "Basso", "Heras", "Mentsjov", "Astarloza", "Pettachi", "Cooke", "McEwan", "Hushovd", "Zabel"],
+      "reserves": ["Nazon", "Tauler"],
+      "needs_attention": false
+    },
+    {
+      "player": "Koert",
+      "team_name": "Conservatives",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "Simoni", "Leipheimer", "Mancebo", "Ekimov", "Bettini", "Petacchi", "Cooke", "McEwen", "Grady", "Zabel", "Mentsjov"],
+      "reserves": ["Botero", "Petrov", "Mengin"],
+      "needs_attention": false
+    },
+    {
+      "player": "Annabel",
+      "team_name": "dream team",
+      "riders": ["Armstrong", "Rinero", "Ullrich", "Hamilton", "Mayo", "Cipollini", "Tombak", "Karpets", "McEwen", "Backstedt", "Zabel", "Casar", "Tossato", "Secchiari", "Baranowski"],
+      "reserves": ["Robin", "Niermann", "Boogerd"],
+      "needs_attention": true
+    },
+    {
+      "player": "Justus",
+      "team_name": "second time around",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "Petacchi", "Moreau", "Basso", "Mancebo", "Totschnig", "McEwen", "Boonen", "Heras", "Chavanel", "Backstedt", "Cooke"],
+      "reserves": ["Leipheimer", "Simoni", "Rinero"],
+      "needs_attention": true
+    },
+    {
+      "player": "Freek",
+      "team_name": "Woordenboek",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "Hruska", "Heras", "Zubeldia", "Chavanel", "Rasmussen", "Hushovd", "Cooke", "Petacchi", "Hondo", "Glomser", "McEwen"],
+      "reserves": ["Basso", "Boonen", "Karpets"],
+      "needs_attention": false
+    },
+    {
+      "player": "Gerard",
+      "team_name": "voorbeeldmannen",
+      "riders": ["McGee", "Hamilton", "Armstrong", "Ullrich", "Zabel", "Zubeldia", "Grady", "Heras", "Boonen", "Simoni", "McEwen", "Petacchi", "Mentsjov", "Leipheimer", "Mayo"],
+      "reserves": ["Rasmussen", "Dekker", "Cipollini"],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "Rich Riders",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mayo", "Zubeldia", "Heras", "Mentsjov", "Bodrogi", "Basso", "Nazon", "Pettacchi", "Cooke", "McEwen", "Hushovd", "Zabel"],
+      "reserves": ["Sastre", "Leipheimer", "Moreau"],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "Shining debut",
+      "riders": ["Armstrong", "Ullrich", "Hamilton", "Mentsjov", "Chavanal", "Rogers", "Virenque", "Dufaux", "Moreau", "Backstedt", "Pettachi", "Cooke", "McEwan", "Nazon", "Zabel"],
+      "reserves": ["Simoni", "Rinero", "Groot"],
+      "needs_attention": false
+    },
+    {
+      "player": "Brigit",
+      "team_name": "Screaming Devils",
+      "riders": ["Cipollini", "Petachi", "Moreau", "Chavanel", "Dekker", "Boogerd", "Rasmussen", "Kirsipuu", "Mancebo", "De Groot", "Mayo", "Zabel", "Heras", "Armstrong", "Basso"],
+      "reserves": ["Mentsjov", "McEwan", "OGrady"],
+      "needs_attention": false
+    },
+    {
+      "player": "Eelco",
+      "team_name": "try out",
+      "riders": ["Armstrong", "Ullrich", "Mayo", "McEwen", "McGee", "Boogerd", "Leipheimer", "Petacchi", "Basso", "Moreau", "Heras", "Cipollini", "Hamilton", "De Groot", "Boonen"],
+      "reserves": ["Nazon", "Caucchiolo", "Mancebo"],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": ["Annabel", "Justus"]
+}

@@ -1,0 +1,360 @@
+{
+  "source": "Tour.2018.docx",
+  "year": 2018,
+  "team_count": 13,
+  "teams": [
+    {
+      "player": "Freek",
+      "team_name": "Special names",
+      "riders": [
+        "Daniel Martinez",
+        "Froome",
+        "Dumoulin",
+        "Roglic",
+        "Porte",
+        "Guillaume Martin",
+        "Quintana",
+        "Pierre Latour",
+        "Bardet",
+        "Sagan",
+        "Gaviria",
+        "Colbrelli",
+        "Groenewegen",
+        "Kittel",
+        "Cavendish"
+      ],
+      "reserves": [
+        "Zakarin",
+        "Uran",
+        "Degenkolb"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Martijn",
+      "team_name": "Novices",
+      "riders": [
+        "Froome",
+        "Uran",
+        "Porte",
+        "Dumoulin",
+        "Gaviria",
+        "Sagan",
+        "Kittel",
+        "Quintana",
+        "Mollema",
+        "Nibali",
+        "Laporte",
+        "Groenewegen",
+        "Thomas",
+        "Matthews",
+        "Cavendish"
+      ],
+      "reserves": [
+        "Kruiswijk",
+        "Yates",
+        "Bardet"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Froome",
+        "Dumoulin",
+        "Nibali",
+        "Porte",
+        "Bardet",
+        "Quintana",
+        "Landa",
+        "Fuglsang",
+        "Uran",
+        "Sagan",
+        "Kittel",
+        "Matthews",
+        "Groenewegen",
+        "Gaviria",
+        "Demare"
+      ],
+      "reserves": [
+        "Roglic",
+        "Maijka",
+        "Mollema"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Froome",
+        "Dumoulin",
+        "Landa",
+        "Nibali",
+        "Porte",
+        "Kruiswijk",
+        "Bardet",
+        "Sagan",
+        "Groenewegen",
+        "Matthews",
+        "Gaviria",
+        "Roglic",
+        "Zakarin",
+        "Pozzovivo",
+        "Quintana"
+      ],
+      "reserves": [
+        "Cavendish",
+        "Uran",
+        "Jungels"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Coert",
+      "team_name": "Conservatives",
+      "riders": [
+        "Groenewegen",
+        "Matthews",
+        "Kittel",
+        "Gaviria",
+        "Cavendish",
+        "Dumoulin",
+        "Froome",
+        "Uran",
+        "Bardet",
+        "Porte",
+        "Kruiswijk",
+        "Roglic",
+        "Pozzovivo",
+        "Barguil",
+        "Quintana"
+      ],
+      "reserves": [
+        "Maijka",
+        "Mollema"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "dream team",
+      "riders": [
+        "Porte",
+        "Froome",
+        "Thomas",
+        "Landa",
+        "Bardet",
+        "Dumoulin",
+        "Fugelsang",
+        "Roglic",
+        "Nibali",
+        "Groenewegen",
+        "Sagan",
+        "Kittel",
+        "Gaviria",
+        "Demare",
+        "Uran"
+      ],
+      "reserves": [
+        "Quintana",
+        "Zakarin",
+        "Jungels"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Trophee holders",
+      "riders": [
+        "Froome",
+        "Dumoulin",
+        "Nibali",
+        "Quintana",
+        "Porte",
+        "Yates",
+        "Landa",
+        "Sagan",
+        "Kittel",
+        "Gaviria",
+        "Groenewegen",
+        "Matthews",
+        "Colbrelli",
+        "Roglic",
+        "Valverde"
+      ],
+      "reserves": [
+        "Bardet",
+        "Kruiswijk"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Bardet",
+        "Froome",
+        "Dumoulin",
+        "Landa",
+        "Porte",
+        "Sagan",
+        "Matthews",
+        "Roglic",
+        "Gaviria",
+        "Kittel",
+        "Groenewegen",
+        "Quintana",
+        "Benoot",
+        "Nibali",
+        "Kruijswijk"
+      ],
+      "reserves": [
+        "Mollema",
+        "D Martin",
+        "Yates"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "voorbeeldmannen",
+      "riders": [
+        "Froome",
+        "Dumoulin",
+        "Bardet",
+        "Quintana",
+        "Nibali",
+        "Uran",
+        "Yates",
+        "Porte",
+        "D Martin",
+        "Landa",
+        "Barguil",
+        "Sagan",
+        "Matthews",
+        "Kittel",
+        "Groenewegen"
+      ],
+      "reserves": [
+        "Thomas",
+        "Porte",
+        "Mollema"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rein",
+      "team_name": "hopefull riders",
+      "riders": [
+        "Froome",
+        "Quintana",
+        "Porte",
+        "Roglic",
+        "Sagan",
+        "Kruiswijk",
+        "Dumoulin",
+        "Bardet",
+        "D Martin",
+        "Groenewegen",
+        "Kittel",
+        "Gaviria",
+        "Matthews",
+        "Greipel",
+        "Demare"
+      ],
+      "reserves": [
+        "Fuglsang",
+        "Thomas",
+        "Uran"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "Second Try",
+      "riders": [
+        "Dumoulin",
+        "Froome",
+        "Quintana",
+        "Nibali",
+        "Valverde",
+        "Porte",
+        "Van Garderen",
+        "Bardet",
+        "Uran",
+        "Landa",
+        "Roglic",
+        "Sagan",
+        "Cavendish",
+        "Kittel",
+        "Demare"
+      ],
+      "reserves": [
+        "A Yates",
+        "Mollema",
+        "Barguil"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_12",
+      "team_name": "",
+      "riders": [
+        "Dumoulin",
+        "Mollema",
+        "ten Dam",
+        "Gesink",
+        "Kruijswijck",
+        "Groenewegen",
+        "Terpstra",
+        "Tiesj Benoot",
+        "de Gendt",
+        "Poels",
+        "van Garderen",
+        "Kittel",
+        "Sinkeldam",
+        "van Avermaet",
+        "Keukelaire"
+      ],
+      "reserves": [
+        "Sagan",
+        "Valverde",
+        "Froome"
+      ],
+      "needs_attention": true,
+      "parse_notes": "Player name not found in document. Picked all Dutch/Ineos riders (Mollema, ten Dam, Gesink, Kruijswijk, Groenewegen, Terpstra, Benoot). Possibly Bas Oud (13th in 2018, only unmatched regular) but style differs from prior Bas Oud picks. Flag for manual review."
+    },
+    {
+      "player": "Han",
+      "team_name": "team that once beated the Zuurbiers",
+      "riders": [
+        "Kittel",
+        "D\u00e9mare",
+        "Greipel",
+        "Gaviria",
+        "Groenewegen",
+        "Kristoff",
+        "Cavendish",
+        "Froome",
+        "Bardet",
+        "Matthews",
+        "Dumoulin",
+        "Zakarin",
+        "Nibali",
+        "Porte",
+        "Sagan"
+      ],
+      "reserves": [
+        "Barguil",
+        "Kruiswijk",
+        "Mollema"
+      ],
+      "needs_attention": false
+    }
+  ],
+  "unresolved": [
+    "Unknown_12"
+  ]
+}

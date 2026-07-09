@@ -1,0 +1,354 @@
+{
+  "source": "Tour 2015.docx",
+  "year": 2015,
+  "team_count": 13,
+  "teams": [
+    {
+      "player": "Freek",
+      "team_name": "Trophy Holders",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Rolland",
+        "Kristoff",
+        "Sagan",
+        "Cavendish",
+        "Coquard",
+        "Demare",
+        "Bennett",
+        "Barguil",
+        "Bardet",
+        "Pinot",
+        "Arredanto"
+      ],
+      "reserves": [
+        "Kwiatkowski",
+        "S Yates",
+        "Kruiswijk"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rein",
+      "team_name": "Last Hope",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Van Garderen",
+        "Sagan",
+        "Degenkolb",
+        "Cavendish",
+        "Kwiatkowski",
+        "Boasson-Hagen",
+        "Dumoulin",
+        "Martin",
+        "Van Avermaet",
+        "Gesink",
+        "Costa R"
+      ],
+      "reserves": [
+        "Thomas",
+        "Ten Dam",
+        "Rodrigues"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Otto",
+      "team_name": "Thrilling Hope",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "v Garderen",
+        "Pinot",
+        "Valverde",
+        "Porte",
+        "Kwiatkowski",
+        "Mollema",
+        "Cavendish",
+        "Sagan",
+        "Greipel",
+        "Degenkolb",
+        "Kristoff"
+      ],
+      "reserves": [
+        "ten Dam",
+        "Demare",
+        "Peraud"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Quinten",
+      "team_name": "Snelste Tijden",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Pinot",
+        "v Garderen",
+        "Uran",
+        "Bardet",
+        "Peraud",
+        "Kwiatkowski",
+        "Cavendish",
+        "Degenkolb",
+        "Kristoff",
+        "Sagan",
+        "Greipel"
+      ],
+      "reserves": [
+        "Mollema",
+        "Valverde",
+        "Majka"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Lori",
+      "team_name": "Glory",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "v Garderen",
+        "Cavendish",
+        "Greipel",
+        "Kristoff",
+        "Degenkolb",
+        "Pinot",
+        "Peraud",
+        "S Yates",
+        "Dumoulin",
+        "Martin",
+        "Sagan"
+      ],
+      "reserves": [
+        "Demare",
+        "Bardet",
+        "Kelderman"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Koert",
+      "team_name": "Conservatives",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Kristoff",
+        "Sagan",
+        "Greipel",
+        "Cavendish",
+        "Ten Dam",
+        "Mollema",
+        "v Garderen",
+        "Bardet",
+        "Kruiswijk",
+        "Barguil",
+        "Pinot"
+      ],
+      "reserves": [],
+      "needs_attention": false
+    },
+    {
+      "player": "Chiel",
+      "team_name": "dream team",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Sagan",
+        "Rolland",
+        "Degenkolb",
+        "Cavendish",
+        "Kristoff",
+        "Valverde",
+        "Dumoulin",
+        "Rodrigues",
+        "Uran",
+        "Pinot",
+        "Konig"
+      ],
+      "reserves": [
+        "Bardet",
+        "Peraud",
+        "Porte"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Karin",
+      "team_name": "Karin's team",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Pinot",
+        "Maijka",
+        "Kelderman",
+        "Mollema",
+        "Kristoff",
+        "Degenkolb",
+        "Cavendish",
+        "Greipel",
+        "Sagan",
+        "Coquard",
+        "Gerrans"
+      ],
+      "reserves": [
+        "van Garderen",
+        "Bardet",
+        "Demare"
+      ],
+      "needs_attention": true,
+      "parse_notes": "Player name not in document; inferred as Karin from Winners_byYear placement data (7th in 2015, only unmatched pool regular)"
+    },
+    {
+      "player": "Hubert",
+      "team_name": "know-it-all",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Valverde",
+        "Mollema",
+        "Kelderman",
+        "Degenkolb",
+        "Greipel",
+        "Kristoff",
+        "Sagan",
+        "Kwiatkowski",
+        "Bardet",
+        "Pinot",
+        "Hagen"
+      ],
+      "reserves": [
+        "van Garderen",
+        "Majka",
+        "Rolland"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Kielen",
+      "team_name": "voorbeeldmannen",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Mollema",
+        "Majka",
+        "Pinot",
+        "Peraud",
+        "Bardet",
+        "Porte",
+        "Kwiatkowski",
+        "Sagan",
+        "Greipel",
+        "Cavendish",
+        "Kristoff"
+      ],
+      "reserves": [
+        "Rodrigues",
+        "R Costa",
+        "van Garderen"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Rich",
+      "team_name": "Rich Riders",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "van Garderen",
+        "R Costa",
+        "Greipel",
+        "Rodrigues",
+        "Bardet",
+        "Cavendish",
+        "Sagan",
+        "Kristoff",
+        "Talansky",
+        "Pinot",
+        "Bouhani"
+      ],
+      "reserves": [
+        "Hagen-daez",
+        "Barguil"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Bas Oudejans",
+      "team_name": "Shining debut",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Porte",
+        "Uran",
+        "Valverde",
+        "Hesjedal",
+        "Cavendish",
+        "Degenkolb",
+        "Greipel",
+        "Kristoff",
+        "Matthews",
+        "Sagan",
+        "Dumoulin"
+      ],
+      "reserves": [
+        "Kelderman",
+        "Gesink"
+      ],
+      "needs_attention": false
+    },
+    {
+      "player": "Unknown_13",
+      "team_name": "",
+      "riders": [
+        "Contador",
+        "Froome",
+        "Nibali",
+        "Quintana",
+        "Cavendish",
+        "Sagan",
+        "Kelderman",
+        "Porte",
+        "Valverde",
+        "Gesink",
+        "Kristoff",
+        "Ten Dam",
+        "Boom",
+        "Slagter",
+        "Greipel"
+      ],
+      "reserves": [],
+      "needs_attention": true,
+      "parse_notes": "Player name not found in document and not in standard placement spreadsheet. Possible occasional participant (Han had no 2015 entry either but this slot has different picks). Flag for manual review."
+    }
+  ],
+  "unresolved": [
+    "Unknown_8",
+    "Unknown_13"
+  ]
+}
