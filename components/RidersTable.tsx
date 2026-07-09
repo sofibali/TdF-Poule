@@ -16,7 +16,11 @@ type Row = RiderTotalsRow & {
   [k: `stage_${number}`]: number;
 };
 
-const PCS_BASE = "https://www.procyclingstats.com/rider/";
+function riderUrl(pcs_slug: string | null | undefined, name: string) {
+  return pcs_slug
+    ? `https://www.letour.fr/en/rider/${pcs_slug}`
+    : `https://www.google.com/search?q=${encodeURIComponent(name + " cyclist")}`;
+}
 
 export default function RidersTable({
   totals,
@@ -99,13 +103,14 @@ export default function RidersTable({
                 <span className="mr-2 text-xs tabular-nums text-slate-400">
                   {r.overall_rank}
                 </span>
-                <EggOrLink
-                  name={r.rider_name}
-                  href={r.pcs_slug ? `${PCS_BASE}${r.pcs_slug}` : null}
+                <a
+                  href={riderUrl(r.pcs_slug, r.rider_name)}
+                  target="_blank"
+                  rel="noreferrer noopener"
                   className="font-medium text-slate-800 hover:text-amber-700 hover:underline"
                 >
                   {r.rider_name}
-                </EggOrLink>
+                </a>
                 {r.bib_number != null && (
                   <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-500">
                     #{r.bib_number}

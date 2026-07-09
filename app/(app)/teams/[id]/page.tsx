@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { computePickEvents, type RiderDropout } from "@/lib/scoring/substitutions";
+import RiderCardLink from "@/components/RiderCardLink";
 import type { TeamRider } from "@/lib/db/types";
 
 export const dynamic = "force-dynamic";
@@ -179,7 +180,7 @@ export default async function TeamDetailPage({
             const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
             const count = teamCountFor(pickRow?.rider_id ?? null, e.raw_name);
             const pcsUrl = meta.pcs_slug
-              ? `https://www.procyclingstats.com/rider/${meta.pcs_slug}`
+              ? `https://www.letour.fr/en/rider/${meta.pcs_slug}`
               : null;
             const statusCls =
               e.status === "active"
@@ -223,20 +224,15 @@ export default async function TeamDetailPage({
                 </span>
               </>
             );
-            return pcsUrl ? (
-              <a
+            return (
+              <RiderCardLink
                 key={e.team_rider_id}
                 href={pcsUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-                className={`${cardCls} cursor-pointer select-none active:scale-[0.97] active:opacity-90 hover:shadow-sm`}
+                name={e.raw_name}
+                className={pcsUrl ? `${cardCls} cursor-pointer select-none active:scale-[0.97] active:opacity-90 hover:shadow-sm` : cardCls}
               >
                 {inner}
-              </a>
-            ) : (
-              <div key={e.team_rider_id} className={cardCls}>
-                {inner}
-              </div>
+              </RiderCardLink>
             );
           })}
         </div>
@@ -255,8 +251,8 @@ export default async function TeamDetailPage({
               const meta = metaFor(pickRow?.rider_id ?? null, e.raw_name);
               const count = teamCountFor(pickRow?.rider_id ?? null, e.raw_name);
               const pcsUrl = meta.pcs_slug
-                ? `https://www.procyclingstats.com/rider/${meta.pcs_slug}`
-                : null;
+              ? `https://www.letour.fr/en/rider/${meta.pcs_slug}`
+              : null;
               const statusCls =
                 e.status === "used"
                   ? "border-blue-200 bg-blue-50/50"
@@ -265,63 +261,38 @@ export default async function TeamDetailPage({
                     : "border-slate-200 bg-white/80";
               const cardCls = `flex items-start justify-between rounded-xl border px-4 py-3 text-sm ${statusCls}`;
               return (
-                <div key={e.team_rider_id} className={pcsUrl ? `${cardCls} cursor-pointer select-none active:scale-[0.97] active:opacity-90` : cardCls}>
-                  {pcsUrl ? (
-                    <a
-                      href={pcsUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="flex-1 min-w-0"
-                    >
-                      <div className="font-semibold text-slate-800 flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
-                        <span className="text-slate-400 mr-0.5">{e.reserve_order}.</span>
-                        <span>{e.raw_name}</span>
-                        <svg className="w-3 h-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        {count > 0 && totalTeams > 1 && (
-                          <RiderCountBadge count={count} total={totalTeams} />
-                        )}
-                      </div>
-                      {meta.pro_team && (
-                        <div className="text-xs text-slate-400">{meta.pro_team}</div>
-                      )}
-                      <div className="mt-1 text-xs">
-                        {e.status === "used" && (
-                          <span className="text-blue-600">
-                            → Subbed in at stage {e.joined_at_stage}
-                            {e.replaced_raw_name && <> for {e.replaced_raw_name}</>}
-                          </span>
-                        )}
-                        {e.status === "unused" && <span className="text-slate-400">Bench</span>}
-                        {e.status === "didnt_start" && <span className="text-slate-400">— DNS</span>}
-                      </div>
-                    </a>
-                  ) : (
-                    <div>
-                      <div className="font-semibold text-slate-800 flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
-                        <span className="text-slate-400 mr-0.5">{e.reserve_order}.</span>
-                        <span>{e.raw_name}</span>
-                        {count > 0 && totalTeams > 1 && (
-                          <RiderCountBadge count={count} total={totalTeams} />
-                        )}
-                      </div>
-                      {meta.pro_team && (
-                        <div className="text-xs text-slate-400">{meta.pro_team}</div>
-                      )}
-                      <div className="mt-1 text-xs">
-                        {e.status === "used" && (
-                          <span className="text-blue-600">
-                            → Subbed in at stage {e.joined_at_stage}
-                            {e.replaced_raw_name && <> for {e.replaced_raw_name}</>}
-                          </span>
-                        )}
-                        {e.status === "unused" && <span className="text-slate-400">Bench</span>}
-                        {e.status === "didnt_start" && <span className="text-slate-400">— DNS</span>}
-                      </div>
-                    </div>
+                <RiderCardLink
+                  key={e.team_rider_id}
+                  href={pcsUrl}
+                  name={e.raw_name}
+                  className={pcsUrl ? `${cardCls} cursor-pointer select-none active:scale-[0.97] active:opacity-90` : cardCls}
+                >
+                  <div className="font-semibold text-slate-800 flex items-center flex-wrap gap-x-1.5 gap-y-0.5">
+                    <span className="text-slate-400 mr-0.5">{e.reserve_order}.</span>
+                    <span>{e.raw_name}</span>
+                    {pcsUrl && (
+                      <svg className="w-3 h-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    )}
+                    {count > 0 && totalTeams > 1 && (
+                      <RiderCountBadge count={count} total={totalTeams} />
+                    )}
+                  </div>
+                  {meta.pro_team && (
+                    <div className="text-xs text-slate-400">{meta.pro_team}</div>
                   )}
-                </div>
+                  <div className="mt-1 text-xs">
+                    {e.status === "used" && (
+                      <span className="text-blue-600">
+                        → Subbed in at stage {e.joined_at_stage}
+                        {e.replaced_raw_name && <> for {e.replaced_raw_name}</>}
+                      </span>
+                    )}
+                    {e.status === "unused" && <span className="text-slate-400">Bench</span>}
+                    {e.status === "didnt_start" && <span className="text-slate-400">— DNS</span>}
+                  </div>
+                </RiderCardLink>
               );
             })}
           </div>
