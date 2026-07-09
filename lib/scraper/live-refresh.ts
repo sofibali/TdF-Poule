@@ -210,13 +210,21 @@ export async function refreshLive(
   // 7) Jersey leaders + tiered youth bonus per stage. Incremental.
   //    Youth bonus rule: top-3 young finishers per stage get 4/3/2 pts.
   //    Awards stored in stage_youth_bonus; jersey holders in stage_jersey_leaders.
+  //    Skip condition: stage must have BOTH jersey leaders AND youth bonus rows.
+  //    Checking only jersey leaders caused partial scrapes (e.g. missing youth_leader
+  //    classification) to permanently block youth bonus from being written.
   const { data: haveJersey } = await supabase
     .from("stage_jersey_leaders")
     .select("stage")
     .eq("pool_id", poolId);
+  const { data: haveBonus } = await supabase
+    .from("stage_youth_bonus")
+    .select("stage")
+    .eq("pool_id", poolId);
   const jerseyStages = new Set((haveJersey ?? []).map((r: { stage: number }) => r.stage));
+  const bonusStages = new Set((haveBonus ?? []).map((r: { stage: number }) => r.stage));
   for (const stage of summary.stages_fetched) {
-    if (jerseyStages.has(stage)) continue;
+    if (jerseyStages.has(stage) && bonusStages.has(stage)) continue;
     try {
       const { youthAwards, holders } = await fetchLetourStageJerseys(stage);
 
