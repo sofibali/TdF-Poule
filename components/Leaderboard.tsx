@@ -75,17 +75,12 @@ export default function Leaderboard({ initial, year, isLive = true }: Props) {
 
       {/* Podium cards — only for the live year, 3+ teams */}
       {isLive && podiumRows.length >= 3 && (
-        <div
-          className="grid gap-3 mb-6"
-          style={{ gridTemplateColumns: `repeat(${podiumRows.length}, minmax(0, 1fr))` }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
           {podiumRows
             .slice()
             .sort((a, b) => {
-              if (podiumRows.length === 3) {
-                const order: Record<number, number> = { 2: 0, 1: 1, 3: 2 };
-                return (order[a.rank] ?? a.rank) - (order[b.rank] ?? b.rank);
-              }
+              // Desktop: silver | gold | bronze visual order via sm:order-* below
+              // Mobile: always rank order (1, 2, 3) so stacked list reads naturally
               return a.rank - b.rank;
             })
             .map((r) => {
@@ -94,19 +89,21 @@ export default function Leaderboard({ initial, year, isLive = true }: Props) {
                 cls: "",
                 ring: "ring-slate-300",
               };
+              const orderCls =
+                r.rank === 1 ? "sm:order-2" : r.rank === 2 ? "sm:order-1" : "sm:order-3";
               return (
                 <div
                   key={r.team_id}
                   onClick={() => router.push(`/teams/${r.team_id}`)}
-                  className={`${cls} cursor-pointer select-none rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02] active:scale-[0.98]`}
+                  className={`${cls} ${orderCls} cursor-pointer select-none rounded-2xl p-4 ring-2 ${ring} transition-transform hover:scale-[1.02] active:scale-[0.98]`}
                 >
-                  <div className="flex items-start justify-between">
-                    <div>
+                  <div className="flex items-start justify-between gap-2 min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className="text-2xl">{emoji}</span>
-                      <div className="mt-1 font-bold text-lg leading-tight">{r.name}</div>
-                      <div className="text-xs text-slate-600">{r.player_name}</div>
+                      <div className="mt-1 font-bold text-lg leading-tight truncate">{r.name}</div>
+                      <div className="text-xs text-slate-600 truncate">{r.player_name}</div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right shrink-0">
                       <div className="text-2xl font-extrabold tabular-nums">{r.total_points}</div>
                       <div className="text-[10px] uppercase tracking-wide text-slate-500">points</div>
                     </div>
