@@ -98,8 +98,8 @@ export async function refreshLive(
       const ups = gcRows.map((r) => ({
         pool_id: poolId,
         position: r.position,
-        rider_id: null,
         raw_name: r.rider,
+        // rider_id omitted — preserves resolved values on re-upsert
       }));
       await supabase.from("final_gc").upsert(ups, { onConflict: "pool_id,position" });
       summary.gc_rows = gcRows.length;
@@ -127,12 +127,14 @@ export async function refreshLive(
     // If 9+ of the top-10 stage finishers appear in the GC top-10, it is very
     // likely GC data being returned for a future stage — skip it.
     for (const r of rows) addName(r.rider);
+    // rider_id is intentionally omitted so ON CONFLICT UPDATE doesn't clobber
+    // previously-resolved values. New inserts get rider_id = null (schema default);
+    // resolveColumn fills it in below.
     const ups = rows.map((r) => ({
       pool_id: poolId,
       stage,
       position: r.position,
       scoring_position: r.scoring_position ?? null,
-      rider_id: null,
       raw_name: r.rider,
     }));
     const { error } = await supabase
@@ -283,17 +285,25 @@ async function resolveColumn(
   peloton: RiderRow[],
   year: number,
 ) {
-  const { data: rows } = await supabase
-    .from(table)
-    .select(table === "stage_results" ? "stage, position, raw_name" : "position, raw_name")
-    .eq("pool_id", poolId)
-    .is("rider_id", null);
-  for (const r of rows ?? []) {
-    const m = matchRider(r.raw_name, peloton, year);
-    if (m.kind !== "matched") continue;
-    const q = supabase.from(table).update({ rider_id: m.rider.id }).eq("pool_id", poolId);
-    if (table === "stage_results") await q.eq("stage", r.stage).eq("position", r.position);
-    else await q.eq("position", r.position);
+  // Paginate to handle >1000 unresolved rows (Supabase default limit).
+  let from = 0;
+  while (true) {
+    const { data: rows } = await supabase
+      .from(table)
+      .select(table === "stage_results" ? "stage, position, raw_name" : "position, raw_name")
+      .eq("pool_id", poolId)
+      .is("rider_id", null)
+      .range(from, from + 999);
+    if (!rows || rows.length === 0) break;
+    for (const r of rows) {
+      const m = matchRider(r.raw_name, peloton, year);
+      if (m.kind !== "matched") continue;
+      const q = supabase.from(table).update({ rider_id: m.rider.id }).eq("pool_id", poolId);
+      if (table === "stage_results") await q.eq("stage", r.stage).eq("position", r.position);
+      else await q.eq("position", r.position);
+    }
+    if (rows.length < 1000) break;
+    from += 1000;
   }
 }
 
