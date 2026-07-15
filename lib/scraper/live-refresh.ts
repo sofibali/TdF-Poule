@@ -275,6 +275,22 @@ export async function refreshLive(
     await new Promise((r) => setTimeout(r, 200));
   }
 
+  // 8) Health check: flag any scoring positions (top 50) still unresolved.
+  //    These cause teams to score 0 for those riders — surface them as errors.
+  const { data: unresolved } = await supabase
+    .from("stage_results")
+    .select("stage, position, raw_name")
+    .eq("pool_id", poolId)
+    .is("rider_id", null)
+    .lte("position", 50)
+    .order("stage")
+    .order("position");
+  for (const r of unresolved ?? []) {
+    summary.errors.push(
+      `unresolved scoring position: stage ${r.stage} pos ${r.position} "${r.raw_name}"`,
+    );
+  }
+
   return summary;
 }
 
