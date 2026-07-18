@@ -40,7 +40,7 @@ export default async function TeamDetailPage({
 
   const { data: pool } = await supabase
     .from("pools")
-    .select("year, num_stages")
+    .select("year, num_stages, reserve_lock_stage")
     .eq("id", team.pool_id)
     .single();
 
@@ -121,6 +121,7 @@ export default async function TeamDetailPage({
   const events = computePickEvents(
     (picks as TeamRider[]) ?? [],
     (dropouts as RiderDropout[]) ?? [],
+    pool?.reserve_lock_stage ?? 6,
   );
 
   const ptsByName = new Map<string, number>();

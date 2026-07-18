@@ -30,12 +30,12 @@ export type PickEvent =
       replaced_raw_name: string | null;
     };
 
-const RESERVE_LOCK_STAGE = 6;
-
 export function computePickEvents(
   picks: TeamRider[],
   dropouts: RiderDropout[],
+  reserveLockStage = 6,
 ): PickEvent[] {
+  const RESERVE_LOCK_STAGE = reserveLockStage;
   const dropMap = new Map<string, number>();
   for (const d of dropouts) dropMap.set(d.rider_id, d.dropout_after_stage);
 
