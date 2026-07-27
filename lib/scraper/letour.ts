@@ -73,8 +73,36 @@ export async function fetchLetourGc(): Promise<StageResult[]> {
   return parseRankingTable(await fetchHtml("/en/rankings"));
 }
 
+/**
+ * The /en/rankings/stage-N page embeds ajax links for every classification,
+ * keyed by a two-letter code + "e" (stage-day, e.g. "ite" = stage general) or
+ * + "g" (cumulative/GC, e.g. "itg" = overall general). Extract one by code.
+ */
+function extractRankingAjaxUrl(html: string, code: string): string | null {
+  const m = html.match(new RegExp(`&quot;${code}&quot;:&quot;([^&]+)&quot;`));
+  return m ? m[1].replace(/\\\//g, "/") : null;
+}
+
+/**
+ * The true stage-day classification (not GC). The main /rankings/stage-N
+ * page's default table isn't reliably "this stage's result" — most notably
+ * on the final stage, letour.fr defaults that table to the overall GC
+ * instead, since the GC is the headline story that day. The page always
+ * embeds a distinct "ite" (stage general) ajax link with the real per-stage
+ * order; fetch that explicitly rather than trusting the page's default tab.
+ */
+async function fetchLetourStagePage(stage: number): Promise<StageResult[]> {
+  const html = await fetchHtml(`/en/rankings/stage-${stage}`);
+  const iteUrl = extractRankingAjaxUrl(html, "ite");
+  if (iteUrl) {
+    const iteRows = parseRankingTable(await fetchHtml(iteUrl));
+    if (iteRows.length > 0) return iteRows;
+  }
+  return parseRankingTable(html);
+}
+
 export async function fetchLetourStage(stage: number): Promise<StageResult[]> {
-  return parseRankingTable(await fetchHtml(`/en/rankings/stage-${stage}`));
+  return fetchLetourStagePage(stage);
 }
 
 /**
@@ -97,8 +125,7 @@ export type StageResultWithScoring = StageResult & { scoring_position: number | 
 export async function fetchLetourStageWithTTT(
   stage: number,
 ): Promise<StageResultWithScoring[]> {
-  const html = await fetchHtml(`/en/rankings/stage-${stage}`);
-  const rows = parseRankingTable(html);
+  const rows = await fetchLetourStagePage(stage);
   if (rows.length === 0) return [];
 
   // Detect TTT: check whether any team appears twice in the first 10 rows.

@@ -78,11 +78,25 @@ async function main() {
 
   const dropouts = await fetchAll("rider_dropouts", "rider_id, dropout_after_stage", poolId);
 
+  const stageYouthBonus = await fetchAll(
+    "stage_youth_bonus",
+    "stage, rider_id, bonus_points",
+    poolId,
+  );
+
+  const stageJerseyLeaders = await fetchAll(
+    "stage_jersey_leaders",
+    "stage, classification, rider_id",
+    poolId,
+  );
+
   // Rider names for readable output — gather every rider id we reference.
   const riderIds = new Set<string>();
   for (const r of teamRiders ?? []) if (r.rider_id) riderIds.add(r.rider_id);
   for (const r of stageResults ?? []) if (r.rider_id) riderIds.add(r.rider_id);
   for (const r of finalGc ?? []) if (r.rider_id) riderIds.add(r.rider_id);
+  for (const r of stageYouthBonus ?? []) if (r.rider_id) riderIds.add(r.rider_id);
+  for (const r of stageJerseyLeaders ?? []) if (r.rider_id) riderIds.add(r.rider_id);
   const { data: riders } = await sb
     .from("riders")
     .select("id, full_name")
@@ -98,6 +112,8 @@ async function main() {
     stageResults: stageResults ?? [],
     finalGc: finalGc ?? [],
     dropouts: dropouts ?? [],
+    stageYouthBonus: stageYouthBonus ?? [],
+    stageJerseyLeaders: stageJerseyLeaders ?? [],
     riderNames,
   };
 
@@ -111,7 +127,8 @@ async function main() {
   console.log(
     `  teams=${snapshot.teams.length} teamRiders=${snapshot.teamRiders.length} ` +
       `stages=${stages.size} stageRows=${snapshot.stageResults.length} ` +
-      `gc=${snapshot.finalGc.length} dropouts=${snapshot.dropouts.length}`,
+      `gc=${snapshot.finalGc.length} dropouts=${snapshot.dropouts.length} ` +
+      `youthBonus=${snapshot.stageYouthBonus.length} jerseyLeaders=${snapshot.stageJerseyLeaders.length}`,
   );
 }
 

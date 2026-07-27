@@ -1,0 +1,6644 @@
+{
+  "teams": [
+    {
+      "id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "player_name": "Bas Ot"
+    },
+    {
+      "id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "player_name": "Bas Oud"
+    },
+    {
+      "id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "player_name": "Chiel"
+    },
+    {
+      "id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "player_name": "Claude-AI"
+    },
+    {
+      "id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "player_name": "Coert"
+    },
+    {
+      "id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "player_name": "Copilot"
+    },
+    {
+      "id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "player_name": "Eelco"
+    },
+    {
+      "id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "player_name": "Gerards"
+    },
+    {
+      "id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "player_name": "Han"
+    },
+    {
+      "id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "player_name": "Hubert"
+    },
+    {
+      "id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "player_name": "Karin"
+    },
+    {
+      "id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "player_name": "Kielen"
+    },
+    {
+      "id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "player_name": "Lori"
+    },
+    {
+      "id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "player_name": "Quinten"
+    },
+    {
+      "id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "player_name": "Rein"
+    },
+    {
+      "id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "player_name": "Rich"
+    },
+    {
+      "id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "player_name": "Sofia"
+    }
+  ],
+  "picks": [
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "FRETIN Nicolas",
+      "rider_id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Milan Fretin",
+        "last_name": "Fretin"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "DE LIE Arnaud",
+      "rider_id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Arnaud De Lie",
+        "last_name": "De Lie"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "MOHORIC Matej",
+      "rider_id": "254f9bdf-b08f-481f-b624-49054d6e597f",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Matej Mohoric",
+        "last_name": "Mohoric"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "raw_name": "BERNAL Egan",
+      "rider_id": "9d3a492a-eee8-47e9-a5a0-826b6c8ef2f6",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Egan Bernal Gomez",
+        "last_name": "Gomez"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "PIGANZOLI Davide",
+      "rider_id": "2467b1e6-a27d-4f13-a2aa-2fdf8e9aa30f",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Davide Piganzoli",
+        "last_name": "Piganzoli"
+      }
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "RODRIGUEZ Carlos",
+      "rider_id": null,
+      "is_reserve": true,
+      "riders": null
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "MEEUS Jordi",
+      "rider_id": "2b07b0f8-63f9-4a2f-86f6-a083d8a282c3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jordi Meeus",
+        "last_name": "Meeus"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "DE LIE Arnaud",
+      "rider_id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Arnaud De Lie",
+        "last_name": "De Lie"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "raw_name": "TIBERI Antonio",
+      "rider_id": "bb67830a-31c3-4dd6-b975-f0d4c6bad1b5",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Antonio Tiberi",
+        "last_name": "Tiberi"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "DE LIE Arnaud",
+      "rider_id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Arnaud De Lie",
+        "last_name": "De Lie"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "GREGOIRE Romain",
+      "rider_id": "d5c4cfe6-f086-4d73-b866-451b39d28bbd",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Romain Gregoire",
+        "last_name": "Gregoire"
+      }
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "raw_name": "SKJELMOSE Mattias",
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Mattias Skjelmose",
+        "last_name": "Skjelmose"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "HINDLEY Jai",
+      "rider_id": "ac7bd765-5758-48bb-9245-e49aeb64ed09",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Jai Hindley",
+        "last_name": "Hindley"
+      }
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "raw_name": "YATES Adam",
+      "rider_id": "49c139dd-0805-4821-8ceb-6765e95b833a",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Adam Yates",
+        "last_name": "Yates"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "HEALY Ben",
+      "rider_id": "ee03bad3-0ce8-42e2-9e65-c3bccb291f17",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Ben Healy",
+        "last_name": "Healy"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "JORGENSON Matteo",
+      "rider_id": "caa6acd8-3484-482f-a198-66d74853dca1",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Matteo Jorgenson",
+        "last_name": "Jorgenson"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "KANTER Tom",
+      "rider_id": "594e6edd-ffda-46a1-9cea-65067e79f6c6",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Max Kanter",
+        "last_name": "Kanter"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "WRIGHT Fred",
+      "rider_id": "4228fffb-fb71-47e1-b5aa-bc5c688b447e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Alfred Brockwell Wright",
+        "last_name": "Wright"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "SKJELMOSE Mattias",
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mattias Skjelmose",
+        "last_name": "Skjelmose"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "GREGOIRE Romain",
+      "rider_id": "d5c4cfe6-f086-4d73-b866-451b39d28bbd",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Romain Gregoire",
+        "last_name": "Gregoire"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "raw_name": "RICCITELLO Matthew",
+      "rider_id": "ce410b40-25b8-4da5-9983-5044696ce030",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Matthew Riccitello",
+        "last_name": "Riccitello"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "SKJELMOSE Mattias",
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mattias Skjelmose",
+        "last_name": "Skjelmose"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "JORGENSON Matteo",
+      "rider_id": "caa6acd8-3484-482f-a198-66d74853dca1",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Matteo Jorgenson",
+        "last_name": "Jorgenson"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "ROGLIC Primoz",
+      "rider_id": "e0317db4-9e73-4417-b910-ce9d0751eca7",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Primoz Roglic",
+        "last_name": "Roglic"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "PIDCOCK Tom",
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tom Pidcock",
+        "last_name": "Pidcock"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "raw_name": "TIBERI Antonio",
+      "rider_id": "bb67830a-31c3-4dd6-b975-f0d4c6bad1b5",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Antonio Tiberi",
+        "last_name": "Tiberi"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "CARAPAZ Richard",
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Richard Carapaz",
+        "last_name": "Carapaz"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "PIGANZOLI Davide",
+      "rider_id": "2467b1e6-a27d-4f13-a2aa-2fdf8e9aa30f",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Davide Piganzoli",
+        "last_name": "Piganzoli"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "HEALY Ben",
+      "rider_id": "ee03bad3-0ce8-42e2-9e65-c3bccb291f17",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Ben Healy",
+        "last_name": "Healy"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "STORER Michael",
+      "rider_id": "55e68fb3-deb5-483e-9947-6181978dd6d3",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Michael Storer",
+        "last_name": "Storer"
+      }
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "raw_name": "PARET PEINTRE Aurelien",
+      "rider_id": "05f608b1-f1ba-4baf-9a3e-323fa327c2d5",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Aurelien Paret Peintre",
+        "last_name": "Peintre"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "HEALY Ben",
+      "rider_id": "ee03bad3-0ce8-42e2-9e65-c3bccb291f17",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Ben Healy",
+        "last_name": "Healy"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "GIRMAY Biniam",
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Biniam Girmay",
+        "last_name": "Girmay"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "DE LIE Arnaud",
+      "rider_id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Arnaud De Lie",
+        "last_name": "De Lie"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "YATES Adam",
+      "rider_id": "49c139dd-0805-4821-8ceb-6765e95b833a",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Adam Yates",
+        "last_name": "Yates"
+      }
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "raw_name": "UIJTDEBROEKS Cian",
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Cian Uijtdebroeks",
+        "last_name": "Uijtdebroeks"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "JOHANNESSEN Tobias Halland",
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tobias Halland Johannessen",
+        "last_name": "Johannessen"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "JORGENSON Matteo",
+      "rider_id": "caa6acd8-3484-482f-a198-66d74853dca1",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Matteo Jorgenson",
+        "last_name": "Jorgenson"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "ARENSMAN Thymen",
+      "rider_id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Thymen Arensman",
+        "last_name": "Arensman"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "HEALY Ben",
+      "rider_id": "ee03bad3-0ce8-42e2-9e65-c3bccb291f17",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Ben Healy",
+        "last_name": "Healy"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "GREGOIRE Romain",
+      "rider_id": "d5c4cfe6-f086-4d73-b866-451b39d28bbd",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Romain Gregoire",
+        "last_name": "Gregoire"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "DE LIE Arnaud",
+      "rider_id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Arnaud De Lie",
+        "last_name": "De Lie"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "HINDLEY Jai",
+      "rider_id": "ac7bd765-5758-48bb-9245-e49aeb64ed09",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Jai Hindley",
+        "last_name": "Hindley"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "VAN EETVELT Lennert",
+      "rider_id": "f59db159-98a3-431a-bc00-79b3fbbf608c",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Lennert Van Eetvelt",
+        "last_name": "Van Eetvelt"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "GANNA Filippo",
+      "rider_id": "9f1f836b-5e5f-4ba5-a107-82885a1a82ce",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Filippo Ganna",
+        "last_name": "Ganna"
+      }
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "raw_name": "O'CONNOR Ben",
+      "rider_id": "bc6ad5f5-ba70-4595-a577-77d506b4ae99",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Ben Alexander O Connor",
+        "last_name": "Connor"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "VINGEGAARD Jonas",
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jonas Vingegaard Hansen",
+        "last_name": "Hansen"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "LIPOWITZ Florian",
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Florian Lipowitz",
+        "last_name": "Lipowitz"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "SEIXAS Paul",
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Paul Seixas",
+        "last_name": "Seixas"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "DEL TORO Isaac",
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Isaac Del Toro Romero",
+        "last_name": "Romero"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "EVENEPOEL Remco",
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Remco Evenepoel",
+        "last_name": "Evenepoel"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "VAUQUELIN Kevin",
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Kevin Vauquelin",
+        "last_name": "Vauquelin"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "AYUSO Juan",
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Juan Ayuso Pesquera",
+        "last_name": "Pesquera"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "MARTINEZ Lenny",
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Lenny Martinez",
+        "last_name": "Martinez"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "HEALY Ben",
+      "rider_id": "ee03bad3-0ce8-42e2-9e65-c3bccb291f17",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Ben Healy",
+        "last_name": "Healy"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "VAN DER POEL Mathieu",
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mathieu Van Der Poel",
+        "last_name": "Van Der Poel"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "KOOIJ Olav",
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Olav Kooij",
+        "last_name": "Kooij"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "PHILIPSEN Jasper",
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Jasper Philipsen",
+        "last_name": "Philipsen"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "PEDERSEN Mads",
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Mads Pedersen",
+        "last_name": "Pedersen"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "MERLIER Tim",
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tim Merlier",
+        "last_name": "Merlier"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "TIBERI Antonio",
+      "rider_id": "bb67830a-31c3-4dd6-b975-f0d4c6bad1b5",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Antonio Tiberi",
+        "last_name": "Tiberi"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "JORGENSON Matteo",
+      "rider_id": "caa6acd8-3484-482f-a198-66d74853dca1",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Matteo Jorgenson",
+        "last_name": "Jorgenson"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "MATTHEWS Michael",
+      "rider_id": "c5f052d5-c91d-45b2-b3a5-fc7e6a40a0bb",
+      "is_reserve": true,
+      "riders": {
+        "full_name": "Michael Matthews",
+        "last_name": "Matthews"
+      }
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "raw_name": "POGACAR Tadej",
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "is_reserve": false,
+      "riders": {
+        "full_name": "Tadej Pogacar",
+        "last_name": "Pogacar"
+      }
+    }
+  ],
+  "dropouts": [
+    {
+      "rider_id": "0807c6e7-52d7-4b84-8323-f7ab0358d423",
+      "dropout_after_stage": 12,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "1249712a-5e93-4010-b3d5-720a635fd493",
+      "dropout_after_stage": 6,
+      "reason": "dnf"
+    },
+    {
+      "rider_id": "1c724333-25fe-415f-9e06-14831e896158",
+      "dropout_after_stage": 12,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "dropout_after_stage": 3,
+      "reason": "dnf"
+    },
+    {
+      "rider_id": "6cd36ea5-babd-4199-a0ad-8de12f775921",
+      "dropout_after_stage": 10,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "dropout_after_stage": 6,
+      "reason": "dnf"
+    },
+    {
+      "rider_id": "86016595-d0ef-46e3-9630-00d0267a2f56",
+      "dropout_after_stage": 6,
+      "reason": "dnf"
+    },
+    {
+      "rider_id": "9229e379-15d0-4c45-bcc2-e881cac363d3",
+      "dropout_after_stage": 12,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "a7348754-f4fe-4312-9c50-12189bda956c",
+      "dropout_after_stage": 4,
+      "reason": "otl"
+    },
+    {
+      "rider_id": "bab970e0-df4c-433e-8a16-e3682a9bf75d",
+      "dropout_after_stage": 9,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "d4b844c9-d6e3-4f5c-a4ac-e8fa26fbef56",
+      "dropout_after_stage": 5,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "e5f94ccc-d569-4855-9278-f03db8b339db",
+      "dropout_after_stage": 6,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "f791fab5-92bc-4b05-a939-649f3d1b5897",
+      "dropout_after_stage": 1,
+      "reason": "dns"
+    },
+    {
+      "rider_id": "fd4dfa37-c648-4eb0-8f1c-0ab973953cf1",
+      "dropout_after_stage": 13,
+      "reason": "dns"
+    }
+  ],
+  "stagePoints": [
+    {
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "stage": 1,
+      "points": 20
+    },
+    {
+      "rider_id": "9f1f836b-5e5f-4ba5-a107-82885a1a82ce",
+      "stage": 1,
+      "points": 15
+    },
+    {
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "stage": 1,
+      "points": 12
+    },
+    {
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "stage": 1,
+      "points": 14
+    },
+    {
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "stage": 1,
+      "points": 8
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 1,
+      "points": 9
+    },
+    {
+      "rider_id": "2467b1e6-a27d-4f13-a2aa-2fdf8e9aa30f",
+      "stage": 1,
+      "points": 7
+    },
+    {
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "stage": 1,
+      "points": 4
+    },
+    {
+      "rider_id": "48ebb3d4-f873-4684-9432-44fa631c94ef",
+      "stage": 1,
+      "points": 3
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 1,
+      "points": 2
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 2,
+      "points": 24
+    },
+    {
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "stage": 2,
+      "points": 15
+    },
+    {
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "stage": 2,
+      "points": 12
+    },
+    {
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "stage": 2,
+      "points": 10
+    },
+    {
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "stage": 2,
+      "points": 8
+    },
+    {
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "stage": 2,
+      "points": 6
+    },
+    {
+      "rider_id": "d5c4cfe6-f086-4d73-b866-451b39d28bbd",
+      "stage": 2,
+      "points": 8
+    },
+    {
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "stage": 2,
+      "points": 6
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 2,
+      "points": 3
+    },
+    {
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "stage": 2,
+      "points": 2
+    },
+    {
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "stage": 3,
+      "points": 20
+    },
+    {
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "stage": 3,
+      "points": 15
+    },
+    {
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "stage": 3,
+      "points": 12
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 3,
+      "points": 14
+    },
+    {
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "stage": 3,
+      "points": 8
+    },
+    {
+      "rider_id": "f59db159-98a3-431a-bc00-79b3fbbf608c",
+      "stage": 3,
+      "points": 9
+    },
+    {
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "stage": 3,
+      "points": 5
+    },
+    {
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "stage": 3,
+      "points": 4
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 3,
+      "points": 5
+    },
+    {
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "stage": 3,
+      "points": 2
+    },
+    {
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "rider_id": "6e7a4059-7572-43ee-8310-110df83b8058",
+      "stage": 4,
+      "points": 19
+    },
+    {
+      "rider_id": "cf134bed-49bc-4982-bebe-e2e07b4275e5",
+      "stage": 4,
+      "points": 15
+    },
+    {
+      "rider_id": "563b076a-aefc-4fec-a3ba-56a17c7f5fce",
+      "stage": 4,
+      "points": 10
+    },
+    {
+      "rider_id": "fd4dfa37-c648-4eb0-8f1c-0ab973953cf1",
+      "stage": 4,
+      "points": 10
+    },
+    {
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "stage": 4,
+      "points": 6
+    },
+    {
+      "rider_id": "68bc1ece-c251-4822-bdad-ea9ea9f14829",
+      "stage": 4,
+      "points": 5
+    },
+    {
+      "rider_id": "e5f94ccc-d569-4855-9278-f03db8b339db",
+      "stage": 4,
+      "points": 4
+    },
+    {
+      "rider_id": "7dc36d03-e7ed-4ec0-9473-7ddf849a0dbc",
+      "stage": 4,
+      "points": 3
+    },
+    {
+      "rider_id": "b0a89b02-97de-49e2-b713-3743f969f2ec",
+      "stage": 4,
+      "points": 2
+    },
+    {
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "stage": 5,
+      "points": 24
+    },
+    {
+      "rider_id": "594e6edd-ffda-46a1-9cea-65067e79f6c6",
+      "stage": 5,
+      "points": 15
+    },
+    {
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "stage": 5,
+      "points": 12
+    },
+    {
+      "rider_id": "080b12a3-cf05-4dc9-b5e9-4fa29d1d64cb",
+      "stage": 5,
+      "points": 13
+    },
+    {
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "stage": 5,
+      "points": 8
+    },
+    {
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "stage": 5,
+      "points": 6
+    },
+    {
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "stage": 5,
+      "points": 5
+    },
+    {
+      "rider_id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "stage": 5,
+      "points": 6
+    },
+    {
+      "rider_id": "d4f6d426-d5a5-4108-af46-add3e547171c",
+      "stage": 5,
+      "points": 3
+    },
+    {
+      "rider_id": "7136ccda-76e9-4fc0-a10f-5adfb2e4ec44",
+      "stage": 5,
+      "points": 2
+    },
+    {
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "stage": 6,
+      "points": 20
+    },
+    {
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "stage": 6,
+      "points": 15
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 6,
+      "points": 16
+    },
+    {
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "stage": 6,
+      "points": 10
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 6,
+      "points": 11
+    },
+    {
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "stage": 6,
+      "points": 6
+    },
+    {
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "stage": 6,
+      "points": 7
+    },
+    {
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "stage": 6,
+      "points": 4
+    },
+    {
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "stage": 6,
+      "points": 3
+    },
+    {
+      "rider_id": "8ea425c5-bd99-4705-964b-962da3dac1f6",
+      "stage": 6,
+      "points": 2
+    },
+    {
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "stage": 7,
+      "points": 20
+    },
+    {
+      "rider_id": "7136ccda-76e9-4fc0-a10f-5adfb2e4ec44",
+      "stage": 7,
+      "points": 15
+    },
+    {
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "stage": 7,
+      "points": 12
+    },
+    {
+      "rider_id": "594e6edd-ffda-46a1-9cea-65067e79f6c6",
+      "stage": 7,
+      "points": 10
+    },
+    {
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "stage": 7,
+      "points": 8
+    },
+    {
+      "rider_id": "709c222e-93bd-45ff-aa16-e3e333cd8675",
+      "stage": 7,
+      "points": 6
+    },
+    {
+      "rider_id": "080b12a3-cf05-4dc9-b5e9-4fa29d1d64cb",
+      "stage": 7,
+      "points": 9
+    },
+    {
+      "rider_id": "a8a199aa-54f1-4581-9f48-f318e3746bde",
+      "stage": 7,
+      "points": 4
+    },
+    {
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "stage": 7,
+      "points": 3
+    },
+    {
+      "rider_id": "a15991e7-be26-4b3e-9b01-de0a8cb15648",
+      "stage": 7,
+      "points": 2
+    },
+    {
+      "rider_id": "7b240415-cb9c-4d63-b072-694ae1aceb1f",
+      "stage": 7,
+      "points": 3
+    },
+    {
+      "rider_id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "stage": 7,
+      "points": 2
+    },
+    {
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "stage": 8,
+      "points": 20
+    },
+    {
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "stage": 8,
+      "points": 15
+    },
+    {
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "stage": 8,
+      "points": 16
+    },
+    {
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "stage": 8,
+      "points": 10
+    },
+    {
+      "rider_id": "7b240415-cb9c-4d63-b072-694ae1aceb1f",
+      "stage": 8,
+      "points": 11
+    },
+    {
+      "rider_id": "915131a6-90ce-4624-8e7e-989ec3f0f119",
+      "stage": 8,
+      "points": 6
+    },
+    {
+      "rider_id": "fb43cc6a-3dfe-436d-b36c-e64f2b6d26a8",
+      "stage": 8,
+      "points": 5
+    },
+    {
+      "rider_id": "d1a924ca-84db-4a80-a604-258bfb11cc14",
+      "stage": 8,
+      "points": 4
+    },
+    {
+      "rider_id": "594e6edd-ffda-46a1-9cea-65067e79f6c6",
+      "stage": 8,
+      "points": 3
+    },
+    {
+      "rider_id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "stage": 8,
+      "points": 4
+    },
+    {
+      "rider_id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "stage": 9,
+      "points": 20
+    },
+    {
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "stage": 9,
+      "points": 15
+    },
+    {
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "stage": 9,
+      "points": 12
+    },
+    {
+      "rider_id": "bc44a88b-20a8-4da9-9748-c2e0403745f0",
+      "stage": 9,
+      "points": 14
+    },
+    {
+      "rider_id": "9f1f836b-5e5f-4ba5-a107-82885a1a82ce",
+      "stage": 9,
+      "points": 8
+    },
+    {
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "stage": 9,
+      "points": 6
+    },
+    {
+      "rider_id": "c5f052d5-c91d-45b2-b3a5-fc7e6a40a0bb",
+      "stage": 9,
+      "points": 5
+    },
+    {
+      "rider_id": "8cc8538b-f013-4af7-9732-19361054ee51",
+      "stage": 9,
+      "points": 4
+    },
+    {
+      "rider_id": "e578b2ce-def4-4b91-b335-658892c9b4c4",
+      "stage": 9,
+      "points": 3
+    },
+    {
+      "rider_id": "68bc1ece-c251-4822-bdad-ea9ea9f14829",
+      "stage": 9,
+      "points": 2
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 9,
+      "points": 3
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 9,
+      "points": 2
+    },
+    {
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "stage": 10,
+      "points": 20
+    },
+    {
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "stage": 10,
+      "points": 15
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 10,
+      "points": 16
+    },
+    {
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "stage": 10,
+      "points": 10
+    },
+    {
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "stage": 10,
+      "points": 11
+    },
+    {
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "stage": 10,
+      "points": 6
+    },
+    {
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "stage": 10,
+      "points": 5
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 10,
+      "points": 6
+    },
+    {
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "stage": 10,
+      "points": 3
+    },
+    {
+      "rider_id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "stage": 10,
+      "points": 2
+    },
+    {
+      "rider_id": "7136ccda-76e9-4fc0-a10f-5adfb2e4ec44",
+      "stage": 11,
+      "points": 20
+    },
+    {
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "stage": 11,
+      "points": 19
+    },
+    {
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "stage": 11,
+      "points": 12
+    },
+    {
+      "rider_id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "stage": 11,
+      "points": 13
+    },
+    {
+      "rider_id": "080b12a3-cf05-4dc9-b5e9-4fa29d1d64cb",
+      "stage": 11,
+      "points": 10
+    },
+    {
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "stage": 11,
+      "points": 6
+    },
+    {
+      "rider_id": "d4f6d426-d5a5-4108-af46-add3e547171c",
+      "stage": 11,
+      "points": 5
+    },
+    {
+      "rider_id": "d1a924ca-84db-4a80-a604-258bfb11cc14",
+      "stage": 11,
+      "points": 4
+    },
+    {
+      "rider_id": "9229e379-15d0-4c45-bcc2-e881cac363d3",
+      "stage": 11,
+      "points": 3
+    },
+    {
+      "rider_id": "fb43cc6a-3dfe-436d-b36c-e64f2b6d26a8",
+      "stage": 11,
+      "points": 2
+    },
+    {
+      "rider_id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "stage": 12,
+      "points": 20
+    },
+    {
+      "rider_id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "stage": 12,
+      "points": 19
+    },
+    {
+      "rider_id": "d9925e33-c198-4074-98a7-df7213452922",
+      "stage": 12,
+      "points": 12
+    },
+    {
+      "rider_id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "stage": 12,
+      "points": 10
+    },
+    {
+      "rider_id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "stage": 12,
+      "points": 11
+    },
+    {
+      "rider_id": "d4f6d426-d5a5-4108-af46-add3e547171c",
+      "stage": 12,
+      "points": 6
+    },
+    {
+      "rider_id": "594e6edd-ffda-46a1-9cea-65067e79f6c6",
+      "stage": 12,
+      "points": 5
+    },
+    {
+      "rider_id": "d1a924ca-84db-4a80-a604-258bfb11cc14",
+      "stage": 12,
+      "points": 4
+    },
+    {
+      "rider_id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "stage": 12,
+      "points": 3
+    },
+    {
+      "rider_id": "080b12a3-cf05-4dc9-b5e9-4fa29d1d64cb",
+      "stage": 12,
+      "points": 4
+    },
+    {
+      "rider_id": "07e404f5-237e-4984-b05a-7da7ee500e36",
+      "stage": 13,
+      "points": 20
+    },
+    {
+      "rider_id": "3bce33d9-8ae4-49ae-95eb-8a9aa8daa796",
+      "stage": 13,
+      "points": 15
+    },
+    {
+      "rider_id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "stage": 13,
+      "points": 12
+    },
+    {
+      "rider_id": "85361a79-9633-4bc4-831a-2049174a61eb",
+      "stage": 13,
+      "points": 10
+    },
+    {
+      "rider_id": "938c1e13-9d04-40d4-8307-071e4cc84e2d",
+      "stage": 13,
+      "points": 8
+    },
+    {
+      "rider_id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "stage": 13,
+      "points": 10
+    },
+    {
+      "rider_id": "e578b2ce-def4-4b91-b335-658892c9b4c4",
+      "stage": 13,
+      "points": 5
+    },
+    {
+      "rider_id": "358fe694-768b-4722-a83e-a68dae13eced",
+      "stage": 13,
+      "points": 4
+    },
+    {
+      "rider_id": "3f539a6a-2604-4128-a464-9f20ab572834",
+      "stage": 13,
+      "points": 3
+    },
+    {
+      "rider_id": "48c17467-9354-46c3-82b1-c20bfc2f2706",
+      "stage": 13,
+      "points": 2
+    },
+    {
+      "rider_id": "cf134bed-49bc-4982-bebe-e2e07b4275e5",
+      "stage": 13,
+      "points": 3
+    },
+    {
+      "rider_id": "71264649-5787-4fa1-9bb4-47afc0f0854a",
+      "stage": 13,
+      "points": 2
+    },
+    {
+      "rider_id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "stage": 14,
+      "points": 20
+    },
+    {
+      "rider_id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "stage": 14,
+      "points": 19
+    },
+    {
+      "rider_id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "stage": 14,
+      "points": 15
+    },
+    {
+      "rider_id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "stage": 14,
+      "points": 10
+    },
+    {
+      "rider_id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "stage": 14,
+      "points": 8
+    },
+    {
+      "rider_id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "stage": 14,
+      "points": 8
+    },
+    {
+      "rider_id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "stage": 14,
+      "points": 5
+    },
+    {
+      "rider_id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "stage": 14,
+      "points": 4
+    },
+    {
+      "rider_id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "stage": 14,
+      "points": 3
+    },
+    {
+      "rider_id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "stage": 14,
+      "points": 2
+    }
+  ],
+  "riders": [
+    {
+      "id": "cb54d9d6-5792-406c-acdf-7bd324573d88",
+      "full_name": "Jonas Abrahamsen",
+      "last_name": "Abrahamsen"
+    },
+    {
+      "id": "fb43cc6a-3dfe-436d-b36c-e64f2b6d26a8",
+      "full_name": "Pascal Ackermann",
+      "last_name": "Ackermann"
+    },
+    {
+      "id": "ae3fdd16-83ae-433f-9957-262a86841a63",
+      "full_name": "Edoardo Affini",
+      "last_name": "Affini"
+    },
+    {
+      "id": "358fe694-768b-4722-a83e-a68dae13eced",
+      "full_name": "Clement Braz Afonso",
+      "last_name": "Afonso"
+    },
+    {
+      "id": "543177e9-29e2-4f15-909f-cf5c9ce92aaa",
+      "full_name": "Julian Alaphilippe",
+      "last_name": "Alaphilippe"
+    },
+    {
+      "id": "b725780a-897e-464d-8450-febb02d2a0d8",
+      "full_name": "Piet Allegaert",
+      "last_name": "Allegaert"
+    },
+    {
+      "id": "76c62d1f-019b-4174-b5b7-5526d23e6643",
+      "full_name": "Thymen Arensman",
+      "last_name": "Arensman"
+    },
+    {
+      "id": "bc4b9b84-eee0-4f47-b662-2abda402094c",
+      "full_name": "Bruno Armirail",
+      "last_name": "Armirail"
+    },
+    {
+      "id": "080b12a3-cf05-4dc9-b5e9-4fa29d1d64cb",
+      "full_name": "Huub Artz",
+      "last_name": "Artz"
+    },
+    {
+      "id": "7c3798ab-562d-466a-9d8c-1180b92a5673",
+      "full_name": "Kasper Asgreen",
+      "last_name": "Asgreen"
+    },
+    {
+      "id": "00ff1b7f-40c1-4a5c-96a1-634f925dc36f",
+      "full_name": "Lewis Askey",
+      "last_name": "Askey"
+    },
+    {
+      "id": "a211e53c-b6ed-4e58-84e3-6838ecb293e8",
+      "full_name": "Davide Ballerini",
+      "last_name": "Ballerini"
+    },
+    {
+      "id": "713a0561-1aa4-49ad-b4f1-a06774543df5",
+      "full_name": "Warren Barguil",
+      "last_name": "Barguil"
+    },
+    {
+      "id": "bc44a88b-20a8-4da9-9748-c2e0403745f0",
+      "full_name": "Alex Baudin",
+      "last_name": "Baudin"
+    },
+    {
+      "id": "709c222e-93bd-45ff-aa16-e3e333cd8675",
+      "full_name": "Phil Bauhaus",
+      "last_name": "Bauhaus"
+    },
+    {
+      "id": "00f47ae4-0958-4621-bf49-f7cc09975188",
+      "full_name": "Joel Nicolau Beltran",
+      "last_name": "Beltran"
+    },
+    {
+      "id": "280e2ef2-daf0-421c-b0f1-7a2d1ffa1359",
+      "full_name": "George Bennett",
+      "last_name": "Bennett"
+    },
+    {
+      "id": "383ed073-7632-4150-b8e9-69fc3341ea2d",
+      "full_name": "Tiesj Benoot",
+      "last_name": "Benoot"
+    },
+    {
+      "id": "0807c6e7-52d7-4b84-8323-f7ab0358d423",
+      "full_name": "Jenno Berckmoes",
+      "last_name": "Berckmoes"
+    },
+    {
+      "id": "f791fab5-92bc-4b05-a939-649f3d1b5897",
+      "full_name": "Clement Berthet",
+      "last_name": "Berthet"
+    },
+    {
+      "id": "70c1cb09-0864-4f2c-bf14-10d2027cc6bc",
+      "full_name": "Sebastian Berwick",
+      "last_name": "Berwick"
+    },
+    {
+      "id": "39afd7d8-9c87-4719-9423-9a520618b315",
+      "full_name": "Jenthe Biermans",
+      "last_name": "Biermans"
+    },
+    {
+      "id": "1c724333-25fe-415f-9e06-14831e896158",
+      "full_name": "Frits Biesterbos",
+      "last_name": "Biesterbos"
+    },
+    {
+      "id": "7b240415-cb9c-4d63-b072-694ae1aceb1f",
+      "full_name": "Pavel Bittner",
+      "last_name": "Bittner"
+    },
+    {
+      "id": "620e77b7-f790-45db-a0e1-d3563881573c",
+      "full_name": "Cees Bol",
+      "last_name": "Bol"
+    },
+    {
+      "id": "8cc8538b-f013-4af7-9732-19361054ee51",
+      "full_name": "Nicolas Breuillard",
+      "last_name": "Breuillard"
+    },
+    {
+      "id": "a7348754-f4fe-4312-9c50-12189bda956c",
+      "full_name": "Kelland O Brien",
+      "last_name": "Brien"
+    },
+    {
+      "id": "fdf0353a-00b8-411a-a4e6-293977559a40",
+      "full_name": "Victor Campenaerts",
+      "last_name": "Campenaerts"
+    },
+    {
+      "id": "3bce33d9-8ae4-49ae-95eb-8a9aa8daa796",
+      "full_name": "Harold Tejada Canacue",
+      "last_name": "Canacue"
+    },
+    {
+      "id": "a53b78da-1e77-4baf-8902-209ce9036976",
+      "full_name": "Richard Carapaz",
+      "last_name": "Carapaz"
+    },
+    {
+      "id": "9beb5089-f384-4014-87fd-7a09db7f884d",
+      "full_name": "Damiano Caruso",
+      "last_name": "Caruso"
+    },
+    {
+      "id": "fd3b8262-21f1-462e-b2e9-456bb1f312da",
+      "full_name": "Mattia Cattaneo",
+      "last_name": "Cattaneo"
+    },
+    {
+      "id": "327a56f2-1219-44ac-b65d-f310574eacad",
+      "full_name": "Jefferson Cepeda",
+      "last_name": "Cepeda"
+    },
+    {
+      "id": "68a4c3c2-11ed-4582-9365-ab51908ac05d",
+      "full_name": "Anthon Charmig",
+      "last_name": "Charmig"
+    },
+    {
+      "id": "bc6ad5f5-ba70-4595-a577-77d506b4ae99",
+      "full_name": "Ben Alexander O Connor",
+      "last_name": "Connor"
+    },
+    {
+      "id": "df62815b-12d5-45de-a6f7-7906825631b4",
+      "full_name": "Ewen Costiou",
+      "last_name": "Costiou"
+    },
+    {
+      "id": "71264649-5787-4fa1-9bb4-47afc0f0854a",
+      "full_name": "Lars Craps",
+      "last_name": "Craps"
+    },
+    {
+      "id": "9fca7720-1190-4401-98c3-ab5c9dfcd9bd",
+      "full_name": "Jose Felix Parra Cuerda",
+      "last_name": "Cuerda"
+    },
+    {
+      "id": "86016595-d0ef-46e3-9630-00d0267a2f56",
+      "full_name": "Arvid De Kleijn",
+      "last_name": "De Kleijn"
+    },
+    {
+      "id": "6362c5d1-99f1-4015-83af-3d6554126220",
+      "full_name": "Arnaud De Lie",
+      "last_name": "De Lie"
+    },
+    {
+      "id": "fd4dfa37-c648-4eb0-8f1c-0ab973953cf1",
+      "full_name": "Ramses Debruyne",
+      "last_name": "Debruyne"
+    },
+    {
+      "id": "16f4aba3-508e-47dd-a3d5-e33bf6ac9aea",
+      "full_name": "John Degenkolb",
+      "last_name": "Degenkolb"
+    },
+    {
+      "id": "d687203a-b2e6-4247-b7a8-bf9218bb210e",
+      "full_name": "Joris Delbove",
+      "last_name": "Delbove"
+    },
+    {
+      "id": "b851315d-c745-4de5-8730-d5dde3d31c70",
+      "full_name": "Alexandre Delettre",
+      "last_name": "Delettre"
+    },
+    {
+      "id": "e52d2d5d-ef6e-4bf1-b929-fe0fbe6d2843",
+      "full_name": "Nico Denz",
+      "last_name": "Denz"
+    },
+    {
+      "id": "924c6182-2f4f-457f-a40d-aaceb5f76af0",
+      "full_name": "Alex Aranburu Deva",
+      "last_name": "Deva"
+    },
+    {
+      "id": "097e4290-9270-4839-8f1a-52d4fdae4ce9",
+      "full_name": "Robbe Dhondt",
+      "last_name": "Dhondt"
+    },
+    {
+      "id": "3c98d795-c8fd-4f87-91c7-b6c6024db6ea",
+      "full_name": "Silvan Dillier",
+      "last_name": "Dillier"
+    },
+    {
+      "id": "0c32d87e-b0ce-408d-a082-e9906e3006f8",
+      "full_name": "Luke Durbridge",
+      "last_name": "Durbridge"
+    },
+    {
+      "id": "7b913b59-be28-44ca-b3b1-984c2cea4c21",
+      "full_name": "Pascal Eenkhoorn",
+      "last_name": "Eenkhoorn"
+    },
+    {
+      "id": "917e4499-e636-4d87-9691-6c655225da3a",
+      "full_name": "Felix Engelhardt",
+      "last_name": "Engelhardt"
+    },
+    {
+      "id": "68cc53df-b7da-47a6-a7ae-fb4722940577",
+      "full_name": "Remco Evenepoel",
+      "last_name": "Evenepoel"
+    },
+    {
+      "id": "48ebb3d4-f873-4684-9432-44fa631c94ef",
+      "full_name": "Tobias Svendsen Foss",
+      "last_name": "Foss"
+    },
+    {
+      "id": "e6ab57d6-bd47-4fcf-a7c2-6ea47758a868",
+      "full_name": "Milan Fretin",
+      "last_name": "Fretin"
+    },
+    {
+      "id": "563b076a-aefc-4fec-a3ba-56a17c7f5fce",
+      "full_name": "Marco Frigo",
+      "last_name": "Frigo"
+    },
+    {
+      "id": "9f1f836b-5e5f-4ba5-a107-82885a1a82ce",
+      "full_name": "Filippo Ganna",
+      "last_name": "Ganna"
+    },
+    {
+      "id": "e9aecdb5-3aff-46a2-987d-1853eb5f87c5",
+      "full_name": "Sergio Andres Higuita Garcia",
+      "last_name": "Garcia"
+    },
+    {
+      "id": "c5f44355-3fcf-4514-a016-c3ad3ebe1b0e",
+      "full_name": "Aaron Murray Gate",
+      "last_name": "Gate"
+    },
+    {
+      "id": "76102b81-5b59-4d38-b670-ab09263974e8",
+      "full_name": "Derek James Gee",
+      "last_name": "Gee"
+    },
+    {
+      "id": "7e125e39-1d64-45b2-9617-6db39625954a",
+      "full_name": "Lorenzo Germani",
+      "last_name": "Germani"
+    },
+    {
+      "id": "e888ad54-e502-4d55-b289-c698b0f19d42",
+      "full_name": "Biniam Girmay",
+      "last_name": "Girmay"
+    },
+    {
+      "id": "a8a199aa-54f1-4581-9f48-f318e3746bde",
+      "full_name": "Dorian Godon",
+      "last_name": "Godon"
+    },
+    {
+      "id": "9d3a492a-eee8-47e9-a5a0-826b6c8ef2f6",
+      "full_name": "Egan Bernal Gomez",
+      "last_name": "Gomez"
+    },
+    {
+      "id": "1d244710-9db9-42c7-8d0c-9dea27bf5172",
+      "full_name": "Kamil Gradek",
+      "last_name": "Gradek"
+    },
+    {
+      "id": "d5c4cfe6-f086-4d73-b866-451b39d28bbd",
+      "full_name": "Romain Gregoire",
+      "last_name": "Gregoire"
+    },
+    {
+      "id": "a391f012-65a0-4288-8d6f-8d25b988c040",
+      "full_name": "Felix Grossschartner",
+      "last_name": "Grossschartner"
+    },
+    {
+      "id": "56a70ce3-d74e-4b88-9636-315ff41a3bbc",
+      "full_name": "Thibault Guernalec",
+      "last_name": "Guernalec"
+    },
+    {
+      "id": "34f5dc41-1974-46ad-9988-be7f43f338b8",
+      "full_name": "Guillaume Martin Guyonnet",
+      "last_name": "Guyonnet"
+    },
+    {
+      "id": "5512f5a3-b017-49f3-b975-14985c25a2c7",
+      "full_name": "Per Strand Hagenes",
+      "last_name": "Hagenes"
+    },
+    {
+      "id": "f38ef72e-3e4c-479e-9416-a17502c401bc",
+      "full_name": "Marco Haller",
+      "last_name": "Haller"
+    },
+    {
+      "id": "c30ccf82-54a3-4f17-9981-366d9907e225",
+      "full_name": "Jonas Vingegaard Hansen",
+      "last_name": "Hansen"
+    },
+    {
+      "id": "6cd36ea5-babd-4199-a0ad-8de12f775921",
+      "full_name": "Christopher Harper",
+      "last_name": "Harper"
+    },
+    {
+      "id": "ee03bad3-0ce8-42e2-9e65-c3bccb291f17",
+      "full_name": "Ben Healy",
+      "last_name": "Healy"
+    },
+    {
+      "id": "9e59822d-9500-4a81-81f3-dd14005647de",
+      "full_name": "Quinten Hermans",
+      "last_name": "Hermans"
+    },
+    {
+      "id": "5df8fab1-1219-4afa-8d36-82844faf07e1",
+      "full_name": "Michel Hessmann",
+      "last_name": "Hessmann"
+    },
+    {
+      "id": "ac7bd765-5758-48bb-9245-e49aeb64ed09",
+      "full_name": "Jai Hindley",
+      "last_name": "Hindley"
+    },
+    {
+      "id": "22f61556-7b60-45db-a5d8-0cf352a1a2e4",
+      "full_name": "Marc Hirschi",
+      "last_name": "Hirschi"
+    },
+    {
+      "id": "c1f10907-9b94-4b89-87f6-1dcacd7b91a9",
+      "full_name": "Daan Hoole",
+      "last_name": "Hoole"
+    },
+    {
+      "id": "6c5d0a57-5caa-4da5-8627-997c93fa794d",
+      "full_name": "Damien Craig Howson",
+      "last_name": "Howson"
+    },
+    {
+      "id": "ed58e1b7-ada5-49fa-936a-25bbe70348ed",
+      "full_name": "Ion Izagirre Insausti",
+      "last_name": "Insausti"
+    },
+    {
+      "id": "6f8bc4aa-bff6-4fb3-83fb-b58504b802fe",
+      "full_name": "Xabier Azparren Irurzun",
+      "last_name": "Irurzun"
+    },
+    {
+      "id": "e578b2ce-def4-4b91-b335-658892c9b4c4",
+      "full_name": "Jordan Jegat",
+      "last_name": "Jegat"
+    },
+    {
+      "id": "35f84e77-5c76-45e7-a8f8-50ba349d2bd9",
+      "full_name": "Tobias Halland Johannessen",
+      "last_name": "Johannessen"
+    },
+    {
+      "id": "91933776-1fa0-47e0-bae2-e5623445ef61",
+      "full_name": "Anders Halland Johannessen",
+      "last_name": "Johannessen"
+    },
+    {
+      "id": "caa6acd8-3484-482f-a198-66d74853dca1",
+      "full_name": "Matteo Jorgenson",
+      "last_name": "Jorgenson"
+    },
+    {
+      "id": "594e6edd-ffda-46a1-9cea-65067e79f6c6",
+      "full_name": "Max Kanter",
+      "last_name": "Kanter"
+    },
+    {
+      "id": "d25bb69c-5533-4d34-bb4a-7f190cf03ea1",
+      "full_name": "Alex Kirsch",
+      "last_name": "Kirsch"
+    },
+    {
+      "id": "95b7dd06-bc28-4aea-ba34-5f9e4ab33f68",
+      "full_name": "Olav Kooij",
+      "last_name": "Kooij"
+    },
+    {
+      "id": "8ea425c5-bd99-4705-964b-962da3dac1f6",
+      "full_name": "Sepp Kuss",
+      "last_name": "Kuss"
+    },
+    {
+      "id": "e1e74d1d-5a29-457e-8ed9-f84b3512bd3d",
+      "full_name": "Michal Kwiatkowski",
+      "last_name": "Kwiatkowski"
+    },
+    {
+      "id": "af61ed90-9686-4790-9b92-4bc66262b6e1",
+      "full_name": "Mathis Le Berre",
+      "last_name": "Le Berre"
+    },
+    {
+      "id": "3048abd1-06a0-4a8d-ba72-94b083e20615",
+      "full_name": "Florian Lipowitz",
+      "last_name": "Lipowitz"
+    },
+    {
+      "id": "5f5c4029-a92b-4014-befe-3f1faebf4a6b",
+      "full_name": "Matis Louvel",
+      "last_name": "Louvel"
+    },
+    {
+      "id": "5c2604ce-28f7-42d2-bdc9-59a5c913f120",
+      "full_name": "Niklas Maerkl",
+      "last_name": "Maerkl"
+    },
+    {
+      "id": "2b330f67-cf99-4227-82f8-cbcc794462d7",
+      "full_name": "Tim Marsman",
+      "last_name": "Marsman"
+    },
+    {
+      "id": "b900452a-f7c2-4d22-b6d4-2f7e96f6cc82",
+      "full_name": "Lenny Martinez",
+      "last_name": "Martinez"
+    },
+    {
+      "id": "c5f052d5-c91d-45b2-b3a5-fc7e6a40a0bb",
+      "full_name": "Michael Matthews",
+      "last_name": "Matthews"
+    },
+    {
+      "id": "938c1e13-9d04-40d4-8307-071e4cc84e2d",
+      "full_name": "Brandon Mcnulty",
+      "last_name": "Mcnulty"
+    },
+    {
+      "id": "2b07b0f8-63f9-4a2f-86f6-a083d8a282c3",
+      "full_name": "Jordi Meeus",
+      "last_name": "Meeus"
+    },
+    {
+      "id": "f56add7c-8ec3-4f9e-9b17-3b31b0f42dd3",
+      "full_name": "Tim Merlier",
+      "last_name": "Merlier"
+    },
+    {
+      "id": "f37aaaae-234d-48f3-a0a6-f7bf513bddb1",
+      "full_name": "Xandro Meurisse",
+      "last_name": "Meurisse"
+    },
+    {
+      "id": "254f9bdf-b08f-481f-b624-49054d6e597f",
+      "full_name": "Matej Mohoric",
+      "last_name": "Mohoric"
+    },
+    {
+      "id": "d4b844c9-d6e3-4f5c-a4ac-e8fa26fbef56",
+      "full_name": "Alex Molenaar",
+      "last_name": "Molenaar"
+    },
+    {
+      "id": "e8a55044-d473-4ee6-9f05-0b5a91614e22",
+      "full_name": "Krists Neilands",
+      "last_name": "Neilands"
+    },
+    {
+      "id": "2504be78-6f76-4719-a3dd-8cc12af5e8f8",
+      "full_name": "Magnus Cort Nielsen",
+      "last_name": "Nielsen"
+    },
+    {
+      "id": "97552b9f-d8e7-42e9-80df-e7fa9a0d2c02",
+      "full_name": "Stefano Oldani",
+      "last_name": "Oldani"
+    },
+    {
+      "id": "5e998bd7-8edd-4835-a837-691107ba4a53",
+      "full_name": "Nelson Oliveira",
+      "last_name": "Oliveira"
+    },
+    {
+      "id": "ce34e6da-280c-4347-a526-7e5353808005",
+      "full_name": "Javier Romo Oliver",
+      "last_name": "Oliver"
+    },
+    {
+      "id": "5b85b403-91f0-48f5-a7cd-6c3f4b9e95b5",
+      "full_name": "Jakub Otruba",
+      "last_name": "Otruba"
+    },
+    {
+      "id": "1154746c-d57a-40b0-8b60-d4b0c89c4399",
+      "full_name": "Quentin Pacher",
+      "last_name": "Pacher"
+    },
+    {
+      "id": "ec082c42-a68a-4f18-8805-4341e5a53bf3",
+      "full_name": "Hugo Page",
+      "last_name": "Page"
+    },
+    {
+      "id": "973bd700-5f83-4ccd-9f4a-95e241169c7e",
+      "full_name": "Mads Pedersen",
+      "last_name": "Pedersen"
+    },
+    {
+      "id": "05f608b1-f1ba-4baf-9a3e-323fa327c2d5",
+      "full_name": "Aurelien Paret Peintre",
+      "last_name": "Peintre"
+    },
+    {
+      "id": "0dfdc431-cfd3-4a2c-aacf-1cfe40c8a3e0",
+      "full_name": "Valentin Paret Peintre",
+      "last_name": "Peintre"
+    },
+    {
+      "id": "2fe44b23-7198-4503-9298-da0b07a05da3",
+      "full_name": "Juan Ayuso Pesquera",
+      "last_name": "Pesquera"
+    },
+    {
+      "id": "d9925e33-c198-4074-98a7-df7213452922",
+      "full_name": "Jasper Philipsen",
+      "last_name": "Philipsen"
+    },
+    {
+      "id": "9f7c78ce-d33a-4d6e-be9d-3e5a4dbe3c25",
+      "full_name": "Tom Pidcock",
+      "last_name": "Pidcock"
+    },
+    {
+      "id": "cf134bed-49bc-4982-bebe-e2e07b4275e5",
+      "full_name": "Raul Garcia Pierna",
+      "last_name": "Pierna"
+    },
+    {
+      "id": "2467b1e6-a27d-4f13-a2aa-2fdf8e9aa30f",
+      "full_name": "Davide Piganzoli",
+      "last_name": "Piganzoli"
+    },
+    {
+      "id": "6bac27fe-3a65-458d-8901-c8f824d83f59",
+      "full_name": "Edward Planckaert",
+      "last_name": "Planckaert"
+    },
+    {
+      "id": "48c17467-9354-46c3-82b1-c20bfc2f2706",
+      "full_name": "Lucas Plapp",
+      "last_name": "Plapp"
+    },
+    {
+      "id": "915131a6-90ce-4624-8e7e-989ec3f0f119",
+      "full_name": "Rick Pluimers",
+      "last_name": "Pluimers"
+    },
+    {
+      "id": "cb6d2ea1-83ba-4e0f-8c4e-c41d8e61ae74",
+      "full_name": "Tadej Pogacar",
+      "last_name": "Pogacar"
+    },
+    {
+      "id": "f13df30a-b85e-4a90-9339-6382a8566bcf",
+      "full_name": "Nils Politt",
+      "last_name": "Politt"
+    },
+    {
+      "id": "9eaf56e2-8703-468c-80c7-9b93fcdbab46",
+      "full_name": "Nicolas Prodhomme",
+      "last_name": "Prodhomme"
+    },
+    {
+      "id": "68bc1ece-c251-4822-bdad-ea9ea9f14829",
+      "full_name": "Sean Quinn",
+      "last_name": "Quinn"
+    },
+    {
+      "id": "183f6342-814d-4029-9b9f-3ae57d39ce4b",
+      "full_name": "Carlos Verona Quintanilla",
+      "last_name": "Quintanilla"
+    },
+    {
+      "id": "9229e379-15d0-4c45-bcc2-e881cac363d3",
+      "full_name": "Fernando Gaviria Rendon",
+      "last_name": "Rendon"
+    },
+    {
+      "id": "8cdd3440-658a-4d90-beb9-00f942f41398",
+      "full_name": "Einer Augusto Rubio Reyes",
+      "last_name": "Reyes"
+    },
+    {
+      "id": "ce410b40-25b8-4da5-9983-5044696ce030",
+      "full_name": "Matthew Riccitello",
+      "last_name": "Riccitello"
+    },
+    {
+      "id": "a78b7776-efe8-4ea0-900e-5e1c439cf417",
+      "full_name": "Jonas Rickaert",
+      "last_name": "Rickaert"
+    },
+    {
+      "id": "e0317db4-9e73-4417-b910-ce9d0751eca7",
+      "full_name": "Primoz Roglic",
+      "last_name": "Roglic"
+    },
+    {
+      "id": "04835d86-4b5c-47ed-835c-48ea04d33578",
+      "full_name": "Isaac Del Toro Romero",
+      "last_name": "Romero"
+    },
+    {
+      "id": "93076485-fc26-4b32-8d18-cf375b6ebbb1",
+      "full_name": "Abel Balderstone Roumens",
+      "last_name": "Roumens"
+    },
+    {
+      "id": "d1a924ca-84db-4a80-a604-258bfb11cc14",
+      "full_name": "Clement Russo",
+      "last_name": "Russo"
+    },
+    {
+      "id": "07e404f5-237e-4984-b05a-7da7ee500e36",
+      "full_name": "Mauro Schmid",
+      "last_name": "Schmid"
+    },
+    {
+      "id": "b18db849-ddca-4bd9-ac50-3910ac6a5c5d",
+      "full_name": "Paul Seixas",
+      "last_name": "Seixas"
+    },
+    {
+      "id": "6e7a4059-7572-43ee-8310-110df83b8058",
+      "full_name": "Quinn Simmons",
+      "last_name": "Simmons"
+    },
+    {
+      "id": "728a65c4-f7dd-454e-89b9-14f3b9d9ee53",
+      "full_name": "Anders Skaarseth",
+      "last_name": "Skaarseth"
+    },
+    {
+      "id": "f319b670-e704-4f87-866b-35c9eb2bdf3e",
+      "full_name": "Mattias Skjelmose",
+      "last_name": "Skjelmose"
+    },
+    {
+      "id": "0f005853-cb50-42ff-b472-e51174c24f5f",
+      "full_name": "Toms Skujins",
+      "last_name": "Skujins"
+    },
+    {
+      "id": "baf5ff0e-5d54-42d4-817f-1d53b633b13e",
+      "full_name": "Liam Slock",
+      "last_name": "Slock"
+    },
+    {
+      "id": "5c34c55b-5fc3-4202-a1dd-ce27745261b8",
+      "full_name": "Robert Stannard",
+      "last_name": "Stannard"
+    },
+    {
+      "id": "63f44cb9-90b3-482a-ad1f-a024dc655e7a",
+      "full_name": "Georg Steinhauser",
+      "last_name": "Steinhauser"
+    },
+    {
+      "id": "be3710e6-5099-4376-9cbf-746d9561ab75",
+      "full_name": "Thomas Jake Stewart",
+      "last_name": "Stewart"
+    },
+    {
+      "id": "55e68fb3-deb5-483e-9947-6181978dd6d3",
+      "full_name": "Michael Storer",
+      "last_name": "Storer"
+    },
+    {
+      "id": "3eedc95b-77cb-412e-a3d0-0419e3a596e6",
+      "full_name": "Jasper Stuyven",
+      "last_name": "Stuyven"
+    },
+    {
+      "id": "4b908d83-b66e-4e76-99c4-f509eea396ae",
+      "full_name": "Joshua Michael Tarling",
+      "last_name": "Tarling"
+    },
+    {
+      "id": "5a8b5427-fe27-4ec1-9f9c-1d2d0cd164d8",
+      "full_name": "Mike Teunissen",
+      "last_name": "Teunissen"
+    },
+    {
+      "id": "951e2e9d-bf25-41d8-b798-21d34b9a39f7",
+      "full_name": "Benjamin Thomas",
+      "last_name": "Thomas"
+    },
+    {
+      "id": "bb67830a-31c3-4dd6-b975-f0d4c6bad1b5",
+      "full_name": "Antonio Tiberi",
+      "last_name": "Tiberi"
+    },
+    {
+      "id": "e5f94ccc-d569-4855-9278-f03db8b339db",
+      "full_name": "Torstein Traeen",
+      "last_name": "Traeen"
+    },
+    {
+      "id": "3b9d565d-7583-4fa1-87ff-0f8cf0e38913",
+      "full_name": "Jan Tratnik",
+      "last_name": "Tratnik"
+    },
+    {
+      "id": "bab970e0-df4c-433e-8a16-e3682a9bf75d",
+      "full_name": "Matteo Trentin",
+      "last_name": "Trentin"
+    },
+    {
+      "id": "d4f6d426-d5a5-4108-af46-add3e547171c",
+      "full_name": "Anthony Turgis",
+      "last_name": "Turgis"
+    },
+    {
+      "id": "8494e819-4fda-4299-bbf3-fe96c435aaca",
+      "full_name": "Cian Uijtdebroeks",
+      "last_name": "Uijtdebroeks"
+    },
+    {
+      "id": "b0a89b02-97de-49e2-b713-3743f969f2ec",
+      "full_name": "Mathias Vacek",
+      "last_name": "Vacek"
+    },
+    {
+      "id": "2cb1c043-8f0c-45b1-97ae-0943700a3794",
+      "full_name": "Michael Valgren",
+      "last_name": "Valgren"
+    },
+    {
+      "id": "a15991e7-be26-4b3e-9b01-de0a8cb15648",
+      "full_name": "Tom Van Asbroeck",
+      "last_name": "Van Asbroeck"
+    },
+    {
+      "id": "0e60e00c-b6f6-4201-b1b5-098df8b928d8",
+      "full_name": "Dylan Van Baarle",
+      "last_name": "Van Baarle"
+    },
+    {
+      "id": "b63ade3e-5246-4d52-8c1a-13a939a54728",
+      "full_name": "Julius Van Den Berg",
+      "last_name": "Van Den Berg"
+    },
+    {
+      "id": "7bc61a4e-01fe-44c1-b7fb-2f1d2ecf5450",
+      "full_name": "Frank Van Den Broek",
+      "last_name": "Van Den Broek"
+    },
+    {
+      "id": "5a29980b-caea-4b96-8fd0-bf6018a39ba6",
+      "full_name": "Mathieu Van Der Poel",
+      "last_name": "Van Der Poel"
+    },
+    {
+      "id": "1f0089f1-caea-4640-8ea9-28733f037af9",
+      "full_name": "Tim Van Dijke",
+      "last_name": "Van Dijke"
+    },
+    {
+      "id": "f59db159-98a3-431a-bc00-79b3fbbf608c",
+      "full_name": "Lennert Van Eetvelt",
+      "last_name": "Van Eetvelt"
+    },
+    {
+      "id": "85361a79-9633-4bc4-831a-2049174a61eb",
+      "full_name": "Maxim Van Gils",
+      "last_name": "Van Gils"
+    },
+    {
+      "id": "1249712a-5e93-4010-b3d5-720a635fd493",
+      "full_name": "Bert Van Lerberghe",
+      "last_name": "Van Lerberghe"
+    },
+    {
+      "id": "8e112ede-f83a-411b-b10b-a33310c98ab7",
+      "full_name": "Vlad Van Mechelen",
+      "last_name": "Van Mechelen"
+    },
+    {
+      "id": "f272b682-2119-4d35-a362-eadccd897b10",
+      "full_name": "Brent Van Moer",
+      "last_name": "Van Moer"
+    },
+    {
+      "id": "57c0ffe7-fc5b-4cd1-b0cd-2e70a4bfd386",
+      "full_name": "Ilan Van Wilder",
+      "last_name": "Van Wilder"
+    },
+    {
+      "id": "1783b97e-1c99-4ce5-b7f8-d4662c920265",
+      "full_name": "Kevin Vauquelin",
+      "last_name": "Vauquelin"
+    },
+    {
+      "id": "98b7a885-f5a8-4c16-b4a1-c3b3c6fa5552",
+      "full_name": "Baptiste Veistroffer",
+      "last_name": "Veistroffer"
+    },
+    {
+      "id": "f20a3302-7b2b-4501-9952-2f76dd17471b",
+      "full_name": "Simone Velasco",
+      "last_name": "Velasco"
+    },
+    {
+      "id": "d2aba173-1f4c-46eb-84ab-9f4369a9c12b",
+      "full_name": "Matteo Vercher",
+      "last_name": "Vercher"
+    },
+    {
+      "id": "d1dacf5a-55cd-4706-bb1b-f2295bd0905b",
+      "full_name": "Florian Vermeersch",
+      "last_name": "Vermeersch"
+    },
+    {
+      "id": "a3d5aa0d-071b-44cf-833d-b412222a0407",
+      "full_name": "Emiel Verstrynge",
+      "last_name": "Verstrynge"
+    },
+    {
+      "id": "9cade3ab-0b69-40bb-b644-f99096374108",
+      "full_name": "Louis Vervaeke",
+      "last_name": "Vervaeke"
+    },
+    {
+      "id": "77c0d933-4f0f-43a8-b7bc-ec5bfac30a12",
+      "full_name": "Nicolya Vinokurov",
+      "last_name": "Vinokurov"
+    },
+    {
+      "id": "66a159f2-7d6e-4e5d-82bd-a91c2540c111",
+      "full_name": "Yannis Voisard",
+      "last_name": "Voisard"
+    },
+    {
+      "id": "7136ccda-76e9-4fc0-a10f-5adfb2e4ec44",
+      "full_name": "Soeren Waerenskjold",
+      "last_name": "Waerenskjold"
+    },
+    {
+      "id": "dd2060e5-abdd-46ef-93dc-5e345700a2cc",
+      "full_name": "Max Walker",
+      "last_name": "Walker"
+    },
+    {
+      "id": "3f539a6a-2604-4128-a464-9f20ab572834",
+      "full_name": "Tim Wellens",
+      "last_name": "Wellens"
+    },
+    {
+      "id": "4228fffb-fb71-47e1-b5aa-bc5c688b447e",
+      "full_name": "Alfred Brockwell Wright",
+      "last_name": "Wright"
+    },
+    {
+      "id": "49c139dd-0805-4821-8ceb-6765e95b833a",
+      "full_name": "Adam Yates",
+      "last_name": "Yates"
+    },
+    {
+      "id": "7dc36d03-e7ed-4ec0-9473-7ddf849a0dbc",
+      "full_name": "Pablo Castrillo Zapater",
+      "last_name": "Zapater"
+    },
+    {
+      "id": "4f1d6441-73b0-4ae4-a583-26566186d246",
+      "full_name": "Georg Zimmermann",
+      "last_name": "Zimmermann"
+    }
+  ],
+  "teamStagePts": [
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 2,
+      "points": 64
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 3,
+      "points": 65
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 5,
+      "points": 61
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 7,
+      "points": 45
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 8,
+      "points": 65
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 9,
+      "points": 23
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 10,
+      "points": 86
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 11,
+      "points": 50
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 12,
+      "points": 75
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 13,
+      "points": 22
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 14,
+      "points": 85
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "0d060e5d-14f7-4e57-8af7-3f1d0d2b0710",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 2,
+      "points": 70
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 3,
+      "points": 73
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 5,
+      "points": 55
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 7,
+      "points": 43
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 8,
+      "points": 61
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 9,
+      "points": 46
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 10,
+      "points": 83
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 12,
+      "points": 64
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 14,
+      "points": 88
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "0f89ff20-d33d-4833-a8b7-81cd00420e47",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 2,
+      "points": 70
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 3,
+      "points": 77
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 5,
+      "points": 49
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 6,
+      "points": 88
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 7,
+      "points": 31
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 8,
+      "points": 46
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 9,
+      "points": 46
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 10,
+      "points": 85
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 11,
+      "points": 31
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 12,
+      "points": 54
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 14,
+      "points": 92
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "140a015c-9cef-44ff-9a64-f4da5aeaa347",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 2,
+      "points": 64
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 3,
+      "points": 65
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 4,
+      "points": 6
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 5,
+      "points": 50
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 7,
+      "points": 40
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 8,
+      "points": 61
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 9,
+      "points": 37
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 10,
+      "points": 86
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 12,
+      "points": 61
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 13,
+      "points": 22
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 14,
+      "points": 85
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "24c40c9a-dbfe-4317-9573-0a8714453b8f",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 2,
+      "points": 78
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 3,
+      "points": 73
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 4,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 5,
+      "points": 26
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 6,
+      "points": 88
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 7,
+      "points": 40
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 8,
+      "points": 45
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 9,
+      "points": 52
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 10,
+      "points": 88
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 11,
+      "points": 18
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 12,
+      "points": 42
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 13,
+      "points": 12
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 14,
+      "points": 88
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "3abe799f-3f91-4f69-a2f5-a9747b65e0c9",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 2,
+      "points": 70
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 3,
+      "points": 65
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 5,
+      "points": 31
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 6,
+      "points": 88
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 7,
+      "points": 43
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 8,
+      "points": 45
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 9,
+      "points": 31
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 10,
+      "points": 85
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 11,
+      "points": 18
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 12,
+      "points": 45
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 13,
+      "points": 10
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 14,
+      "points": 85
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "3bdffc6f-463f-4577-bf20-e6837e722215",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 2,
+      "points": 66
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 3,
+      "points": 65
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 5,
+      "points": 25
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 7,
+      "points": 31
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 8,
+      "points": 30
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 9,
+      "points": 43
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 10,
+      "points": 86
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 11,
+      "points": 12
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 12,
+      "points": 35
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 13,
+      "points": 22
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 14,
+      "points": 85
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "6a7f9cb1-806b-410b-a54e-1c6ed3610852",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 2,
+      "points": 70
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 3,
+      "points": 85
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 5,
+      "points": 55
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 7,
+      "points": 43
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 8,
+      "points": 61
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 9,
+      "points": 46
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 10,
+      "points": 83
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 12,
+      "points": 64
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 14,
+      "points": 92
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "80ad4099-621d-40e9-9710-02f2603ab457",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 2,
+      "points": 70
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 3,
+      "points": 85
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 4,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 5,
+      "points": 44
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 7,
+      "points": 40
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 8,
+      "points": 61
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 9,
+      "points": 40
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 10,
+      "points": 83
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 12,
+      "points": 61
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 14,
+      "points": 92
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "85556d0d-05aa-4b0b-a075-9649748cfc0e",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 2,
+      "points": 84
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 3,
+      "points": 73
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 5,
+      "points": 49
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 6,
+      "points": 92
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 7,
+      "points": 31
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 8,
+      "points": 46
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 9,
+      "points": 46
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 10,
+      "points": 91
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 11,
+      "points": 31
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 12,
+      "points": 54
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 14,
+      "points": 90
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "88420efd-8204-46eb-98f4-54d20f489ee8",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 2,
+      "points": 78
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 3,
+      "points": 73
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 5,
+      "points": 49
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 6,
+      "points": 89
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 7,
+      "points": 31
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 8,
+      "points": 46
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 9,
+      "points": 46
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 10,
+      "points": 89
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 11,
+      "points": 31
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 12,
+      "points": 54
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 14,
+      "points": 90
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "95f0d714-37d0-4049-bac9-e961108bb54c",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 1,
+      "points": 55
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 2,
+      "points": 78
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 3,
+      "points": 71
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 4,
+      "points": 20
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 5,
+      "points": 43
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 6,
+      "points": 81
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 7,
+      "points": 23
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 8,
+      "points": 41
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 9,
+      "points": 58
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 10,
+      "points": 77
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 12,
+      "points": 44
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 13,
+      "points": 12
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 14,
+      "points": 80
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "9e6455cc-e75d-4d90-ad9e-a126b9d138ff",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 2,
+      "points": 72
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 3,
+      "points": 73
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 5,
+      "points": 49
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 6,
+      "points": 85
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 7,
+      "points": 31
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 8,
+      "points": 46
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 9,
+      "points": 58
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 10,
+      "points": 86
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 11,
+      "points": 31
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 12,
+      "points": 54
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 13,
+      "points": 22
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 14,
+      "points": 88
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "a0dfe9cd-dc6a-4626-9610-5cfab45d8f7c",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 1,
+      "points": 72
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 2,
+      "points": 64
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 3,
+      "points": 72
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 4,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 5,
+      "points": 50
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 6,
+      "points": 79
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 7,
+      "points": 40
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 8,
+      "points": 61
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 9,
+      "points": 5
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 10,
+      "points": 73
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 12,
+      "points": 61
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 13,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 14,
+      "points": 84
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "a5e514b2-5432-49a8-8943-953a7684075a",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 1,
+      "points": 61
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 2,
+      "points": 58
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 3,
+      "points": 61
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 5,
+      "points": 43
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 6,
+      "points": 88
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 7,
+      "points": 23
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 8,
+      "points": 41
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 9,
+      "points": 31
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 10,
+      "points": 85
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 11,
+      "points": 37
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 12,
+      "points": 44
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 13,
+      "points": 10
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 14,
+      "points": 85
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "a81e9cd6-846c-4ffd-8da7-7af25b5726a4",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 1,
+      "points": 53
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 2,
+      "points": 75
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 3,
+      "points": 57
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 5,
+      "points": 5
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 6,
+      "points": 67
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 7,
+      "points": 3
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 8,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 9,
+      "points": 44
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 10,
+      "points": 56
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 11,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 12,
+      "points": 3
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 13,
+      "points": 10
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 14,
+      "points": 65
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "be68188e-35f6-4667-b6e0-9307fff2ea9e",
+      "stage": 21,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 1,
+      "points": 69
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 2,
+      "points": 70
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 3,
+      "points": 65
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 4,
+      "points": 26
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 5,
+      "points": 49
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 6,
+      "points": 88
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 7,
+      "points": 31
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 8,
+      "points": 46
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 9,
+      "points": 31
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 10,
+      "points": 85
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 11,
+      "points": 31
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 12,
+      "points": 54
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 13,
+      "points": 10
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 14,
+      "points": 85
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 15,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 16,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 17,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 18,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 19,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 20,
+      "points": 0
+    },
+    {
+      "team_id": "c4d83344-0733-472a-a002-a6051a892c5f",
+      "stage": 21,
+      "points": 0
+    }
+  ]
+}

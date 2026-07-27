@@ -85,16 +85,12 @@ export async function refreshLive(
     if (t) harvest.set(t.toLowerCase(), t);
   };
 
-  // 1) GC first — used as a bleed-through reference for stage detection.
-  //    letour.fr sometimes returns the current GC standings for future stage
-  //    endpoints. By fetching GC up front we can detect and skip those rows.
-  let gcRiderSet = new Set<string>(); // normalised names of GC top-10
+  // 1) GC first.
   let gcRows: { position: number; rider: string; pcs_slug: string | null; pro_team: string | null }[] = [];
   try {
     gcRows = await fetchLetourGc();
     for (const r of gcRows) addName(r.rider);
     if (gcRows.length > 0) {
-      gcRiderSet = new Set(gcRows.slice(0, 10).map((r) => r.rider.toLowerCase()));
       const ups = gcRows.map((r) => ({
         pool_id: poolId,
         position: r.position,
@@ -109,9 +105,9 @@ export async function refreshLive(
   }
 
   // 2) Stages — fetch sequentially, stop after the first stage with no results.
-  //    Guard against GC bleed-through: if letour.fr returns the current GC
-  //    standings for a future stage endpoint, the top-10 will exactly match the
-  //    GC top-10. Break when that happens instead of writing stale data.
+  //    fetchLetourStageWithTTT always resolves the stage-day ("ite") ajax
+  //    classification rather than the page's default table, so it can't
+  //    bleed through the overall GC even on the final stage.
   for (let stage = 1; stage <= maxStages; stage++) {
     let rows;
     try {
@@ -122,10 +118,6 @@ export async function refreshLive(
     }
     if (rows.length === 0) break; // future stage (empty page)
 
-    // Detect GC data recycled as a future-stage result.
-    // A real stage result has a different top-10 order than the standing GC.
-    // If 9+ of the top-10 stage finishers appear in the GC top-10, it is very
-    // likely GC data being returned for a future stage — skip it.
     for (const r of rows) addName(r.rider);
     // rider_id is intentionally omitted so ON CONFLICT UPDATE doesn't clobber
     // previously-resolved values. New inserts get rider_id = null (schema default);
